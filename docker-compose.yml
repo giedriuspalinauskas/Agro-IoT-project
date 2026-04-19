@@ -18,8 +18,8 @@ services:
       DATABASE_URL: postgresql://agro_user:agropass@n8n-postgres:5432/agro_iot
     networks:
       - default
-      - n8n_default
+      - n8n-postgres_default
 
 networks:
-  n8n_default:
+  n8n-postgres_default:
     external: true
