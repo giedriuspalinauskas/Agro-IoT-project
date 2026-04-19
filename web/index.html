@@ -1,7 +1,635 @@
 <!doctype html>
-<html>
-  <head><meta charset="utf-8"><title>Agro IoT</title></head>
-  <body>
-    <h1>Agro IoT veikia!</h1>
-  </body>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agro IoT</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f4f6f3;
+    --surface: #ffffff;
+    --border: #dde3d8;
+    --green: #3B6D11;
+    --green-light: #EAF3DE;
+    --green-mid: #639922;
+    --text: #1a1a1a;
+    --text-muted: #5a6b52;
+    --danger: #A32D2D;
+    --danger-light: #FCEBEB;
+    --info: #185FA5;
+    --info-light: #E6F1FB;
+    --amber: #854F0B;
+    --amber-light: #FAEEDA;
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg); }
+  .login-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; width: 360px; box-shadow: var(--shadow); }
+  .login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; }
+  .login-logo-icon { width: 40px; height: 40px; background: var(--green); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .login-logo-icon svg { width: 22px; height: 22px; fill: white; }
+  .login-logo-text { font-size: 20px; font-weight: 600; color: var(--green); }
+  .login-card h2 { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px; }
+  .form-group input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; }
+  .form-group input:focus { border-color: var(--green-mid); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; }
+  .btn-primary { background: var(--green); color: white; width: 100%; }
+  .btn-primary:hover { background: #2d5209; }
+  .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-secondary:hover { background: var(--bg); }
+  .btn-danger { background: transparent; border: 1px solid #f0b3b3; color: var(--danger); }
+  .btn-danger:hover { background: var(--danger-light); }
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+  .error-msg { color: var(--danger); font-size: 13px; margin-top: 0.75rem; text-align: center; }
+
+  /* LAYOUT */
+  #app { display: none; min-height: 100vh; }
+  .sidebar { position: fixed; top: 0; left: 0; width: 220px; height: 100vh; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; }
+  .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1rem; border-bottom: 1px solid var(--border); }
+  .sidebar-logo-icon { width: 32px; height: 32px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .sidebar-logo-icon svg { width: 18px; height: 18px; fill: white; }
+  .sidebar-logo-text { font-size: 16px; font-weight: 600; color: var(--green); }
+  .sidebar-nav { flex: 1; padding: 0.75rem 0.5rem; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: all 0.15s; margin-bottom: 2px; }
+  .nav-item:hover { background: var(--green-light); color: var(--green); }
+  .nav-item.active { background: var(--green-light); color: var(--green); font-weight: 500; }
+  .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .nav-section { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px 4px; margin-top: 8px; }
+  .sidebar-bottom { padding: 0.75rem; border-top: 1px solid var(--border); }
+  .user-info { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 8px; margin-bottom: 6px; }
+  .user-avatar { width: 32px; height: 32px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--green); }
+  .user-name { font-size: 13px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--text-muted); }
+
+  /* MAIN */
+  .main { margin-left: 220px; padding: 2rem; min-height: 100vh; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .page-header { margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 22px; font-weight: 600; }
+  .page-header p { font-size: 14px; color: var(--text-muted); margin-top: 2px; }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
+  .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 600; color: var(--text); }
+  .stat-value.green { color: var(--green); }
+
+  /* CARDS */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  .card-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); }
+  .card-title { font-size: 15px; font-weight: 500; }
+  .card-body { padding: 1.25rem; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--bg); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+
+  /* BADGES */
+  .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 500; }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-red { background: var(--danger-light); color: var(--danger); }
+  .badge-blue { background: var(--info-light); color: var(--info); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 100; display: none; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 14px; padding: 1.5rem; width: 440px; max-width: 95vw; border: 1px solid var(--border); }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .modal-title { font-size: 16px; font-weight: 600; }
+  .modal-close { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--text-muted); line-height: 1; }
+  .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+
+  /* LOCATION CARDS */
+  .locations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .location-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .location-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+  .location-card-title { font-size: 15px; font-weight: 600; }
+  .location-card-addr { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .location-card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+  .location-card-footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .device-pill { display: inline-flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--text-muted); }
+
+  /* ACTIONS */
+  .actions { display: flex; gap: 6px; }
+
+  /* EMPTY */
+  .empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+  .empty-icon { font-size: 32px; margin-bottom: 0.5rem; }
+
+  select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--surface); outline: none; }
+  select:focus { border-color: var(--green-mid); }
+  textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--surface); outline: none; resize: vertical; font-family: inherit; }
+  textarea:focus { border-color: var(--green-mid); }
+
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <span class="login-logo-text">Agro IoT</span>
+    </div>
+    <h2>Prisijunkite prie sistemos</h2>
+    <div class="form-group">
+      <label>Vartotojo vardas</label>
+      <input type="text" id="login-username" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>Slaptažodis</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Prisijungti</button>
+    <div class="error-msg" id="login-error"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <span class="sidebar-logo-text">Agro IoT</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Pagrindinė</div>
+      <div class="nav-item active" onclick="showPage('dashboard')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        Suvestinė
+      </div>
+      <div class="nav-item" onclick="showPage('locations')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Žemės vietos
+      </div>
+      <div class="nav-item" onclick="showPage('devices')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z"/></svg>
+        Įrenginiai
+      </div>
+      <div class="nav-item admin-only" onclick="showPage('users')" style="display:none">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Vartotojai
+      </div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name" id="user-name-display">-</div>
+          <div class="user-role" id="user-role-display">-</div>
+        </div>
+      </div>
+      <button class="btn btn-secondary" style="width:100%;font-size:13px" onclick="doLogout()">Atsijungti</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h1>Suvestinė</h1>
+        <p>Sistemos apžvalga</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Žemės vietos</div><div class="stat-value green" id="stat-locations">-</div></div>
+        <div class="stat-card"><div class="stat-label">Įrenginiai</div><div class="stat-value green" id="stat-devices">-</div></div>
+        <div class="stat-card admin-only" style="display:none"><div class="stat-label">Vartotojai</div><div class="stat-value green" id="stat-users">-</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Mano vietos ir įrenginiai</span></div>
+        <div class="card-body" id="dashboard-locations"></div>
+      </div>
+    </div>
+
+    <!-- LOCATIONS -->
+    <div class="page" id="page-locations">
+      <div class="top-bar">
+        <div class="page-header" style="margin:0">
+          <h1>Žemės vietos</h1>
+          <p>Sklypų valdymas</p>
+        </div>
+        <button class="btn btn-primary admin-only" style="display:none" onclick="openModal('modal-location')">+ Pridėti vietą</button>
+      </div>
+      <div class="locations-grid" id="locations-grid"></div>
+    </div>
+
+    <!-- DEVICES -->
+    <div class="page" id="page-devices">
+      <div class="top-bar">
+        <div class="page-header" style="margin:0">
+          <h1>Įrenginiai</h1>
+          <p>IoT jutiklių valdymas</p>
+        </div>
+        <button class="btn btn-primary admin-only" style="display:none" onclick="openAddDevice()">+ Pridėti įrenginį</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>Unikalus ID</th><th>Vieta</th><th>Veiksmai</th></tr></thead>
+            <tbody id="devices-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="page" id="page-users">
+      <div class="top-bar">
+        <div class="page-header" style="margin:0">
+          <h1>Vartotojai</h1>
+          <p>Vartotojų administravimas</p>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('modal-user')">+ Pridėti vartotoją</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL: Vieta -->
+<div class="modal-overlay" id="modal-location">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-location-title">Nauja žemės vieta</span>
+      <button class="modal-close" onclick="closeModal('modal-location')">×</button>
+    </div>
+    <input type="hidden" id="loc-edit-id">
+    <div class="form-group"><label>Pavadinimas *</label><input type="text" id="loc-name" placeholder="Pvz. Sodas Kaune"></div>
+    <div class="form-group"><label>Adresas *</label><input type="text" id="loc-address" placeholder="Pvz. Kauno r., Lietuvos g. 5"></div>
+    <div class="form-group"><label>Aprašymas</label><textarea id="loc-desc" rows="3" placeholder="Neprivalomas aprašymas..."></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-location')">Atšaukti</button>
+      <button class="btn btn-primary" onclick="saveLocation()">Išsaugoti</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Įrenginys -->
+<div class="modal-overlay" id="modal-device">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Naujas įrenginys</span>
+      <button class="modal-close" onclick="closeModal('modal-device')">×</button>
+    </div>
+    <div class="form-group"><label>Pavadinimas *</label><input type="text" id="dev-name" placeholder="Pvz. Temperatūros jutiklis 1"></div>
+    <div class="form-group"><label>Tipas *</label>
+      <select id="dev-type">
+        <option value="temperature">Temperatūros jutiklis</option>
+        <option value="humidity">Drėgmės jutiklis</option>
+        <option value="soil">Dirvožemio jutiklis</option>
+        <option value="rain">Lietaus jutiklis</option>
+        <option value="wind">Vėjo jutiklis</option>
+        <option value="other">Kitas</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Unikalus ID *</label><input type="text" id="dev-uid" placeholder="Pvz. SENSOR-001"></div>
+    <div class="form-group"><label>Žemės vieta *</label><select id="dev-location"></select></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-device')">Atšaukti</button>
+      <button class="btn btn-primary" onclick="saveDevice()">Išsaugoti</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Vartotojas -->
+<div class="modal-overlay" id="modal-user">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-user-title">Naujas vartotojas</span>
+      <button class="modal-close" onclick="closeModal('modal-user')">×</button>
+    </div>
+    <input type="hidden" id="usr-edit-id">
+    <div class="form-group"><label>Vartotojo vardas *</label><input type="text" id="usr-username" placeholder="vardas"></div>
+    <div class="form-group"><label>El. paštas *</label><input type="email" id="usr-email" placeholder="el@pastas.lt"></div>
+    <div class="form-group"><label>Slaptažodis *</label><input type="password" id="usr-password" placeholder="••••••••"></div>
+    <div class="form-group"><label>Rolė</label>
+      <select id="usr-role">
+        <option value="false">Paprastas vartotojas</option>
+        <option value="true">Administratorius</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-user')">Atšaukti</button>
+      <button class="btn btn-primary" onclick="saveUser()">Išsaugoti</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Priskirti vietas -->
+<div class="modal-overlay" id="modal-assign">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Priskirti vietas</span>
+      <button class="modal-close" onclick="closeModal('modal-assign')">×</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">Vartotojas: <strong id="assign-username"></strong></p>
+    <div id="assign-locations-list"></div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModal('modal-assign')">Uždaryti</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://' + location.hostname + ':8002/api';
+let token = localStorage.getItem('agro_token');
+let currentUser = null;
+let allLocations = [];
+let allUsers = [];
+let allDevices = [];
+
+async function api(method, path, body) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  const r = await fetch(API + path, { method, headers, body: body ? JSON.stringify(body) : undefined });
+  if (r.status === 401) { doLogout(); return; }
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || 'Klaida'); }
+  if (r.status === 204 || method === 'DELETE') return {};
+  return r.json();
+}
+
+async function doLogin() {
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+  document.getElementById('login-error').textContent = '';
+  try {
+    const data = await api('POST', '/auth/login', { username, password });
+    token = data.access_token;
+    localStorage.setItem('agro_token', token);
+    await initApp();
+  } catch(e) {
+    document.getElementById('login-error').textContent = e.message;
+  }
+}
+
+document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+async function initApp() {
+  try {
+    currentUser = await api('GET', '/auth/me');
+  } catch(e) { doLogout(); return; }
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('user-name-display').textContent = currentUser.username;
+  document.getElementById('user-role-display').textContent = currentUser.is_admin ? 'Administratorius' : 'Vartotojas';
+  document.getElementById('user-avatar').textContent = currentUser.username[0].toUpperCase();
+  if (currentUser.is_admin) {
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
+  }
+  await loadAll();
+  showPage('dashboard');
+}
+
+async function loadAll() {
+  try {
+    allLocations = await api('GET', '/locations');
+    allDevices = await api('GET', '/devices');
+    if (currentUser.is_admin) allUsers = await api('GET', '/users');
+    renderStats();
+    renderDashboard();
+    renderLocations();
+    renderDevices();
+    if (currentUser.is_admin) renderUsers();
+  } catch(e) { console.error(e); }
+}
+
+function renderStats() {
+  document.getElementById('stat-locations').textContent = allLocations.length;
+  document.getElementById('stat-devices').textContent = allDevices.length;
+  if (currentUser.is_admin) document.getElementById('stat-users').textContent = allUsers.length;
+}
+
+function renderDashboard() {
+  const el = document.getElementById('dashboard-locations');
+  if (!allLocations.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🌱</div><p>Nėra priskirtų žemės vietų</p></div>'; return; }
+  el.innerHTML = '<div class="locations-grid">' + allLocations.map(loc => {
+    const devs = allDevices.filter(d => d.location_id === loc.id);
+    return `<div class="location-card">
+      <div class="location-card-header"><span class="location-card-title">${esc(loc.name)}</span><span class="badge badge-green">${devs.length} įrenginiai</span></div>
+      <div class="location-card-addr">📍 ${esc(loc.address)}</div>
+      ${loc.description ? `<div class="location-card-desc">${esc(loc.description)}</div>` : ''}
+      <div class="location-card-footer">${devs.map(d => `<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('')}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function renderLocations() {
+  const el = document.getElementById('locations-grid');
+  if (!allLocations.length) { el.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🌱</div><p>Nėra žemės vietų</p></div>'; return; }
+  el.innerHTML = allLocations.map(loc => {
+    const devs = allDevices.filter(d => d.location_id === loc.id);
+    const adminBtns = currentUser.is_admin ? `
+      <button class="btn btn-secondary btn-sm" onclick="editLocation(${loc.id})">Redaguoti</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteLocation(${loc.id})">Šalinti</button>` : '';
+    return `<div class="location-card">
+      <div class="location-card-header">
+        <span class="location-card-title">${esc(loc.name)}</span>
+        <span class="badge badge-green">${devs.length} įrenginiai</span>
+      </div>
+      <div class="location-card-addr">📍 ${esc(loc.address)}</div>
+      ${loc.description ? `<div class="location-card-desc">${esc(loc.description)}</div>` : ''}
+      <div class="location-card-footer">
+        ${devs.map(d => `<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('')}
+        <div style="flex:1"></div>
+        <div class="actions" style="margin-top:4px">${adminBtns}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderDevices() {
+  const tb = document.getElementById('devices-tbody');
+  if (!allDevices.length) { tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra įrenginių</td></tr>'; return; }
+  tb.innerHTML = allDevices.map(d => {
+    const loc = allLocations.find(l => l.id === d.location_id);
+    const adminBtns = currentUser.is_admin ? `<button class="btn btn-danger btn-sm" onclick="deleteDevice(${d.id})">Šalinti</button>` : '-';
+    return `<tr>
+      <td><strong>${esc(d.name)}</strong></td>
+      <td><span class="badge badge-blue">${deviceTypeLabel(d.device_type)}</span></td>
+      <td><code style="font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px">${esc(d.unique_id)}</code></td>
+      <td>${loc ? esc(loc.name) : '-'}</td>
+      <td>${adminBtns}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderUsers() {
+  const tb = document.getElementById('users-tbody');
+  if (!allUsers.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra vartotojų</td></tr>'; return; }
+  tb.innerHTML = allUsers.map(u => `<tr>
+    <td><strong>${esc(u.username)}</strong></td>
+    <td>${esc(u.email)}</td>
+    <td><span class="badge ${u.is_admin ? 'badge-amber' : 'badge-green'}">${u.is_admin ? 'Admin' : 'Vartotojas'}</span></td>
+    <td><span class="badge ${u.is_active ? 'badge-green' : 'badge-red'}">${u.is_active ? 'Aktyvus' : 'Išjungtas'}</span></td>
+    <td><button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id}, '${esc(u.username)}')">Vietos</button></td>
+    <td class="actions">
+      <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button>
+    </td>
+  </tr>`).join('');
+}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+  const navMap = { dashboard: 0, locations: 1, devices: 2, users: 3 };
+  const items = document.querySelectorAll('.nav-item');
+  if (navMap[name] !== undefined) items[navMap[name]] && items[navMap[name]].classList.add('active');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function openAddDevice() {
+  const sel = document.getElementById('dev-location');
+  sel.innerHTML = allLocations.map(l => `<option value="${l.id}">${esc(l.name)}</option>`).join('');
+  document.getElementById('dev-name').value = '';
+  document.getElementById('dev-uid').value = '';
+  openModal('modal-device');
+}
+
+async function saveLocation() {
+  const id = document.getElementById('loc-edit-id').value;
+  const name = document.getElementById('loc-name').value.trim();
+  const address = document.getElementById('loc-address').value.trim();
+  const description = document.getElementById('loc-desc').value.trim();
+  if (!name || !address) { alert('Pavadinimas ir adresas yra privalomi'); return; }
+  try {
+    if (id) await api('PUT', '/locations/' + id, { name, address, description: description || null });
+    else await api('POST', '/locations', { name, address, description: description || null });
+    closeModal('modal-location');
+    await loadAll();
+  } catch(e) { alert(e.message); }
+}
+
+function editLocation(id) {
+  const loc = allLocations.find(l => l.id === id);
+  if (!loc) return;
+  document.getElementById('loc-edit-id').value = loc.id;
+  document.getElementById('loc-name').value = loc.name;
+  document.getElementById('loc-address').value = loc.address;
+  document.getElementById('loc-desc').value = loc.description || '';
+  document.getElementById('modal-location-title').textContent = 'Redaguoti vietą';
+  openModal('modal-location');
+}
+
+async function deleteLocation(id) {
+  if (!confirm('Ar tikrai norite šalinti šią vietą? Bus ištrinti ir visi jos įrenginiai.')) return;
+  try { await api('DELETE', '/locations/' + id); await loadAll(); } catch(e) { alert(e.message); }
+}
+
+async function saveDevice() {
+  const name = document.getElementById('dev-name').value.trim();
+  const device_type = document.getElementById('dev-type').value;
+  const unique_id = document.getElementById('dev-uid').value.trim();
+  const location_id = parseInt(document.getElementById('dev-location').value);
+  if (!name || !unique_id) { alert('Visi laukai privalomi'); return; }
+  try {
+    await api('POST', '/devices', { name, device_type, unique_id, location_id });
+    closeModal('modal-device');
+    await loadAll();
+  } catch(e) { alert(e.message); }
+}
+
+async function deleteDevice(id) {
+  if (!confirm('Ar tikrai norite šalinti šį įrenginį?')) return;
+  try { await api('DELETE', '/devices/' + id); await loadAll(); } catch(e) { alert(e.message); }
+}
+
+async function saveUser() {
+  const username = document.getElementById('usr-username').value.trim();
+  const email = document.getElementById('usr-email').value.trim();
+  const password = document.getElementById('usr-password').value;
+  const is_admin = document.getElementById('usr-role').value === 'true';
+  if (!username || !email || !password) { alert('Visi laukai privalomi'); return; }
+  try {
+    await api('POST', '/users', { username, email, password, is_admin });
+    closeModal('modal-user');
+    await loadAll();
+  } catch(e) { alert(e.message); }
+}
+
+async function deleteUser(id) {
+  if (!confirm('Ar tikrai norite šalinti šį vartotoją?')) return;
+  try { await api('DELETE', '/users/' + id); await loadAll(); } catch(e) { alert(e.message); }
+}
+
+async function openAssign(userId, username) {
+  document.getElementById('assign-username').textContent = username;
+  const user = allUsers.find(u => u.id === userId);
+  const userLocs = await api('GET', '/locations');
+  const list = document.getElementById('assign-locations-list');
+  list.innerHTML = allLocations.map(loc => {
+    const assigned = userLocs.some ? false : false;
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">${esc(loc.name)}</span>
+      <div class="actions">
+        <button class="btn btn-secondary btn-sm" onclick="assignLoc(${userId}, ${loc.id}, this)">Priskirti</button>
+        <button class="btn btn-danger btn-sm" onclick="unassignLoc(${userId}, ${loc.id})">Atšaukti</button>
+      </div>
+    </div>`;
+  }).join('');
+  openModal('modal-assign');
+}
+
+async function assignLoc(userId, locId) {
+  try { await api('POST', `/users/${userId}/locations/${locId}`); } catch(e) { alert(e.message); }
+}
+async function unassignLoc(userId, locId) {
+  try { await api('DELETE', `/users/${userId}/locations/${locId}`); } catch(e) { alert(e.message); }
+}
+
+function doLogout() {
+  token = null;
+  localStorage.removeItem('agro_token');
+  currentUser = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').textContent = '';
+}
+
+function deviceTypeLabel(type) {
+  const map = { temperature: '🌡', humidity: '💧', soil: '🌱', rain: '🌧', wind: '💨', other: '📡' };
+  return map[type] || '📡';
+}
+
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+if (token) initApp();
+</script>
+</body>
 </html>
