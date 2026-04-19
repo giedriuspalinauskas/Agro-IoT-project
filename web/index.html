@@ -27,7 +27,7 @@
   }
   body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  /* ===== LOGIN ===== */
+  /* LOGIN */
   #login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
   .login-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; width: 100%; max-width: 360px; box-shadow: var(--shadow); }
   .login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; }
@@ -36,7 +36,7 @@
   .login-logo-text { font-size: 20px; font-weight: 600; color: var(--green); }
   .login-card h2 { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-bottom: 1.5rem; }
 
-  /* ===== FORMS ===== */
+  /* FORMS */
   .form-group { margin-bottom: 1rem; position: relative; }
   .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px; }
   .form-group input, .form-group textarea, .form-group select {
@@ -47,7 +47,7 @@
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--green-mid); }
   .form-group textarea { resize: vertical; }
 
-  /* ===== BUTTONS ===== */
+  /* BUTTONS */
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; }
   .btn-primary { background: var(--green); color: white; }
   .btn-primary:hover { background: #2d5209; }
@@ -61,7 +61,7 @@
   .error-msg { color: var(--danger); font-size: 13px; margin-top: 0.75rem; text-align: center; }
   .success-msg { color: var(--green); font-size: 13px; margin-top: 0.75rem; text-align: center; }
 
-  /* ===== APP LAYOUT ===== */
+  /* APP LAYOUT */
   #app { display: none; min-height: 100vh; }
 
   /* SIDEBAR */
@@ -99,13 +99,13 @@
   .topbar-logo-icon svg { width: 16px; height: 16px; fill: white; }
   .topbar-logo-text { font-size: 15px; font-weight: 600; color: var(--green); }
   .burger { background: none; border: none; cursor: pointer; padding: 4px; display: flex; flex-direction: column; gap: 4px; }
-  .burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.2s; }
+  .burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
 
   /* OVERLAY */
   .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 45; }
   .sidebar-overlay.open { display: block; }
 
-  /* MAIN CONTENT */
+  /* MAIN */
   .main { margin-left: var(--sidebar-w); padding: 2rem; min-height: 100vh; }
   .page { display: none; }
   .page.active { display: block; }
@@ -128,7 +128,7 @@
 
   /* TABLE */
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 400px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
   td { padding: 10px 12px; border-bottom: 1px solid var(--bg); vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
@@ -166,7 +166,7 @@
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
   .empty-icon { font-size: 32px; margin-bottom: 0.5rem; }
 
-  /* ADDRESS AUTOCOMPLETE */
+  /* AUTOCOMPLETE */
   .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 200; max-height: 200px; overflow-y: auto; }
   .autocomplete-item { padding: 9px 12px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--bg); color: var(--text); }
   .autocomplete-item:last-child { border-bottom: none; }
@@ -184,14 +184,23 @@
   .assign-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.2s; }
   .assign-dot.on { background: var(--green); }
 
-  /* PROFILE CARD */
+  /* PROFILE */
   .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; max-width: 480px; }
   .profile-avatar { width: 56px; height: 56px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 600; color: var(--green); margin-bottom: 1rem; }
-  .profile-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--bg); font-size: 14px; }
+  .profile-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bg); font-size: 14px; gap: 8px; flex-wrap: wrap; }
   .profile-row:last-of-type { border-bottom: none; }
   .profile-label { color: var(--text-muted); font-size: 13px; }
 
-  /* RESPONSIVE */
+  /* USER MOBILE CARDS - hidden on desktop */
+  .user-mobile-card { display: none; }
+
+  /* DESKTOP */
+  @media (min-width: 769px) {
+    .user-desktop-row td { display: table-cell; }
+    .user-mobile-td { display: none !important; }
+  }
+
+  /* MOBILE */
   @media (max-width: 768px) {
     .topbar { display: flex; }
     .sidebar { transform: translateX(-100%); }
@@ -202,9 +211,30 @@
     .coord-row { grid-template-columns: 1fr; }
     .top-bar { flex-direction: column; align-items: flex-start; }
     .modal { padding: 1.25rem; }
-    table { font-size: 12px; }
-    td, th { padding: 8px; }
+
+    /* Users: hide table, show cards */
+    .users-table-head { display: none; }
+    .user-desktop-row { display: none !important; }
+    .user-mobile-td { display: table-cell !important; padding: 0 0 10px 0 !important; border: none !important; background: transparent !important; }
+    .user-mobile-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .user-mobile-card .um-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 8px; }
+    .user-mobile-card .um-name { font-size: 15px; font-weight: 600; }
+    .user-mobile-card .um-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+    .user-mobile-card .um-email { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+    .user-mobile-card .um-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .user-mobile-card .um-actions .btn { flex: 1; justify-content: center; }
+
+    /* Devices table – allow scroll */
+    #page-devices .table-wrap { min-width: 0; }
+    #page-devices table { min-width: 480px; }
   }
+
   @media (max-width: 400px) {
     .stats-grid { grid-template-columns: 1fr; }
     .login-card { padding: 1.5rem 1rem; }
@@ -230,7 +260,6 @@
 
 <!-- APP -->
 <div id="app">
-  <!-- Mobile topbar -->
   <div class="topbar">
     <div class="topbar-logo">
       <div class="topbar-logo-icon"><svg viewBox="0 0 24 24" fill="white"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20c9 0 11-11 11-11s-3 1-5 0c0 0 0-1 3-1z"/></svg></div>
@@ -305,16 +334,20 @@
       </table></div></div>
     </div>
 
-    <!-- USERS (admin only) -->
+    <!-- USERS -->
     <div class="page" id="page-users">
       <div class="top-bar">
         <div class="page-header" style="margin:0"><h1>Vartotojai</h1><p>Vartotojų administravimas</p></div>
         <button class="btn btn-primary" onclick="openModal('modal-user')">+ Pridėti vartotoją</button>
       </div>
-      <div class="card"><div class="table-wrap"><table>
-        <thead><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
-        <tbody id="users-tbody"></tbody>
-      </table></div></div>
+      <div class="card" id="users-desktop-card">
+        <div class="table-wrap">
+          <table>
+            <thead class="users-table-head"><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- PROFILE -->
@@ -400,7 +433,7 @@
   </div>
 </div>
 
-<!-- MODAL: Naujas vartotojas -->
+<!-- MODAL: Vartotojas -->
 <div class="modal-overlay" id="modal-user">
   <div class="modal">
     <div class="modal-header"><span class="modal-title">Naujas vartotojas</span><button class="modal-close" onclick="closeModal('modal-user')">×</button></div>
@@ -436,7 +469,6 @@ let selLat = null, selLng = null, coordTab = 'auto';
 let addrTimer = null;
 let assignUserId = null;
 
-/* ===== API ===== */
 async function api(method, path, body) {
   const headers = {'Content-Type':'application/json'};
   if (token) headers['Authorization'] = 'Bearer ' + token;
@@ -447,7 +479,6 @@ async function api(method, path, body) {
   return r.json();
 }
 
-/* ===== AUTH ===== */
 async function doLogin() {
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value;
@@ -465,27 +496,20 @@ document.getElementById('login-password').addEventListener('keydown', e => { if(
 async function initApp() {
   try { currentUser = await api('GET', '/auth/me'); } catch(e) { doLogout(); return; }
   if (!currentUser) return;
-
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
-
-  // Update user info
   document.getElementById('user-name-display').textContent = currentUser.username;
   document.getElementById('user-role-display').textContent = currentUser.is_admin ? 'Administratorius' : 'Vartotojas';
   document.getElementById('user-avatar').textContent = currentUser.username[0].toUpperCase();
-
-  // Show/hide admin elements based on role
   const isAdmin = currentUser.is_admin;
   document.getElementById('nav-users').style.display = isAdmin ? '' : 'none';
   document.getElementById('stat-users-card').style.display = isAdmin ? '' : 'none';
   document.getElementById('btn-add-location').style.display = isAdmin ? '' : 'none';
   document.getElementById('btn-add-device').style.display = isAdmin ? '' : 'none';
-
   await loadAll();
   showPage('dashboard');
 }
 
-/* ===== LOAD DATA ===== */
 async function loadAll() {
   try {
     allLocations = await api('GET', '/locations') || [];
@@ -496,7 +520,6 @@ async function loadAll() {
   } catch(e) { console.error(e); }
 }
 
-/* ===== RENDER ===== */
 function renderStats() {
   document.getElementById('stat-locations').textContent = allLocations.length;
   document.getElementById('stat-devices').textContent = allDevices.length;
@@ -557,15 +580,38 @@ function renderDevices() {
 
 function renderUsers() {
   const tb = document.getElementById('users-tbody');
-  if (!allUsers.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra vartotojų</td></tr>'; return; }
-  tb.innerHTML = allUsers.map(u => `<tr>
-    <td><strong>${esc(u.username)}</strong></td>
-    <td>${esc(u.email)}</td>
-    <td><span class="badge ${u.is_admin?'badge-amber':'badge-green'}">${u.is_admin?'Admin':'Vartotojas'}</span></td>
-    <td><span class="badge ${u.is_active?'badge-green':'badge-red'}">${u.is_active?'Aktyvus':'Išjungtas'}</span></td>
-    <td><button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">Vietos</button></td>
-    <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button></td>
-  </tr>`).join('');
+  if (!allUsers.length) {
+    tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra vartotojų</td></tr>';
+    return;
+  }
+  tb.innerHTML = allUsers.map(u => {
+    const roleB = `<span class="badge ${u.is_admin?'badge-amber':'badge-green'}">${u.is_admin?'Admin':'Vartotojas'}</span>`;
+    const statusB = `<span class="badge ${u.is_active?'badge-green':'badge-red'}">${u.is_active?'Aktyvus':'Išjungtas'}</span>`;
+    return `
+      <tr class="user-desktop-row">
+        <td><strong>${esc(u.username)}</strong></td>
+        <td>${esc(u.email)}</td>
+        <td>${roleB}</td>
+        <td>${statusB}</td>
+        <td><button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">Vietos</button></td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button></td>
+      </tr>
+      <tr>
+        <td colspan="6" class="user-mobile-td">
+          <div class="user-mobile-card">
+            <div class="um-top">
+              <span class="um-name">${esc(u.username)}</span>
+              <div class="um-badges">${roleB}${statusB}</div>
+            </div>
+            <div class="um-email">${esc(u.email)}</div>
+            <div class="um-actions">
+              <button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">📍 Vietos</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button>
+            </div>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
 }
 
 function renderProfile() {
@@ -584,7 +630,6 @@ function renderProfile() {
   document.getElementById('new-password2').value = '';
 }
 
-/* ===== CHANGE PASSWORD ===== */
 async function changePassword() {
   const pw1 = document.getElementById('new-password').value;
   const pw2 = document.getElementById('new-password2').value;
@@ -601,7 +646,6 @@ async function changePassword() {
   } catch(e) { document.getElementById('pw-error').textContent = e.message; }
 }
 
-/* ===== NAVIGATION ===== */
 function showPage(name, navEl) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -609,15 +653,13 @@ function showPage(name, navEl) {
   if (page) page.classList.add('active');
   if (navEl) navEl.classList.add('active');
   else {
-    const navId = 'nav-' + name;
-    const nav = document.getElementById(navId);
+    const nav = document.getElementById('nav-' + name);
     if (nav) nav.classList.add('active');
   }
   if (name === 'profile') renderProfile();
   closeSidebar();
 }
 
-/* ===== SIDEBAR MOBILE ===== */
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebar-overlay').classList.toggle('open');
@@ -627,11 +669,9 @@ function closeSidebar() {
   document.getElementById('sidebar-overlay').classList.remove('open');
 }
 
-/* ===== MODAL ===== */
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-/* ===== ADDRESS AUTOCOMPLETE ===== */
 async function onAddressInput(val) {
   clearTimeout(addrTimer);
   const box = document.getElementById('address-suggestions');
@@ -683,7 +723,6 @@ function getCoords() {
   return { lat: selLat, lng: selLng };
 }
 
-/* ===== LOCATION CRUD ===== */
 function openLocationModal() {
   document.getElementById('loc-edit-id').value = '';
   document.getElementById('loc-name').value = '';
@@ -738,7 +777,6 @@ async function deleteLocation(id) {
   try { await api('DELETE', '/locations/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
-/* ===== DEVICE CRUD ===== */
 function openAddDevice() {
   document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
   document.getElementById('dev-name').value = '';
@@ -760,7 +798,6 @@ async function deleteDevice(id) {
   try { await api('DELETE', '/devices/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
-/* ===== USER CRUD ===== */
 async function saveUser() {
   const username = document.getElementById('usr-username').value.trim();
   const email = document.getElementById('usr-email').value.trim();
@@ -775,28 +812,25 @@ async function deleteUser(id) {
   try { await api('DELETE', '/users/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
-/* ===== ASSIGN LOCATIONS ===== */
 async function openAssign(userId, username) {
   assignUserId = userId;
   document.getElementById('assign-username').textContent = username;
   document.getElementById('assign-locations-list').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Kraunama...</p>';
   openModal('modal-assign');
-
   if (!allLocations.length) {
     document.getElementById('assign-locations-list').innerHTML = '<p style="font-size:13px;color:var(--text-muted);text-align:center;padding:1rem">Nėra sukurtų žemės vietų</p>';
     return;
   }
-
   document.getElementById('assign-locations-list').innerHTML = allLocations.map(loc => `
     <div class="assign-row">
-      <div style="display:flex;align-items:center;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px;min-width:0">
         <div class="assign-dot" id="dot-${userId}-${loc.id}"></div>
-        <div>
-          <div style="font-size:14px;font-weight:500">${esc(loc.name)}</div>
-          <div style="font-size:11px;color:var(--text-muted)">${esc(loc.address)}</div>
+        <div style="min-width:0">
+          <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(loc.name)}</div>
+          <div style="font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(loc.address)}</div>
         </div>
       </div>
-      <div class="actions">
+      <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-secondary btn-xs" onclick="doAssign(${userId},${loc.id},true,this)">+ Priskirti</button>
         <button class="btn btn-danger btn-xs" onclick="doAssign(${userId},${loc.id},false,this)">− Atšaukti</button>
       </div>
@@ -815,7 +849,6 @@ async function doAssign(userId, locId, assign, btn) {
   } catch(e) { alert(e.message); }
 }
 
-/* ===== LOGOUT ===== */
 function doLogout() {
   token=null; localStorage.removeItem('agro_token'); currentUser=null;
   allLocations=[]; allUsers=[]; allDevices=[];
@@ -825,7 +858,6 @@ function doLogout() {
   document.getElementById('login-error').textContent='';
 }
 
-/* ===== HELPERS ===== */
 function deviceTypeLabel(t) {
   return {temperature:'🌡',humidity:'💧',soil:'🌱',rain:'🌧',wind:'💨',other:'📡'}[t]||'📡';
 }
