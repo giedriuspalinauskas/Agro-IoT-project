@@ -46,6 +46,7 @@
   }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--green-mid); }
   .form-group textarea { resize: vertical; }
+  .form-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
   /* BUTTONS */
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; }
@@ -56,6 +57,8 @@
   .btn-secondary:hover { background: var(--bg); }
   .btn-danger { background: transparent; border: 1px solid #f0b3b3; color: var(--danger); }
   .btn-danger:hover { background: var(--danger-light); }
+  .btn-info { background: transparent; border: 1px solid #b3ccf0; color: var(--info); }
+  .btn-info:hover { background: var(--info-light); }
   .btn-sm { padding: 5px 10px; font-size: 12px; }
   .btn-xs { padding: 3px 8px; font-size: 11px; }
   .error-msg { color: var(--danger); font-size: 13px; margin-top: 0.75rem; text-align: center; }
@@ -63,14 +66,7 @@
 
   /* APP LAYOUT */
   #app { display: none; min-height: 100vh; }
-
-  /* SIDEBAR */
-  .sidebar {
-    position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh;
-    background: var(--surface); border-right: 1px solid var(--border);
-    display: flex; flex-direction: column; z-index: 50;
-    transition: transform 0.25s ease;
-  }
+  .sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 50; transition: transform 0.25s ease; }
   .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1rem; border-bottom: 1px solid var(--border); }
   .sidebar-logo-icon { width: 32px; height: 32px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .sidebar-logo-icon svg { width: 18px; height: 18px; fill: white; }
@@ -89,19 +85,13 @@
   .user-role { font-size: 11px; color: var(--text-muted); }
 
   /* MOBILE TOPBAR */
-  .topbar {
-    display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px;
-    background: var(--surface); border-bottom: 1px solid var(--border);
-    align-items: center; justify-content: space-between; padding: 0 1rem; z-index: 40;
-  }
+  .topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px; background: var(--surface); border-bottom: 1px solid var(--border); align-items: center; justify-content: space-between; padding: 0 1rem; z-index: 40; }
   .topbar-logo { display: flex; align-items: center; gap: 8px; }
   .topbar-logo-icon { width: 28px; height: 28px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
   .topbar-logo-icon svg { width: 16px; height: 16px; fill: white; }
   .topbar-logo-text { font-size: 15px; font-weight: 600; color: var(--green); }
   .burger { background: none; border: none; cursor: pointer; padding: 4px; display: flex; flex-direction: column; gap: 4px; }
   .burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
-
-  /* OVERLAY */
   .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 45; }
   .sidebar-overlay.open { display: block; }
 
@@ -144,7 +134,7 @@
   /* MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.open { display: flex; }
-  .modal { background: var(--surface); border-radius: 14px; padding: 1.5rem; width: 100%; max-width: 480px; border: 1px solid var(--border); max-height: 90vh; overflow-y: auto; }
+  .modal { background: var(--surface); border-radius: 14px; padding: 1.5rem; width: 100%; max-width: 520px; border: 1px solid var(--border); max-height: 90vh; overflow-y: auto; }
   .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
   .modal-title { font-size: 16px; font-weight: 600; }
   .modal-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--text-muted); line-height: 1; padding: 2px 6px; }
@@ -161,6 +151,20 @@
   .location-card-footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .device-pill { display: inline-flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--text-muted); }
   .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* MEASUREMENT CARDS */
+  .measurement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+  .measure-card { background: var(--bg); border-radius: 8px; padding: 12px 16px; text-align: center; }
+  .measure-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .measure-value { font-size: 28px; font-weight: 600; color: var(--green); }
+  .measure-unit { font-size: 14px; color: var(--text-muted); }
+  .measure-time { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* MEASUREMENTS TABLE */
+  .measurements-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .measurements-table th { text-align: left; padding: 6px 10px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+  .measurements-table td { padding: 8px 10px; border-bottom: 1px solid var(--bg); }
+  .measurements-table tr:last-child td { border-bottom: none; }
 
   /* EMPTY */
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
@@ -188,19 +192,14 @@
   .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; max-width: 480px; }
   .profile-avatar { width: 56px; height: 56px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 600; color: var(--green); margin-bottom: 1rem; }
   .profile-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bg); font-size: 14px; gap: 8px; flex-wrap: wrap; }
-  .profile-row:last-of-type { border-bottom: none; }
   .profile-label { color: var(--text-muted); font-size: 13px; }
 
-  /* USER MOBILE CARDS - hidden on desktop */
+  /* USER MOBILE */
   .user-mobile-card { display: none; }
 
-  /* DESKTOP */
   @media (min-width: 769px) {
-    .user-desktop-row td { display: table-cell; }
     .user-mobile-td { display: none !important; }
   }
-
-  /* MOBILE */
   @media (max-width: 768px) {
     .topbar { display: flex; }
     .sidebar { transform: translateX(-100%); }
@@ -211,33 +210,23 @@
     .coord-row { grid-template-columns: 1fr; }
     .top-bar { flex-direction: column; align-items: flex-start; }
     .modal { padding: 1.25rem; }
-
-    /* Users: hide table, show cards */
+    .measurement-grid { grid-template-columns: 1fr 1fr; }
     .users-table-head { display: none; }
     .user-desktop-row { display: none !important; }
     .user-mobile-td { display: table-cell !important; padding: 0 0 10px 0 !important; border: none !important; background: transparent !important; }
-    .user-mobile-card {
-      display: block;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem;
-    }
+    .user-mobile-card { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
     .user-mobile-card .um-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 8px; }
     .user-mobile-card .um-name { font-size: 15px; font-weight: 600; }
     .user-mobile-card .um-badges { display: flex; gap: 4px; flex-wrap: wrap; }
     .user-mobile-card .um-email { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
     .user-mobile-card .um-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .user-mobile-card .um-actions .btn { flex: 1; justify-content: center; }
-
-    /* Devices table – allow scroll */
-    #page-devices .table-wrap { min-width: 0; }
-    #page-devices table { min-width: 480px; }
+    #page-devices table { min-width: 500px; }
   }
-
   @media (max-width: 400px) {
     .stats-grid { grid-template-columns: 1fr; }
     .login-card { padding: 1.5rem 1rem; }
+    .measurement-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -329,7 +318,7 @@
         <button class="btn btn-primary" id="btn-add-device" style="display:none" onclick="openAddDevice()">+ Pridėti įrenginį</button>
       </div>
       <div class="card"><div class="table-wrap"><table>
-        <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>Unikalus ID</th><th>Vieta</th><th>Veiksmai</th></tr></thead>
+        <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>Unikalus ID</th><th>DevEUI</th><th>Vieta</th><th>Veiksmai</th></tr></thead>
         <tbody id="devices-tbody"></tbody>
       </table></div></div>
     </div>
@@ -340,7 +329,7 @@
         <div class="page-header" style="margin:0"><h1>Vartotojai</h1><p>Vartotojų administravimas</p></div>
         <button class="btn btn-primary" onclick="openModal('modal-user')">+ Pridėti vartotoją</button>
       </div>
-      <div class="card" id="users-desktop-card">
+      <div class="card">
         <div class="table-wrap">
           <table>
             <thead class="users-table-head"><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
@@ -412,7 +401,11 @@
 <!-- MODAL: Įrenginys -->
 <div class="modal-overlay" id="modal-device">
   <div class="modal">
-    <div class="modal-header"><span class="modal-title">Naujas įrenginys</span><button class="modal-close" onclick="closeModal('modal-device')">×</button></div>
+    <div class="modal-header">
+      <span class="modal-title" id="modal-device-title">Naujas įrenginys</span>
+      <button class="modal-close" onclick="closeModal('modal-device')">×</button>
+    </div>
+    <input type="hidden" id="dev-edit-id">
     <div class="form-group"><label>Pavadinimas *</label><input type="text" id="dev-name" placeholder="Pvz. Temperatūros jutiklis 1"></div>
     <div class="form-group"><label>Tipas *</label>
       <select id="dev-type">
@@ -425,7 +418,12 @@
       </select>
     </div>
     <div class="form-group"><label>Unikalus ID *</label><input type="text" id="dev-uid" placeholder="Pvz. SENSOR-001"></div>
-    <div class="form-group"><label>Žemės vieta *</label><select id="dev-location"></select></div>
+    <div class="form-group">
+      <label>ChirpStack DevEUI</label>
+      <input type="text" id="dev-eui" placeholder="Pvz. a84041d755182720">
+      <div class="form-hint">Randama ChirpStack konsolėje → Applications → Devices</div>
+    </div>
+    <div class="form-group" id="dev-location-group"><label>Žemės vieta *</label><select id="dev-location"></select></div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-device')">Atšaukti</button>
       <button class="btn btn-primary" onclick="saveDevice()">Išsaugoti</button>
@@ -457,6 +455,25 @@
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">Vartotojas: <strong id="assign-username"></strong></p>
     <div id="assign-locations-list"></div>
     <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal('modal-assign')">Uždaryti</button></div>
+  </div>
+</div>
+
+<!-- MODAL: Matavimai -->
+<div class="modal-overlay" id="modal-measurements">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-measurements-title">Matavimai</span>
+      <button class="modal-close" onclick="closeModal('modal-measurements')">×</button>
+    </div>
+    <div id="measurements-latest" style="margin-bottom:1rem"></div>
+    <div style="font-size:13px;font-weight:500;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em">Istorija (paskutiniai 50)</div>
+    <div style="overflow-x:auto">
+      <table class="measurements-table">
+        <thead><tr><th>Laikas</th><th>Temperatūra</th><th>Drėgmė</th></tr></thead>
+        <tbody id="measurements-tbody"></tbody>
+      </table>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-measurements')">Uždaryti</button></div>
   </div>
 </div>
 
@@ -564,16 +581,27 @@ function renderLocations() {
 
 function renderDevices() {
   const tb = document.getElementById('devices-tbody');
-  if (!allDevices.length) { tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra įrenginių</td></tr>'; return; }
+  if (!allDevices.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra įrenginių</td></tr>'; return; }
   tb.innerHTML = allDevices.map(d => {
     const loc = allLocations.find(l => l.id === d.location_id);
-    const btn = currentUser.is_admin ? `<button class="btn btn-danger btn-sm" onclick="deleteDevice(${d.id})">Šalinti</button>` : '-';
+    const eui = d.chirpstack_dev_eui
+      ? `<code style="font-size:11px;background:var(--bg);padding:2px 6px;border-radius:4px">${esc(d.chirpstack_dev_eui)}</code>`
+      : '<span style="color:var(--text-muted);font-size:12px">—</span>';
+    const adminBtns = currentUser.is_admin ? `
+      <button class="btn btn-secondary btn-sm" onclick="editDevice(${d.id})">Redaguoti</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteDevice(${d.id})">Šalinti</button>` : '';
     return `<tr>
       <td><strong>${esc(d.name)}</strong></td>
       <td><span class="badge badge-blue">${deviceTypeLabel(d.device_type)}</span></td>
       <td><code style="font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px">${esc(d.unique_id)}</code></td>
+      <td>${eui}</td>
       <td>${loc ? esc(loc.name) : '-'}</td>
-      <td>${btn}</td>
+      <td>
+        <div class="actions">
+          <button class="btn btn-info btn-sm" onclick="openMeasurements(${d.id},'${esc(d.name)}')">📊 Duomenys</button>
+          ${adminBtns}
+        </div>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -599,10 +627,7 @@ function renderUsers() {
       <tr>
         <td colspan="6" class="user-mobile-td">
           <div class="user-mobile-card">
-            <div class="um-top">
-              <span class="um-name">${esc(u.username)}</span>
-              <div class="um-badges">${roleB}${statusB}</div>
-            </div>
+            <div class="um-top"><span class="um-name">${esc(u.username)}</span><div class="um-badges">${roleB}${statusB}</div></div>
             <div class="um-email">${esc(u.email)}</div>
             <div class="um-actions">
               <button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">📍 Vietos</button>
@@ -646,16 +671,56 @@ async function changePassword() {
   } catch(e) { document.getElementById('pw-error').textContent = e.message; }
 }
 
+/* MEASUREMENTS */
+async function openMeasurements(deviceId, deviceName) {
+  document.getElementById('modal-measurements-title').textContent = '📊 ' + deviceName;
+  document.getElementById('measurements-latest').innerHTML = '<p style="color:var(--text-muted);font-size:13px">Kraunama...</p>';
+  document.getElementById('measurements-tbody').innerHTML = '';
+  openModal('modal-measurements');
+  try {
+    const data = await api('GET', `/measurements/device/${deviceId}?limit=50`);
+    if (!data || !data.length) {
+      document.getElementById('measurements-latest').innerHTML = '<div class="empty"><div class="empty-icon">📡</div><p>Duomenų dar nėra. Patikrinkite ar DevEUI teisingai sukonfigūruotas.</p></div>';
+      document.getElementById('measurements-tbody').innerHTML = '';
+      return;
+    }
+    const latest = data[0];
+    document.getElementById('measurements-latest').innerHTML = `
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Paskutinis matavimas: ${formatTime(latest.received_at)}</div>
+      <div class="measurement-grid">
+        ${latest.temperature !== null ? `<div class="measure-card">
+          <div class="measure-label">🌡 Temperatūra</div>
+          <div class="measure-value">${latest.temperature.toFixed(1)}<span class="measure-unit"> °C</span></div>
+        </div>` : ''}
+        ${latest.humidity !== null ? `<div class="measure-card">
+          <div class="measure-label">💧 Drėgmė</div>
+          <div class="measure-value">${latest.humidity.toFixed(1)}<span class="measure-unit"> %</span></div>
+        </div>` : ''}
+      </div>`;
+    document.getElementById('measurements-tbody').innerHTML = data.map(m => `
+      <tr>
+        <td style="white-space:nowrap">${formatTime(m.received_at)}</td>
+        <td>${m.temperature !== null ? m.temperature.toFixed(1) + ' °C' : '—'}</td>
+        <td>${m.humidity !== null ? m.humidity.toFixed(1) + ' %' : '—'}</td>
+      </tr>`).join('');
+  } catch(e) {
+    document.getElementById('measurements-latest').innerHTML = `<p style="color:var(--danger);font-size:13px">${e.message}</p>`;
+  }
+}
+
+function formatTime(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('lt-LT') + ' ' + d.toLocaleTimeString('lt-LT', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+/* NAVIGATION */
 function showPage(name, navEl) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const page = document.getElementById('page-' + name);
   if (page) page.classList.add('active');
   if (navEl) navEl.classList.add('active');
-  else {
-    const nav = document.getElementById('nav-' + name);
-    if (nav) nav.classList.add('active');
-  }
+  else { const nav = document.getElementById('nav-' + name); if (nav) nav.classList.add('active'); }
   if (name === 'profile') renderProfile();
   closeSidebar();
 }
@@ -668,10 +733,10 @@ function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
 }
-
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
+/* ADDRESS AUTOCOMPLETE */
 async function onAddressInput(val) {
   clearTimeout(addrTimer);
   const box = document.getElementById('address-suggestions');
@@ -723,6 +788,7 @@ function getCoords() {
   return { lat: selLat, lng: selLng };
 }
 
+/* LOCATION CRUD */
 function openLocationModal() {
   document.getElementById('loc-edit-id').value = '';
   document.getElementById('loc-name').value = '';
@@ -777,20 +843,48 @@ async function deleteLocation(id) {
   try { await api('DELETE', '/locations/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
+/* DEVICE CRUD */
 function openAddDevice() {
-  document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
+  document.getElementById('dev-edit-id').value = '';
   document.getElementById('dev-name').value = '';
   document.getElementById('dev-uid').value = '';
+  document.getElementById('dev-eui').value = '';
+  document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
+  document.getElementById('modal-device-title').textContent = 'Naujas įrenginys';
+  document.getElementById('dev-location-group').style.display = '';
+  openModal('modal-device');
+}
+
+function editDevice(id) {
+  const d = allDevices.find(x=>x.id===id);
+  if (!d) return;
+  document.getElementById('dev-edit-id').value = d.id;
+  document.getElementById('dev-name').value = d.name;
+  document.getElementById('dev-uid').value = d.unique_id;
+  document.getElementById('dev-eui').value = d.chirpstack_dev_eui||'';
+  document.getElementById('dev-type').value = d.device_type;
+  document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}" ${l.id===d.location_id?'selected':''}>${esc(l.name)}</option>`).join('');
+  document.getElementById('modal-device-title').textContent = 'Redaguoti įrenginį';
+  document.getElementById('dev-location-group').style.display = '';
   openModal('modal-device');
 }
 
 async function saveDevice() {
+  const id = document.getElementById('dev-edit-id').value;
   const name = document.getElementById('dev-name').value.trim();
   const device_type = document.getElementById('dev-type').value;
   const unique_id = document.getElementById('dev-uid').value.trim();
+  const chirpstack_dev_eui = document.getElementById('dev-eui').value.trim() || null;
   const location_id = parseInt(document.getElementById('dev-location').value);
-  if (!name||!unique_id) { alert('Visi laukai privalomi'); return; }
-  try { await api('POST', '/devices', {name, device_type, unique_id, location_id}); closeModal('modal-device'); await loadAll(); } catch(e) { alert(e.message); }
+  if (!name||!unique_id) { alert('Pavadinimas ir unikalus ID yra privalomi'); return; }
+  try {
+    if (id) {
+      await api('PUT', '/devices/'+id, {name, device_type, unique_id, chirpstack_dev_eui});
+    } else {
+      await api('POST', '/devices', {name, device_type, unique_id, chirpstack_dev_eui, location_id});
+    }
+    closeModal('modal-device'); await loadAll();
+  } catch(e) { alert(e.message); }
 }
 
 async function deleteDevice(id) {
@@ -798,6 +892,7 @@ async function deleteDevice(id) {
   try { await api('DELETE', '/devices/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
+/* USER CRUD */
 async function saveUser() {
   const username = document.getElementById('usr-username').value.trim();
   const email = document.getElementById('usr-email').value.trim();
@@ -812,6 +907,7 @@ async function deleteUser(id) {
   try { await api('DELETE', '/users/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
+/* ASSIGN LOCATIONS */
 async function openAssign(userId, username) {
   assignUserId = userId;
   document.getElementById('assign-username').textContent = username;
@@ -826,8 +922,8 @@ async function openAssign(userId, username) {
       <div style="display:flex;align-items:center;gap:8px;min-width:0">
         <div class="assign-dot" id="dot-${userId}-${loc.id}"></div>
         <div style="min-width:0">
-          <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(loc.name)}</div>
-          <div style="font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(loc.address)}</div>
+          <div style="font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(loc.name)}</div>
+          <div style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(loc.address)}</div>
         </div>
       </div>
       <div style="display:flex;gap:6px;flex-shrink:0">

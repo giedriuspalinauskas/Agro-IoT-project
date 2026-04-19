@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from database import get_db
 from auth import get_current_user, require_admin
-from schemas import DeviceOut, DeviceCreate
+from schemas import DeviceOut, DeviceCreate, DeviceUpdate
 import models
 
 router = APIRouter()
@@ -24,6 +24,17 @@ def create_device(data: DeviceCreate, db: Session = Depends(get_db), _=Depends(r
         raise HTTPException(status_code=404, detail="Vieta nerasta")
     device = models.Device(**data.model_dump())
     db.add(device)
+    db.commit()
+    db.refresh(device)
+    return device
+
+@router.put("/{device_id}", response_model=DeviceOut)
+def update_device(device_id: int, data: DeviceUpdate, db: Session = Depends(get_db), _=Depends(require_admin)):
+    device = db.query(models.Device).filter(models.Device.id == device_id).first()
+    if not device:
+        raise HTTPException(status_code=404, detail="Įrenginys nerastas")
+    for k, v in data.model_dump(exclude_unset=True).items():
+        setattr(device, k, v)
     db.commit()
     db.refresh(device)
     return device
