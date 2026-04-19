@@ -261,10 +261,13 @@
       <div class="nav-section admin-nav-section" style="display:none">Išorinės sistemos</div>
       <div class="nav-item admin-nav-item" onclick="openChirpStack()" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>ChirpStack
+<<<<<<< HEAD
       </div>
       <div class="nav-item admin-nav-item" onclick="openN8N()" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>N8N
       </div>
+=======
+>>>>>>> parent of d0e8b56 (n8n pridejimas)
       </div>
     </nav>
     <div class="sidebar-bottom">
@@ -496,7 +499,6 @@
 <script>
 const API = 'http://' + location.hostname + ':8002/api';
 const CHIRPSTACK_URL = 'http://192.168.0.177:8080';
-const N8N_URL = 'http://192.168.0.177:5678';
 let token = localStorage.getItem('agro_token');
 let currentUser = null;
 let allLocations = [], allUsers = [], allDevices = [];
@@ -694,11 +696,6 @@ async function changePassword() {
 /* CHIRPSTACK */
 function openChirpStack() {
   window.open(CHIRPSTACK_URL, '_blank');
-}
-
-/* N8N */
-function openN8N() {
-  window.open(N8N_URL, '_blank');
 }
 
 /* IMPORT */
