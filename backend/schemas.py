@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 class Token(BaseModel):
@@ -31,11 +31,30 @@ class UserOut(UserBase):
     class Config:
         from_attributes = True
 
+class FieldMappingIn(BaseModel):
+    source_field: str
+    display_name: str
+    unit: Optional[str] = None
+    sensor_type: str
+
+class FieldMappingOut(FieldMappingIn):
+    id: int
+    device_id: int
+    class Config:
+        from_attributes = True
+
+class MeasurementValueOut(BaseModel):
+    field_key: str
+    field_value: float
+    class Config:
+        from_attributes = True
+
 class MeasurementOut(BaseModel):
     id: int
     temperature: Optional[float] = None
     humidity: Optional[float] = None
     received_at: datetime
+    values: List[MeasurementValueOut] = []
     class Config:
         from_attributes = True
 
@@ -63,6 +82,7 @@ class DeviceOut(DeviceBase):
     id: int
     location_id: int
     measurements: List[MeasurementOut] = []
+    field_mappings: List[FieldMappingOut] = []
     class Config:
         from_attributes = True
 

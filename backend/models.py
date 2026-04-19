@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table, Text, Float, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table, Text, Float, DateTime, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from database import Base
@@ -43,6 +43,18 @@ class Device(Base):
     humidity_field = Column(String, nullable=True)
     location = relationship("Location", back_populates="devices")
     measurements = relationship("Measurement", back_populates="device", cascade="all, delete-orphan")
+    field_mappings = relationship("DeviceFieldMapping", back_populates="device", cascade="all, delete-orphan")
+
+class DeviceFieldMapping(Base):
+    __tablename__ = "device_field_mapping"
+    id = Column(Integer, primary_key=True, index=True)
+    device_id = Column(Integer, ForeignKey("devices.id"), nullable=False)
+    source_field = Column(String, nullable=False)
+    display_name = Column(String, nullable=False)
+    unit = Column(String, nullable=True)
+    sensor_type = Column(String, nullable=False)
+    device = relationship("Device", back_populates="field_mappings")
+    __table_args__ = (UniqueConstraint("device_id", "source_field"),)
 
 class Measurement(Base):
     __tablename__ = "measurements"
@@ -53,3 +65,12 @@ class Measurement(Base):
     raw_data = Column(Text, nullable=True)
     received_at = Column(DateTime(timezone=True), server_default=func.now())
     device = relationship("Device", back_populates="measurements")
+    values = relationship("MeasurementValue", back_populates="measurement", cascade="all, delete-orphan")
+
+class MeasurementValue(Base):
+    __tablename__ = "measurement_values"
+    id = Column(Integer, primary_key=True, index=True)
+    measurement_id = Column(Integer, ForeignKey("measurements.id"), nullable=False)
+    field_key = Column(String, nullable=False)
+    field_value = Column(Float, nullable=False)
+    measurement = relationship("Measurement", back_populates="values")
