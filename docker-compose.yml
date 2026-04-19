@@ -7,3 +7,19 @@ services:
       - "8081:80"
     volumes:
       - ./web:/usr/share/nginx/html:ro
+
+  backend:
+    build: ./backend
+    container_name: agro-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://agro_user:agropass@n8n-postgres:5432/agro_iot
+    networks:
+      - default
+      - n8n_default
+
+networks:
+  n8n_default:
+    external: true
