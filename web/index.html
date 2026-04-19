@@ -7,26 +7,15 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f4f6f3;
-    --surface: #ffffff;
-    --border: #dde3d8;
-    --green: #3B6D11;
-    --green-light: #EAF3DE;
-    --green-mid: #639922;
-    --text: #1a1a1a;
-    --text-muted: #5a6b52;
-    --danger: #A32D2D;
-    --danger-light: #FCEBEB;
-    --info: #185FA5;
-    --info-light: #E6F1FB;
-    --amber: #854F0B;
-    --amber-light: #FAEEDA;
-    --radius: 10px;
-    --shadow: 0 1px 4px rgba(0,0,0,0.07);
-    --sidebar-w: 220px;
+    --bg: #f4f6f3; --surface: #ffffff; --border: #dde3d8;
+    --green: #3B6D11; --green-light: #EAF3DE; --green-mid: #639922;
+    --text: #1a1a1a; --text-muted: #5a6b52;
+    --danger: #A32D2D; --danger-light: #FCEBEB;
+    --info: #185FA5; --info-light: #E6F1FB;
+    --amber: #854F0B; --amber-light: #FAEEDA;
+    --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,0.07); --sidebar-w: 220px;
   }
   body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
   #login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
   .login-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; width: 100%; max-width: 360px; box-shadow: var(--shadow); }
   .login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; }
@@ -34,14 +23,12 @@
   .login-logo-icon svg { width: 22px; height: 22px; fill: white; }
   .login-logo-text { font-size: 20px; font-weight: 600; color: var(--green); }
   .login-card h2 { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-bottom: 1.5rem; }
-
   .form-group { margin-bottom: 1rem; position: relative; }
   .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px; }
   .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; font-family: inherit; }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--green-mid); }
   .form-group textarea { resize: vertical; }
   .form-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; }
   .btn-primary { background: var(--green); color: white; }
   .btn-primary:hover { background: #2d5209; }
@@ -58,7 +45,6 @@
   .btn-xs { padding: 3px 8px; font-size: 11px; }
   .error-msg { color: var(--danger); font-size: 13px; margin-top: 0.75rem; text-align: center; }
   .success-msg { color: var(--green); font-size: 13px; margin-top: 0.75rem; text-align: center; }
-
   #app { display: none; min-height: 100vh; }
   .sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 50; transition: transform 0.25s ease; }
   .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1rem; border-bottom: 1px solid var(--border); }
@@ -77,7 +63,6 @@
   .user-avatar { width: 32px; height: 32px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--green); flex-shrink: 0; }
   .user-name { font-size: 13px; font-weight: 500; }
   .user-role { font-size: 11px; color: var(--text-muted); }
-
   .topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px; background: var(--surface); border-bottom: 1px solid var(--border); align-items: center; justify-content: space-between; padding: 0 1rem; z-index: 40; }
   .topbar-logo { display: flex; align-items: center; gap: 8px; }
   .topbar-logo-icon { width: 28px; height: 28px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
@@ -87,7 +72,6 @@
   .burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
   .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 45; }
   .sidebar-overlay.open { display: block; }
-
   .main { margin-left: var(--sidebar-w); padding: 2rem; min-height: 100vh; }
   .page { display: none; }
   .page.active { display: block; }
@@ -95,30 +79,26 @@
   .page-header h1 { font-size: 22px; font-weight: 600; }
   .page-header p { font-size: 14px; color: var(--text-muted); margin-top: 2px; }
   .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px; }
-
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
   .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
   .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
   .stat-value { font-size: 26px; font-weight: 600; color: var(--green); }
-
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
   .card-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
   .card-title { font-size: 15px; font-weight: 500; }
   .card-body { padding: 1.25rem; }
-
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
   td { padding: 10px 12px; border-bottom: 1px solid var(--bg); vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: var(--bg); }
-
   .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 500; white-space: nowrap; }
   .badge-green { background: var(--green-light); color: var(--green); }
   .badge-amber { background: var(--amber-light); color: var(--amber); }
   .badge-red { background: var(--danger-light); color: var(--danger); }
   .badge-blue { background: var(--info-light); color: var(--info); }
-
+  .badge-gray { background: #e8e8e8; color: #666; }
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--surface); border-radius: 14px; padding: 1.5rem; width: 100%; max-width: 520px; border: 1px solid var(--border); max-height: 90vh; overflow-y: auto; }
@@ -126,7 +106,6 @@
   .modal-title { font-size: 16px; font-weight: 600; }
   .modal-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--text-muted); line-height: 1; padding: 2px 6px; }
   .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; flex-wrap: wrap; }
-
   .locations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
   .location-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
   .location-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
@@ -137,51 +116,43 @@
   .location-card-footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .device-pill { display: inline-flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--text-muted); }
   .actions { display: flex; gap: 6px; flex-wrap: wrap; }
-
   .measurement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
   .measure-card { background: var(--bg); border-radius: 8px; padding: 12px 16px; text-align: center; }
   .measure-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
   .measure-value { font-size: 28px; font-weight: 600; color: var(--green); }
   .measure-unit { font-size: 14px; color: var(--text-muted); }
-
   .measurements-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .measurements-table th { text-align: left; padding: 6px 10px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); }
   .measurements-table td { padding: 8px 10px; border-bottom: 1px solid var(--bg); }
   .measurements-table tr:last-child td { border-bottom: none; }
-
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
   .empty-icon { font-size: 32px; margin-bottom: 0.5rem; }
-
   .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 200; max-height: 200px; overflow-y: auto; }
   .autocomplete-item { padding: 9px 12px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--bg); color: var(--text); }
   .autocomplete-item:last-child { border-bottom: none; }
   .autocomplete-item:hover { background: var(--green-light); color: var(--green); }
-
   .input-tabs { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
   .input-tab { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); transition: all 0.15s; }
   .input-tab.active { background: var(--green-light); color: var(--green); border-color: var(--green-mid); }
   .coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
   .assign-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 8px; }
   .assign-row:last-child { border-bottom: none; }
   .assign-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.2s; }
   .assign-dot.on { background: var(--green); }
-
-  /* ChirpStack banner */
-  .chirpstack-banner { display: flex; align-items: center; justify-content: space-between; background: var(--info-light); border: 1px solid #b3ccf0; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px; }
-  .chirpstack-banner-text { font-size: 13px; color: var(--info); }
-  .chirpstack-banner-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
-
+  /* Field mapping */
+  .field-map-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .field-map-arrow { color: var(--text-muted); font-size: 16px; text-align: center; }
+  .field-tag { display: inline-flex; align-items: center; background: var(--info-light); color: var(--info); border-radius: 6px; padding: 4px 10px; font-size: 12px; font-family: monospace; cursor: pointer; border: 1px solid #b3ccf0; transition: all 0.15s; }
+  .field-tag:hover { background: var(--info); color: white; }
+  .field-tag.selected { background: var(--green); color: white; border-color: var(--green); }
+  /* Warning banner */
+  .warning-banner { background: var(--amber-light); border: 1px solid #f0d4b3; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--amber); margin-bottom: 12px; }
   .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; max-width: 480px; }
   .profile-avatar { width: 56px; height: 56px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 600; color: var(--green); margin-bottom: 1rem; }
   .profile-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bg); font-size: 14px; gap: 8px; flex-wrap: wrap; }
   .profile-label { color: var(--text-muted); font-size: 13px; }
-
   .user-mobile-card { display: none; }
-
-  @media (min-width: 769px) {
-    .user-mobile-td { display: none !important; }
-  }
+  @media (min-width: 769px) { .user-mobile-td { display: none !important; } }
   @media (max-width: 768px) {
     .topbar { display: flex; }
     .sidebar { transform: translateX(-100%); }
@@ -193,7 +164,7 @@
     .top-bar { flex-direction: column; align-items: flex-start; }
     .modal { padding: 1.25rem; }
     .measurement-grid { grid-template-columns: 1fr 1fr; }
-    .chirpstack-banner { flex-direction: column; align-items: flex-start; }
+    .field-map-row { grid-template-columns: 1fr auto 1fr; }
     .users-table-head { display: none; }
     .user-desktop-row { display: none !important; }
     .user-mobile-td { display: table-cell !important; padding: 0 0 10px 0 !important; border: none !important; background: transparent !important; }
@@ -204,13 +175,9 @@
     .user-mobile-card .um-email { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
     .user-mobile-card .um-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .user-mobile-card .um-actions .btn { flex: 1; justify-content: center; }
-    #page-devices table { min-width: 560px; }
+    #page-devices table { min-width: 480px; }
   }
-  @media (max-width: 400px) {
-    .stats-grid { grid-template-columns: 1fr; }
-    .login-card { padding: 1.5rem 1rem; }
-    .measurement-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 400px) { .stats-grid { grid-template-columns: 1fr; } .login-card { padding: 1.5rem 1rem; } .measurement-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -238,7 +205,6 @@
     <button class="burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
   </div>
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
-
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-icon"><svg viewBox="0 0 24 24" fill="white"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20c9 0 11-11 11-11s-3 1-5 0c0 0 0-1 3-1z"/></svg></div>
@@ -258,25 +224,21 @@
       <div class="nav-item" id="nav-users" onclick="showPage('users',this)" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Vartotojai
       </div>
-      <div class="nav-section admin-nav-section" style="display:none">Išorinės sistemos</div>
-      <div class="nav-item admin-nav-item" onclick="openChirpStack()" style="display:none">
+      <div class="nav-section" id="nav-ext-section" style="display:none">Išorinės sistemos</div>
+      <div class="nav-item" id="nav-chirpstack" onclick="openChirpStack()" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>ChirpStack
       </div>
     </nav>
     <div class="sidebar-bottom">
       <div class="user-info" onclick="showPage('profile')">
         <div class="user-avatar" id="user-avatar">A</div>
-        <div>
-          <div class="user-name" id="user-name-display">-</div>
-          <div class="user-role" id="user-role-display">-</div>
-        </div>
+        <div><div class="user-name" id="user-name-display">-</div><div class="user-role" id="user-role-display">-</div></div>
       </div>
       <button class="btn btn-secondary" style="width:100%;font-size:13px" onclick="doLogout()">Atsijungti</button>
     </div>
   </aside>
 
   <main class="main">
-    <!-- DASHBOARD -->
     <div class="page" id="page-dashboard">
       <div class="page-header"><h1>Suvestinė</h1><p>Sistemos apžvalga</p></div>
       <div class="stats-grid">
@@ -287,7 +249,6 @@
       <div class="card"><div class="card-header"><span class="card-title">Mano vietos ir įrenginiai</span></div><div class="card-body" id="dashboard-locations"></div></div>
     </div>
 
-    <!-- LOCATIONS -->
     <div class="page" id="page-locations">
       <div class="top-bar">
         <div class="page-header" style="margin:0"><h1>Žemės vietos</h1><p>Sklypų valdymas</p></div>
@@ -296,7 +257,6 @@
       <div class="locations-grid" id="locations-grid"></div>
     </div>
 
-    <!-- DEVICES -->
     <div class="page" id="page-devices">
       <div class="top-bar">
         <div class="page-header" style="margin:0"><h1>Įrenginiai</h1><p>IoT jutiklių valdymas</p></div>
@@ -305,29 +265,26 @@
           <button class="btn btn-primary" onclick="openAddDevice()">+ Pridėti rankiniu</button>
         </div>
       </div>
+      <div id="unknown-devices-warning" style="display:none" class="warning-banner">
+        ⚠️ Kai kurie įrenginiai neturi nustatytų duomenų laukų – <strong>paspauskite „Konfigūruoti"</strong> kad nurodyti kokius duomenis saugoti.
+      </div>
       <div class="card"><div class="table-wrap"><table>
         <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>DevEUI</th><th>Vieta</th><th>Veiksmai</th></tr></thead>
         <tbody id="devices-tbody"></tbody>
       </table></div></div>
     </div>
 
-    <!-- USERS -->
     <div class="page" id="page-users">
       <div class="top-bar">
         <div class="page-header" style="margin:0"><h1>Vartotojai</h1><p>Vartotojų administravimas</p></div>
         <button class="btn btn-primary" onclick="openModal('modal-user')">+ Pridėti vartotoją</button>
       </div>
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead class="users-table-head"><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
-            <tbody id="users-tbody"></tbody>
-          </table>
-        </div>
-      </div>
+      <div class="card"><div class="table-wrap"><table>
+        <thead class="users-table-head"><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
+        <tbody id="users-tbody"></tbody>
+      </table></div></div>
     </div>
 
-    <!-- PROFILE -->
     <div class="page" id="page-profile">
       <div class="page-header"><h1>Mano profilis</h1><p>Paskyros informacija</p></div>
       <div class="profile-card">
@@ -352,10 +309,7 @@
 <!-- MODAL: Vieta -->
 <div class="modal-overlay" id="modal-location">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-location-title">Nauja žemės vieta</span>
-      <button class="modal-close" onclick="closeModal('modal-location')">×</button>
-    </div>
+    <div class="modal-header"><span class="modal-title" id="modal-location-title">Nauja žemės vieta</span><button class="modal-close" onclick="closeModal('modal-location')">×</button></div>
     <input type="hidden" id="loc-edit-id">
     <div class="form-group"><label>Pavadinimas *</label><input type="text" id="loc-name" placeholder="Pvz. Sodas Kaune"></div>
     <div class="form-group">
@@ -389,10 +343,7 @@
 <!-- MODAL: Įrenginys -->
 <div class="modal-overlay" id="modal-device">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-device-title">Naujas įrenginys</span>
-      <button class="modal-close" onclick="closeModal('modal-device')">×</button>
-    </div>
+    <div class="modal-header"><span class="modal-title" id="modal-device-title">Naujas įrenginys</span><button class="modal-close" onclick="closeModal('modal-device')">×</button></div>
     <input type="hidden" id="dev-edit-id">
     <div class="form-group"><label>Pavadinimas *</label><input type="text" id="dev-name" placeholder="Pvz. Arduino Uno LA66"></div>
     <div class="form-group"><label>Tipas *</label>
@@ -409,10 +360,10 @@
     <div class="form-group"><label>Unikalus ID *</label><input type="text" id="dev-uid" placeholder="Pvz. SENSOR-001"></div>
     <div class="form-group">
       <label>ChirpStack DevEUI</label>
-      <input type="text" id="dev-eui" placeholder="Pvz. a84041d755182720">
-      <div class="form-hint">Randama ChirpStack konsolėje → Applications → Devices</div>
+      <input type="text" id="dev-eui" placeholder="Pvz. a84041fee1895d87">
+      <div class="form-hint">Randama ChirpStack → Applications → Devices</div>
     </div>
-    <div class="form-group" id="dev-location-group"><label>Žemės vieta *</label><select id="dev-location"></select></div>
+    <div class="form-group"><label>Žemės vieta *</label><select id="dev-location"></select></div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-device')">Atšaukti</button>
       <button class="btn btn-primary" onclick="saveDevice()">Išsaugoti</button>
@@ -420,21 +371,78 @@
   </div>
 </div>
 
-<!-- MODAL: Importuoti iš ChirpStack -->
+<!-- MODAL: Konfigūruoti įrenginį (field mapping) -->
+<div class="modal-overlay" id="modal-configure">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header"><span class="modal-title" id="modal-configure-title">Konfigūruoti įrenginį</span><button class="modal-close" onclick="closeModal('modal-configure')">×</button></div>
+    <input type="hidden" id="cfg-device-id">
+
+    <div class="form-group">
+      <label>Įrenginio tipas *</label>
+      <select id="cfg-type">
+        <option value="combined">Temperatūra + Drėgmė</option>
+        <option value="temperature">Tik temperatūra</option>
+        <option value="humidity">Tik drėgmė</option>
+        <option value="soil">Dirvožemio jutiklis</option>
+        <option value="rain">Lietaus jutiklis</option>
+        <option value="wind">Vėjo jutiklis</option>
+        <option value="other">Kitas</option>
+      </select>
+    </div>
+
+    <div class="form-group"><label>Žemės vieta</label><select id="cfg-location"></select></div>
+
+    <div style="margin-top:0.5rem">
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Duomenų laukų mapingas</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Pasirinkite iš gautų laukų kuris atitinka temperatūrą ir drėgmę. Laukai automatiškai nuskaityti iš paskutinio gauto paketo.</div>
+
+      <div id="cfg-fields-loading" style="color:var(--text-muted);font-size:13px;padding:8px 0">Kraunami laukai...</div>
+      <div id="cfg-fields-container" style="display:none">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px">Gauti laukai iš įrenginio:</div>
+        <div id="cfg-available-fields" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px"></div>
+
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px">Mapingas:</div>
+        <div class="field-map-row">
+          <div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">🌡 Temperatūros laukas</div>
+            <select id="cfg-temp-field" style="font-size:13px">
+              <option value="">— nenurodytas —</option>
+            </select>
+          </div>
+          <div class="field-map-arrow">→</div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--green);font-weight:500">temperature °C</div>
+        </div>
+        <div class="field-map-row" style="margin-top:8px">
+          <div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">💧 Drėgmės laukas</div>
+            <select id="cfg-hum-field" style="font-size:13px">
+              <option value="">— nenurodytas —</option>
+            </select>
+          </div>
+          <div class="field-map-arrow">→</div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--info);font-weight:500">humidity %</div>
+        </div>
+
+        <div id="cfg-sample" style="margin-top:12px;background:var(--bg);border-radius:8px;padding:10px 12px;font-size:11px;font-family:monospace;color:var(--text-muted);word-break:break-all"></div>
+      </div>
+      <div id="cfg-no-data" style="display:none;color:var(--text-muted);font-size:13px;padding:8px 0">
+        ℹ️ Dar nėra duomenų iš šio įrenginio. Galite nustatyti laukus rankiniu būdu kai įrenginys pradės siųsti.
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-configure')">Atšaukti</button>
+      <button class="btn btn-primary" onclick="saveConfig()">Išsaugoti konfigūraciją</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Importuoti -->
 <div class="modal-overlay" id="modal-import">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">⬇ Importuoti iš ChirpStack</span>
-      <button class="modal-close" onclick="closeModal('modal-import')">×</button>
-    </div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">
-      Importuojami visi įrenginiai iš ChirpStack aplikacijos. Jau esantys įrenginiai (pagal DevEUI) nebus dubliuojami.
-    </p>
-    <div class="form-group">
-      <label>Priskirti žemės vietai *</label>
-      <select id="import-location"></select>
-      <div class="form-hint">Visi importuoti įrenginiai bus priskirti šiai vietai</div>
-    </div>
+    <div class="modal-header"><span class="modal-title">⬇ Importuoti iš ChirpStack</span><button class="modal-close" onclick="closeModal('modal-import')">×</button></div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">Importuojami visi įrenginiai iš ChirpStack. Jau esantys (pagal DevEUI) atnaujinami, nauji pridedami.</p>
+    <div class="form-group"><label>Priskirti žemės vietai *</label><select id="import-location"></select><div class="form-hint">Tik naujiems įrenginiams – jau esantys išlaiko savo vietą</div></div>
     <div id="import-result" style="margin-top:1rem"></div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-import')">Atšaukti</button>
@@ -450,9 +458,7 @@
     <div class="form-group"><label>Prisijungimo vardas *</label><input type="text" id="usr-username" placeholder="Prisijungimo vardas"></div>
     <div class="form-group"><label>El. paštas *</label><input type="email" id="usr-email" placeholder="el@pastas.lt"></div>
     <div class="form-group"><label>Slaptažodis *</label><input type="password" id="usr-password" placeholder="Slaptažodis"></div>
-    <div class="form-group"><label>Rolė</label>
-      <select id="usr-role"><option value="false">Paprastas vartotojas</option><option value="true">Administratorius</option></select>
-    </div>
+    <div class="form-group"><label>Rolė</label><select id="usr-role"><option value="false">Paprastas vartotojas</option><option value="true">Administratorius</option></select></div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-user')">Atšaukti</button>
       <button class="btn btn-primary" onclick="saveUser()">Išsaugoti</button>
@@ -473,10 +479,7 @@
 <!-- MODAL: Matavimai -->
 <div class="modal-overlay" id="modal-measurements">
   <div class="modal" style="max-width:600px">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-measurements-title">Matavimai</span>
-      <button class="modal-close" onclick="closeModal('modal-measurements')">×</button>
-    </div>
+    <div class="modal-header"><span class="modal-title" id="modal-measurements-title">Matavimai</span><button class="modal-close" onclick="closeModal('modal-measurements')">×</button></div>
     <div id="measurements-latest" style="margin-bottom:1rem"></div>
     <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em">Istorija (paskutiniai 50 įrašų)</div>
     <div style="overflow-x:auto">
@@ -495,9 +498,7 @@ const CHIRPSTACK_URL = 'http://192.168.0.177:8080';
 let token = localStorage.getItem('agro_token');
 let currentUser = null;
 let allLocations = [], allUsers = [], allDevices = [];
-let selLat = null, selLng = null, coordTab = 'auto';
-let addrTimer = null;
-let assignUserId = null;
+let selLat = null, selLng = null, coordTab = 'auto', addrTimer = null;
 
 async function api(method, path, body) {
   const headers = {'Content-Type':'application/json'};
@@ -532,11 +533,8 @@ async function initApp() {
   document.getElementById('user-role-display').textContent = currentUser.is_admin ? 'Administratorius' : 'Vartotojas';
   document.getElementById('user-avatar').textContent = currentUser.username[0].toUpperCase();
   const isAdmin = currentUser.is_admin;
-  document.getElementById('nav-users').style.display = isAdmin ? '' : 'none';
-  document.getElementById('stat-users-card').style.display = isAdmin ? '' : 'none';
-  document.getElementById('btn-add-location').style.display = isAdmin ? '' : 'none';
-  document.getElementById('devices-admin-btns').style.display = isAdmin ? '' : 'none';
-  document.querySelectorAll('.admin-nav-section, .admin-nav-item').forEach(el => el.style.display = isAdmin ? '' : 'none');
+  ['nav-users','stat-users-card','btn-add-location','devices-admin-btns','nav-ext-section','nav-chirpstack']
+    .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = isAdmin ? '' : 'none'; });
   await loadAll();
   showPage('dashboard');
 }
@@ -559,25 +557,13 @@ function renderStats() {
 
 function locCard(loc, showActions) {
   const devs = allDevices.filter(d => d.location_id === loc.id);
-  const coords = (loc.latitude && loc.longitude)
-    ? `<div class="location-card-coords">📌 ${loc.latitude.toFixed(6)}, ${loc.longitude.toFixed(6)}</div>` : '';
-  const adminBtns = (showActions && currentUser.is_admin) ? `
-    <div class="actions" style="margin-top:8px;width:100%">
-      <button class="btn btn-secondary btn-sm" onclick="editLocation(${loc.id})">Redaguoti</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteLocation(${loc.id})">Šalinti</button>
-    </div>` : '';
+  const coords = (loc.latitude && loc.longitude) ? `<div class="location-card-coords">📌 ${loc.latitude.toFixed(6)}, ${loc.longitude.toFixed(6)}</div>` : '';
+  const adminBtns = (showActions && currentUser.is_admin) ? `<div class="actions" style="margin-top:8px;width:100%"><button class="btn btn-secondary btn-sm" onclick="editLocation(${loc.id})">Redaguoti</button><button class="btn btn-danger btn-sm" onclick="deleteLocation(${loc.id})">Šalinti</button></div>` : '';
   return `<div class="location-card">
-    <div class="location-card-header">
-      <span class="location-card-title">${esc(loc.name)}</span>
-      <span class="badge badge-green">${devs.length} įrenginiai</span>
-    </div>
-    <div class="location-card-addr">📍 ${esc(loc.address)}</div>
-    ${coords}
+    <div class="location-card-header"><span class="location-card-title">${esc(loc.name)}</span><span class="badge badge-green">${devs.length} įrenginiai</span></div>
+    <div class="location-card-addr">📍 ${esc(loc.address)}</div>${coords}
     ${loc.description ? `<div class="location-card-desc">${esc(loc.description)}</div>` : ''}
-    <div class="location-card-footer">
-      ${devs.map(d=>`<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('')}
-      ${adminBtns}
-    </div>
+    <div class="location-card-footer">${devs.map(d=>`<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('')}${adminBtns}</div>
   </div>`;
 }
 
@@ -595,34 +581,31 @@ function renderLocations() {
 
 function renderDevices() {
   const tb = document.getElementById('devices-tbody');
+  const warn = document.getElementById('unknown-devices-warning');
+  const unconfigured = allDevices.filter(d => !d.temperature_field && !d.humidity_field && d.chirpstack_dev_eui);
+  if (warn) warn.style.display = (unconfigured.length && currentUser.is_admin) ? '' : 'none';
+
   if (!allDevices.length) {
-    tb.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">
-      Nėra įrenginių${currentUser.is_admin ? ' — naudokite „Importuoti iš ChirpStack" mygtuką' : ''}
-    </td></tr>`;
+    tb.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra įrenginių${currentUser.is_admin ? ' — naudokite „Importuoti iš ChirpStack"' : ''}</td></tr>`;
     return;
   }
   tb.innerHTML = allDevices.map(d => {
     const loc = allLocations.find(l => l.id === d.location_id);
-    const eui = d.chirpstack_dev_eui
-      ? `<code style="font-size:11px;background:var(--bg);padding:2px 6px;border-radius:4px">${esc(d.chirpstack_dev_eui)}</code>`
-      : '<span style="color:var(--text-muted);font-size:12px">—</span>';
+    const eui = d.chirpstack_dev_eui ? `<code style="font-size:11px;background:var(--bg);padding:2px 6px;border-radius:4px">${esc(d.chirpstack_dev_eui)}</code>` : '<span style="color:var(--text-muted)">—</span>';
+    const needsCfg = d.chirpstack_dev_eui && !d.temperature_field && !d.humidity_field;
+    const cfgBadge = needsCfg ? '<span class="badge badge-amber" style="margin-left:6px">⚠ Nekonfigūruotas</span>' : '';
     const adminBtns = currentUser.is_admin ? `
-      <button class="btn btn-secondary btn-sm" onclick="editDevice(${d.id})">Redaguoti</button>
+      <button class="btn btn-amber btn-sm" onclick="openConfigure(${d.id})">⚙ Konfigūruoti</button>
       <button class="btn btn-danger btn-sm" onclick="deleteDevice(${d.id})">Šalinti</button>` : '';
     return `<tr>
-      <td>
-        <div style="font-weight:500">${esc(d.name)}</div>
-        <div style="font-size:11px;color:var(--text-muted)">${loc ? esc(loc.name) : '—'}</div>
-      </td>
+      <td><div style="font-weight:500">${esc(d.name)}${cfgBadge}</div><div style="font-size:11px;color:var(--text-muted)">${loc ? esc(loc.name) : '—'}</div></td>
       <td><span class="badge badge-blue">${deviceTypeLabel(d.device_type)}</span></td>
       <td>${eui}</td>
-      <td>${loc ? esc(loc.name) : '-'}</td>
-      <td>
-        <div class="actions">
-          <button class="btn btn-info btn-sm" onclick="openMeasurements(${d.id},'${esc(d.name)}')">📊 Duomenys</button>
-          ${adminBtns}
-        </div>
-      </td>
+      <td>${loc ? esc(loc.name) : '—'}</td>
+      <td><div class="actions">
+        <button class="btn btn-info btn-sm" onclick="openMeasurements(${d.id},'${esc(d.name)}')">📊 Duomenys</button>
+        ${adminBtns}
+      </div></td>
     </tr>`;
   }).join('');
 }
@@ -633,24 +616,20 @@ function renderUsers() {
   tb.innerHTML = allUsers.map(u => {
     const roleB = `<span class="badge ${u.is_admin?'badge-amber':'badge-green'}">${u.is_admin?'Admin':'Vartotojas'}</span>`;
     const statusB = `<span class="badge ${u.is_active?'badge-green':'badge-red'}">${u.is_active?'Aktyvus':'Išjungtas'}</span>`;
-    return `
-      <tr class="user-desktop-row">
-        <td><strong>${esc(u.username)}</strong></td>
-        <td>${esc(u.email)}</td>
-        <td>${roleB}</td><td>${statusB}</td>
-        <td><button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">Vietos</button></td>
-        <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button></td>
-      </tr>
-      <tr><td colspan="6" class="user-mobile-td">
-        <div class="user-mobile-card">
-          <div class="um-top"><span class="um-name">${esc(u.username)}</span><div class="um-badges">${roleB}${statusB}</div></div>
-          <div class="um-email">${esc(u.email)}</div>
-          <div class="um-actions">
-            <button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">📍 Vietos</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button>
-          </div>
-        </div>
-      </td></tr>`;
+    return `<tr class="user-desktop-row">
+      <td><strong>${esc(u.username)}</strong></td><td>${esc(u.email)}</td>
+      <td>${roleB}</td><td>${statusB}</td>
+      <td><button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">Vietos</button></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button></td>
+    </tr>
+    <tr><td colspan="6" class="user-mobile-td"><div class="user-mobile-card">
+      <div class="um-top"><span class="um-name">${esc(u.username)}</span><div class="um-badges">${roleB}${statusB}</div></div>
+      <div class="um-email">${esc(u.email)}</div>
+      <div class="um-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">📍 Vietos</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button>
+      </div>
+    </div></td></tr>`;
   }).join('');
 }
 
@@ -658,12 +637,8 @@ function renderProfile() {
   document.getElementById('profile-avatar').textContent = currentUser.username[0].toUpperCase();
   document.getElementById('profile-username').textContent = currentUser.username;
   document.getElementById('profile-email').textContent = currentUser.email;
-  document.getElementById('profile-role').innerHTML = currentUser.is_admin
-    ? '<span class="badge badge-amber">Administratorius</span>'
-    : '<span class="badge badge-green">Vartotojas</span>';
-  document.getElementById('profile-status').innerHTML = currentUser.is_active
-    ? '<span class="badge badge-green">Aktyvus</span>'
-    : '<span class="badge badge-red">Išjungtas</span>';
+  document.getElementById('profile-role').innerHTML = currentUser.is_admin ? '<span class="badge badge-amber">Administratorius</span>' : '<span class="badge badge-green">Vartotojas</span>';
+  document.getElementById('profile-status').innerHTML = currentUser.is_active ? '<span class="badge badge-green">Aktyvus</span>' : '<span class="badge badge-red">Išjungtas</span>';
   document.getElementById('pw-error').textContent = '';
   document.getElementById('pw-success').textContent = '';
   document.getElementById('new-password').value = '';
@@ -686,45 +661,64 @@ async function changePassword() {
   } catch(e) { document.getElementById('pw-error').textContent = e.message; }
 }
 
-/* CHIRPSTACK */
-function openChirpStack() {
-  window.open(CHIRPSTACK_URL, '_blank');
-}
+/* CONFIGURE DEVICE */
+async function openConfigure(deviceId) {
+  const d = allDevices.find(x => x.id === deviceId);
+  if (!d) return;
+  document.getElementById('cfg-device-id').value = deviceId;
+  document.getElementById('modal-configure-title').textContent = '⚙ ' + d.name;
+  document.getElementById('cfg-type').value = d.device_type || 'combined';
+  document.getElementById('cfg-location').innerHTML = allLocations.map(l => `<option value="${l.id}" ${l.id === d.location_id ? 'selected' : ''}>${esc(l.name)}</option>`).join('');
+  document.getElementById('cfg-fields-loading').style.display = 'block';
+  document.getElementById('cfg-fields-container').style.display = 'none';
+  document.getElementById('cfg-no-data').style.display = 'none';
+  openModal('modal-configure');
 
-/* IMPORT */
-function openImportModal() {
-  document.getElementById('import-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
-  document.getElementById('import-result').innerHTML = '';
-  document.getElementById('btn-do-import').disabled = false;
-  document.getElementById('btn-do-import').textContent = '⬇ Importuoti';
-  if (!allLocations.length) {
-    document.getElementById('import-result').innerHTML = '<p style="color:var(--danger);font-size:13px">Pirmiausia sukurkite bent vieną žemės vietą!</p>';
-  }
-  openModal('modal-import');
-}
-
-async function doImport() {
-  const locationId = document.getElementById('import-location').value;
-  const btn = document.getElementById('btn-do-import');
-  const resultEl = document.getElementById('import-result');
-  btn.disabled = true;
-  btn.textContent = 'Importuojama...';
-  resultEl.innerHTML = '<p style="color:var(--text-muted);font-size:13px">Jungiamasi prie ChirpStack...</p>';
   try {
-    const data = await api('POST', `/devices/import-from-chirpstack?location_id=${locationId}`);
-    if (!data) return;
-    resultEl.innerHTML = `
-      <div style="background:var(--green-light);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--green)">
-        ✅ Sėkmingai importuota <strong>${data.length}</strong> įrenginių!
-        ${data.map(d=>`<div style="margin-top:4px;font-size:12px">• ${esc(d.name)} <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">${esc(d.chirpstack_dev_eui||'')}</code></div>`).join('')}
-      </div>`;
-    btn.textContent = '✓ Importuota';
-    await loadAll();
+    const result = await api('GET', `/measurements/device/${deviceId}/fields`);
+    document.getElementById('cfg-fields-loading').style.display = 'none';
+    if (!result || !result.fields || !result.fields.length) {
+      document.getElementById('cfg-no-data').style.display = 'block';
+      return;
+    }
+    document.getElementById('cfg-fields-container').style.display = 'block';
+    const fields = result.fields;
+    const sample = result.sample || {};
+
+    // Show available fields as tags
+    document.getElementById('cfg-available-fields').innerHTML = fields.map(f =>
+      `<span class="field-tag" title="Reikšmė: ${sample[f]}">${esc(f)} = ${sample[f]}</span>`
+    ).join('');
+
+    // Populate selects
+    const tempSel = document.getElementById('cfg-temp-field');
+    const humSel = document.getElementById('cfg-hum-field');
+    const opts = '<option value="">— nenurodytas —</option>' + fields.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+    tempSel.innerHTML = opts;
+    humSel.innerHTML = opts;
+    if (d.temperature_field) tempSel.value = d.temperature_field;
+    else { const auto = fields.find(f => f.toLowerCase().includes('temp')); if (auto) tempSel.value = auto; }
+    if (d.humidity_field) humSel.value = d.humidity_field;
+    else { const auto = fields.find(f => f.toLowerCase().includes('hum') || f.toLowerCase().includes('rh')); if (auto) humSel.value = auto; }
+
+    document.getElementById('cfg-sample').textContent = 'Paskutinis paketas: ' + JSON.stringify(sample, null, 0);
   } catch(e) {
-    resultEl.innerHTML = `<p style="color:var(--danger);font-size:13px">❌ Klaida: ${e.message}</p>`;
-    btn.disabled = false;
-    btn.textContent = '⬇ Importuoti';
+    document.getElementById('cfg-fields-loading').style.display = 'none';
+    document.getElementById('cfg-no-data').style.display = 'block';
   }
+}
+
+async function saveConfig() {
+  const id = document.getElementById('cfg-device-id').value;
+  const device_type = document.getElementById('cfg-type').value;
+  const location_id = parseInt(document.getElementById('cfg-location').value);
+  const temperature_field = document.getElementById('cfg-temp-field').value || null;
+  const humidity_field = document.getElementById('cfg-hum-field').value || null;
+  try {
+    await api('PUT', '/devices/' + id, {device_type, location_id, temperature_field, humidity_field});
+    closeModal('modal-configure');
+    await loadAll();
+  } catch(e) { alert(e.message); }
 }
 
 /* MEASUREMENTS */
@@ -736,26 +730,18 @@ async function openMeasurements(deviceId, deviceName) {
   try {
     const data = await api('GET', `/measurements/device/${deviceId}?limit=50`);
     if (!data || !data.length) {
-      document.getElementById('measurements-latest').innerHTML = `
-        <div class="empty"><div class="empty-icon">📡</div>
-        <p>Duomenų dar nėra.</p>
-        <p style="font-size:12px;margin-top:8px">Patikrinkite ar:<br>1. DevEUI teisingai įvestas<br>2. ChirpStack HTTP Integration sukonfigūruota<br>3. Įrenginys siunčia duomenis</p></div>`;
+      document.getElementById('measurements-latest').innerHTML = `<div class="empty"><div class="empty-icon">📡</div><p>Duomenų dar nėra.</p><p style="font-size:12px;margin-top:8px">Patikrinkite:<br>1. Ar įrenginys turi DevEUI<br>2. Ar nustatyti duomenų laukai (⚙ Konfigūruoti)<br>3. Ar ChirpStack HTTP Integration sukonfigūruota</p></div>`;
       return;
     }
     const latest = data[0];
-    const tempHtml = latest.temperature !== null
-      ? `<div class="measure-card"><div class="measure-label">🌡 Temperatūra</div><div class="measure-value">${latest.temperature.toFixed(1)}<span class="measure-unit"> °C</span></div></div>` : '';
-    const humHtml = latest.humidity !== null
-      ? `<div class="measure-card"><div class="measure-label">💧 Drėgmė</div><div class="measure-value">${latest.humidity.toFixed(1)}<span class="measure-unit"> %</span></div></div>` : '';
-    document.getElementById('measurements-latest').innerHTML = `
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Paskutinis matavimas: ${formatTime(latest.received_at)}</div>
-      <div class="measurement-grid">${tempHtml}${humHtml}</div>`;
-    document.getElementById('measurements-tbody').innerHTML = data.map(m => `
-      <tr>
-        <td style="white-space:nowrap;color:var(--text-muted)">${formatTime(m.received_at)}</td>
-        <td>${m.temperature !== null ? '<strong>' + m.temperature.toFixed(1) + '</strong> °C' : '—'}</td>
-        <td>${m.humidity !== null ? '<strong>' + m.humidity.toFixed(1) + '</strong> %' : '—'}</td>
-      </tr>`).join('');
+    const tempHtml = latest.temperature !== null ? `<div class="measure-card"><div class="measure-label">🌡 Temperatūra</div><div class="measure-value">${latest.temperature.toFixed(1)}<span class="measure-unit"> °C</span></div></div>` : '';
+    const humHtml = latest.humidity !== null ? `<div class="measure-card"><div class="measure-label">💧 Drėgmė</div><div class="measure-value">${latest.humidity.toFixed(1)}<span class="measure-unit"> %</span></div></div>` : '';
+    document.getElementById('measurements-latest').innerHTML = `<div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Paskutinis matavimas: ${formatTime(latest.received_at)}</div><div class="measurement-grid">${tempHtml}${humHtml}</div>`;
+    document.getElementById('measurements-tbody').innerHTML = data.map(m => `<tr>
+      <td style="white-space:nowrap;color:var(--text-muted)">${formatTime(m.received_at)}</td>
+      <td>${m.temperature !== null ? '<strong>' + m.temperature.toFixed(1) + '</strong> °C' : '—'}</td>
+      <td>${m.humidity !== null ? '<strong>' + m.humidity.toFixed(1) + '</strong> %' : '—'}</td>
+    </tr>`).join('');
   } catch(e) {
     document.getElementById('measurements-latest').innerHTML = `<p style="color:var(--danger);font-size:13px">${e.message}</p>`;
   }
@@ -764,6 +750,40 @@ async function openMeasurements(deviceId, deviceName) {
 function formatTime(iso) {
   const d = new Date(iso);
   return d.toLocaleDateString('lt-LT') + ' ' + d.toLocaleTimeString('lt-LT', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+/* CHIRPSTACK */
+function openChirpStack() { window.open(CHIRPSTACK_URL, '_blank'); }
+
+/* IMPORT */
+function openImportModal() {
+  document.getElementById('import-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
+  document.getElementById('import-result').innerHTML = '';
+  document.getElementById('btn-do-import').disabled = false;
+  document.getElementById('btn-do-import').textContent = '⬇ Importuoti';
+  openModal('modal-import');
+}
+
+async function doImport() {
+  const locationId = document.getElementById('import-location').value;
+  const btn = document.getElementById('btn-do-import');
+  const resultEl = document.getElementById('import-result');
+  btn.disabled = true; btn.textContent = 'Importuojama...';
+  resultEl.innerHTML = '<p style="color:var(--text-muted);font-size:13px">Jungiamasi prie ChirpStack...</p>';
+  try {
+    const data = await api('POST', `/devices/import-from-chirpstack?location_id=${locationId}`);
+    if (!data) return;
+    resultEl.innerHTML = `<div style="background:var(--green-light);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--green)">
+      ✅ Importuota <strong>${data.length}</strong> įrenginių!
+      ${data.map(d=>`<div style="margin-top:4px;font-size:12px">• ${esc(d.name)} <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">${esc(d.chirpstack_dev_eui||'')}</code></div>`).join('')}
+      <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">⚙ Paspauskite „Konfigūruoti" prie kiekvieno įrenginio kad nustatytumėte duomenų laukus.</div>
+    </div>`;
+    btn.textContent = '✓ Importuota';
+    await loadAll();
+  } catch(e) {
+    resultEl.innerHTML = `<p style="color:var(--danger);font-size:13px">❌ Klaida: ${e.message}</p>`;
+    btn.disabled = false; btn.textContent = '⬇ Importuoti';
+  }
 }
 
 /* NAVIGATION */
@@ -778,14 +798,8 @@ function showPage(name, navEl) {
   closeSidebar();
 }
 
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebar-overlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('open');
-}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').classList.toggle('open'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('open'); }
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
@@ -818,8 +832,7 @@ function selectAddress(display, lat, lng) {
 
 document.addEventListener('click', e => {
   if (!e.target.closest('#loc-address') && !e.target.closest('#address-suggestions')) {
-    const b = document.getElementById('address-suggestions');
-    if (b) b.style.display = 'none';
+    const b = document.getElementById('address-suggestions'); if (b) b.style.display = 'none';
   }
 });
 
@@ -844,15 +857,10 @@ function getCoords() {
 /* LOCATION CRUD */
 function openLocationModal() {
   document.getElementById('loc-edit-id').value = '';
-  document.getElementById('loc-name').value = '';
-  document.getElementById('loc-address').value = '';
-  document.getElementById('loc-desc').value = '';
-  document.getElementById('loc-lat').value = '';
-  document.getElementById('loc-lng').value = '';
+  ['loc-name','loc-address','loc-desc','loc-lat','loc-lng'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('coord-preview').style.display = 'none';
   document.getElementById('modal-location-title').textContent = 'Nauja žemės vieta';
-  selLat=null; selLng=null;
-  switchCoordTab('auto');
+  selLat=null; selLng=null; switchCoordTab('auto');
   openModal('modal-location');
 }
 
@@ -867,11 +875,7 @@ function editLocation(id) {
   document.getElementById('loc-lng').value = loc.longitude||'';
   document.getElementById('modal-location-title').textContent = 'Redaguoti vietą';
   selLat = loc.latitude||null; selLng = loc.longitude||null;
-  if (selLat && selLng) {
-    const p = document.getElementById('coord-preview');
-    p.textContent = `📌 ${selLat.toFixed(6)}, ${selLng.toFixed(6)}`;
-    p.style.display = 'block';
-  }
+  if (selLat && selLng) { const p = document.getElementById('coord-preview'); p.textContent = `📌 ${selLat.toFixed(6)}, ${selLng.toFixed(6)}`; p.style.display = 'block'; }
   switchCoordTab(selLat ? 'auto' : 'manual');
   openModal('modal-location');
 }
@@ -883,10 +887,9 @@ async function saveLocation() {
   const description = document.getElementById('loc-desc').value.trim();
   if (!name||!address) { alert('Pavadinimas ir adresas yra privalomi'); return; }
   const {lat, lng} = getCoords();
-  const payload = {name, address, description: description||null, latitude: lat, longitude: lng};
   try {
-    if (id) await api('PUT', '/locations/'+id, payload);
-    else await api('POST', '/locations', payload);
+    if (id) await api('PUT', '/locations/'+id, {name, address, description: description||null, latitude: lat, longitude: lng});
+    else await api('POST', '/locations', {name, address, description: description||null, latitude: lat, longitude: lng});
     closeModal('modal-location'); await loadAll();
   } catch(e) { alert(e.message); }
 }
@@ -899,27 +902,10 @@ async function deleteLocation(id) {
 /* DEVICE CRUD */
 function openAddDevice() {
   document.getElementById('dev-edit-id').value = '';
-  document.getElementById('dev-name').value = '';
-  document.getElementById('dev-uid').value = '';
-  document.getElementById('dev-eui').value = '';
+  ['dev-name','dev-uid','dev-eui'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('dev-type').value = 'combined';
   document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
   document.getElementById('modal-device-title').textContent = 'Naujas įrenginys';
-  document.getElementById('dev-location-group').style.display = '';
-  openModal('modal-device');
-}
-
-function editDevice(id) {
-  const d = allDevices.find(x=>x.id===id);
-  if (!d) return;
-  document.getElementById('dev-edit-id').value = d.id;
-  document.getElementById('dev-name').value = d.name;
-  document.getElementById('dev-uid').value = d.unique_id;
-  document.getElementById('dev-eui').value = d.chirpstack_dev_eui||'';
-  document.getElementById('dev-type').value = d.device_type;
-  document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}" ${l.id===d.location_id?'selected':''}>${esc(l.name)}</option>`).join('');
-  document.getElementById('modal-device-title').textContent = 'Redaguoti įrenginį';
-  document.getElementById('dev-location-group').style.display = '';
   openModal('modal-device');
 }
 
@@ -932,7 +918,7 @@ async function saveDevice() {
   const location_id = parseInt(document.getElementById('dev-location').value);
   if (!name||!unique_id) { alert('Pavadinimas ir unikalus ID yra privalomi'); return; }
   try {
-    if (id) await api('PUT', '/devices/'+id, {name, device_type, unique_id, chirpstack_dev_eui});
+    if (id) await api('PUT', '/devices/'+id, {name, device_type, unique_id, chirpstack_dev_eui, location_id});
     else await api('POST', '/devices', {name, device_type, unique_id, chirpstack_dev_eui, location_id});
     closeModal('modal-device'); await loadAll();
   } catch(e) { alert(e.message); }
@@ -960,22 +946,15 @@ async function deleteUser(id) {
 
 /* ASSIGN */
 async function openAssign(userId, username) {
-  assignUserId = userId;
   document.getElementById('assign-username').textContent = username;
   document.getElementById('assign-locations-list').innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Kraunama...</p>';
   openModal('modal-assign');
-  if (!allLocations.length) {
-    document.getElementById('assign-locations-list').innerHTML = '<p style="font-size:13px;color:var(--text-muted);text-align:center;padding:1rem">Nėra sukurtų žemės vietų</p>';
-    return;
-  }
+  if (!allLocations.length) { document.getElementById('assign-locations-list').innerHTML = '<p style="font-size:13px;color:var(--text-muted);text-align:center;padding:1rem">Nėra sukurtų žemės vietų</p>'; return; }
   document.getElementById('assign-locations-list').innerHTML = allLocations.map(loc => `
     <div class="assign-row">
       <div style="display:flex;align-items:center;gap:8px;min-width:0">
         <div class="assign-dot" id="dot-${userId}-${loc.id}"></div>
-        <div style="min-width:0">
-          <div style="font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(loc.name)}</div>
-          <div style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(loc.address)}</div>
-        </div>
+        <div style="min-width:0"><div style="font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(loc.name)}</div><div style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(loc.address)}</div></div>
       </div>
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-secondary btn-xs" onclick="doAssign(${userId},${loc.id},true,this)">+ Priskirti</button>
@@ -990,8 +969,7 @@ async function doAssign(userId, locId, assign, btn) {
     else await api('DELETE', `/users/${userId}/locations/${locId}`);
     const dot = document.getElementById(`dot-${userId}-${locId}`);
     if (dot) dot.classList.toggle('on', assign);
-    const orig = btn.textContent;
-    btn.textContent = '✓';
+    const orig = btn.textContent; btn.textContent = '✓';
     setTimeout(() => { btn.textContent = orig; }, 800);
   } catch(e) { alert(e.message); }
 }
@@ -1006,11 +984,9 @@ function doLogout() {
 }
 
 function deviceTypeLabel(t) {
-  return {combined:'🌡💧',temperature:'🌡',humidity:'💧',soil:'🌱',rain:'🌧',wind:'💨',other:'📡'}[t]||'📡';
+  return {combined:'🌡💧',temperature:'🌡',humidity:'💧',soil:'🌱',rain:'🌧',wind:'💨',other:'📡',unknown:'❓'}[t]||'📡';
 }
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 if (token) initApp();
 </script>
