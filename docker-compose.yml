@@ -13,7 +13,7 @@ services:
     container_name: agro-backend
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8002:8000"
     environment:
       DATABASE_URL: postgresql://agro_user:agropass@n8n-postgres:5432/agro_iot
     networks:
