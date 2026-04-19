@@ -39,6 +39,8 @@ class Device(Base):
     unique_id = Column(String, unique=True, nullable=False)
     location_id = Column(Integer, ForeignKey("locations.id"), nullable=False)
     chirpstack_dev_eui = Column(String, nullable=True)
+    temperature_field = Column(String, nullable=True)
+    humidity_field = Column(String, nullable=True)
     location = relationship("Location", back_populates="devices")
     measurements = relationship("Measurement", back_populates="device", cascade="all, delete-orphan")
 

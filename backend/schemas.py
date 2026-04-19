@@ -44,6 +44,8 @@ class DeviceBase(BaseModel):
     device_type: str
     unique_id: str
     chirpstack_dev_eui: Optional[str] = None
+    temperature_field: Optional[str] = None
+    humidity_field: Optional[str] = None
 
 class DeviceCreate(DeviceBase):
     location_id: int
@@ -53,6 +55,9 @@ class DeviceUpdate(BaseModel):
     device_type: Optional[str] = None
     unique_id: Optional[str] = None
     chirpstack_dev_eui: Optional[str] = None
+    location_id: Optional[int] = None
+    temperature_field: Optional[str] = None
+    humidity_field: Optional[str] = None
 
 class DeviceOut(DeviceBase):
     id: int
