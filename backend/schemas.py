@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List
+from datetime import datetime
 
 class Token(BaseModel):
     access_token: str
@@ -30,10 +31,19 @@ class UserOut(UserBase):
     class Config:
         from_attributes = True
 
+class MeasurementOut(BaseModel):
+    id: int
+    temperature: Optional[float] = None
+    humidity: Optional[float] = None
+    received_at: datetime
+    class Config:
+        from_attributes = True
+
 class DeviceBase(BaseModel):
     name: str
     device_type: str
     unique_id: str
+    chirpstack_dev_eui: Optional[str] = None
 
 class DeviceCreate(DeviceBase):
     location_id: int
@@ -41,6 +51,7 @@ class DeviceCreate(DeviceBase):
 class DeviceOut(DeviceBase):
     id: int
     location_id: int
+    measurements: List[MeasurementOut] = []
     class Config:
         from_attributes = True
 

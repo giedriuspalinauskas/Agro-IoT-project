@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table, Text, Float
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table, Text, Float, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from database import Base
 
 user_location = Table(
@@ -37,4 +38,16 @@ class Device(Base):
     device_type = Column(String, nullable=False)
     unique_id = Column(String, unique=True, nullable=False)
     location_id = Column(Integer, ForeignKey("locations.id"), nullable=False)
+    chirpstack_dev_eui = Column(String, nullable=True)
     location = relationship("Location", back_populates="devices")
+    measurements = relationship("Measurement", back_populates="device", cascade="all, delete-orphan")
+
+class Measurement(Base):
+    __tablename__ = "measurements"
+    id = Column(Integer, primary_key=True, index=True)
+    device_id = Column(Integer, ForeignKey("devices.id"), nullable=False)
+    temperature = Column(Float, nullable=True)
+    humidity = Column(Float, nullable=True)
+    raw_data = Column(Text, nullable=True)
+    received_at = Column(DateTime(timezone=True), server_default=func.now())
+    device = relationship("Device", back_populates="measurements")

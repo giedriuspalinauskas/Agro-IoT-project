@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from routers import auth, users, locations, devices
+from routers import auth, users, locations, devices, measurements
 import models
 
 Base.metadata.create_all(bind=engine)
@@ -20,6 +20,7 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(users.router, prefix="/api/users", tags=["users"])
 app.include_router(locations.router, prefix="/api/locations", tags=["locations"])
 app.include_router(devices.router, prefix="/api/devices", tags=["devices"])
+app.include_router(measurements.router, prefix="/api/measurements", tags=["measurements"])
 
 @app.get("/api/health")
 def health():
