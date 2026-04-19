@@ -48,6 +48,8 @@ class LocationBase(BaseModel):
     name: str
     address: str
     description: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 class LocationCreate(LocationBase):
     pass
@@ -56,6 +58,8 @@ class LocationUpdate(BaseModel):
     name: Optional[str] = None
     address: Optional[str] = None
     description: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 class LocationOut(LocationBase):
     id: int

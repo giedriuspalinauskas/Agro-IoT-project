@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table, Text
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table, Text, Float
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -25,6 +25,8 @@ class Location(Base):
     name = Column(String, nullable=False)
     address = Column(String, nullable=False)
     description = Column(Text, nullable=True)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
     users = relationship("User", secondary=user_location, back_populates="locations")
     devices = relationship("Device", back_populates="location", cascade="all, delete-orphan")
 
