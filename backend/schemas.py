@@ -48,6 +48,12 @@ class DeviceBase(BaseModel):
 class DeviceCreate(DeviceBase):
     location_id: int
 
+class DeviceUpdate(BaseModel):
+    name: Optional[str] = None
+    device_type: Optional[str] = None
+    unique_id: Optional[str] = None
+    chirpstack_dev_eui: Optional[str] = None
+
 class DeviceOut(DeviceBase):
     id: int
     location_id: int
