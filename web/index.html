@@ -27,7 +27,6 @@
   }
   body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  /* LOGIN */
   #login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
   .login-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 2rem; width: 100%; max-width: 360px; box-shadow: var(--shadow); }
   .login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2rem; }
@@ -36,19 +35,13 @@
   .login-logo-text { font-size: 20px; font-weight: 600; color: var(--green); }
   .login-card h2 { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-bottom: 1.5rem; }
 
-  /* FORMS */
   .form-group { margin-bottom: 1rem; position: relative; }
   .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px; }
-  .form-group input, .form-group textarea, .form-group select {
-    width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
-    font-size: 14px; color: var(--text); background: var(--surface); outline: none;
-    transition: border 0.15s; font-family: inherit;
-  }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; font-family: inherit; }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--green-mid); }
   .form-group textarea { resize: vertical; }
   .form-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
-  /* BUTTONS */
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; }
   .btn-primary { background: var(--green); color: white; }
   .btn-primary:hover { background: #2d5209; }
@@ -59,12 +52,13 @@
   .btn-danger:hover { background: var(--danger-light); }
   .btn-info { background: transparent; border: 1px solid #b3ccf0; color: var(--info); }
   .btn-info:hover { background: var(--info-light); }
+  .btn-amber { background: transparent; border: 1px solid #f0d4b3; color: var(--amber); }
+  .btn-amber:hover { background: var(--amber-light); }
   .btn-sm { padding: 5px 10px; font-size: 12px; }
   .btn-xs { padding: 3px 8px; font-size: 11px; }
   .error-msg { color: var(--danger); font-size: 13px; margin-top: 0.75rem; text-align: center; }
   .success-msg { color: var(--green); font-size: 13px; margin-top: 0.75rem; text-align: center; }
 
-  /* APP LAYOUT */
   #app { display: none; min-height: 100vh; }
   .sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 50; transition: transform 0.25s ease; }
   .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1rem; border-bottom: 1px solid var(--border); }
@@ -84,7 +78,6 @@
   .user-name { font-size: 13px; font-weight: 500; }
   .user-role { font-size: 11px; color: var(--text-muted); }
 
-  /* MOBILE TOPBAR */
   .topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px; background: var(--surface); border-bottom: 1px solid var(--border); align-items: center; justify-content: space-between; padding: 0 1rem; z-index: 40; }
   .topbar-logo { display: flex; align-items: center; gap: 8px; }
   .topbar-logo-icon { width: 28px; height: 28px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
@@ -95,7 +88,6 @@
   .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 45; }
   .sidebar-overlay.open { display: block; }
 
-  /* MAIN */
   .main { margin-left: var(--sidebar-w); padding: 2rem; min-height: 100vh; }
   .page { display: none; }
   .page.active { display: block; }
@@ -104,19 +96,16 @@
   .page-header p { font-size: 14px; color: var(--text-muted); margin-top: 2px; }
   .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px; }
 
-  /* STATS */
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
   .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
   .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
   .stat-value { font-size: 26px; font-weight: 600; color: var(--green); }
 
-  /* CARDS */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
   .card-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
   .card-title { font-size: 15px; font-weight: 500; }
   .card-body { padding: 1.25rem; }
 
-  /* TABLE */
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
@@ -124,14 +113,12 @@
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: var(--bg); }
 
-  /* BADGES */
   .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 500; white-space: nowrap; }
   .badge-green { background: var(--green-light); color: var(--green); }
   .badge-amber { background: var(--amber-light); color: var(--amber); }
   .badge-red { background: var(--danger-light); color: var(--danger); }
   .badge-blue { background: var(--info-light); color: var(--info); }
 
-  /* MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--surface); border-radius: 14px; padding: 1.5rem; width: 100%; max-width: 520px; border: 1px solid var(--border); max-height: 90vh; overflow-y: auto; }
@@ -140,7 +127,6 @@
   .modal-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--text-muted); line-height: 1; padding: 2px 6px; }
   .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; flex-wrap: wrap; }
 
-  /* LOCATION CARDS */
   .locations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
   .location-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
   .location-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
@@ -152,49 +138,45 @@
   .device-pill { display: inline-flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--text-muted); }
   .actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
-  /* MEASUREMENT CARDS */
   .measurement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
   .measure-card { background: var(--bg); border-radius: 8px; padding: 12px 16px; text-align: center; }
   .measure-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
   .measure-value { font-size: 28px; font-weight: 600; color: var(--green); }
   .measure-unit { font-size: 14px; color: var(--text-muted); }
-  .measure-time { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
-  /* MEASUREMENTS TABLE */
   .measurements-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .measurements-table th { text-align: left; padding: 6px 10px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); }
   .measurements-table td { padding: 8px 10px; border-bottom: 1px solid var(--bg); }
   .measurements-table tr:last-child td { border-bottom: none; }
 
-  /* EMPTY */
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
   .empty-icon { font-size: 32px; margin-bottom: 0.5rem; }
 
-  /* AUTOCOMPLETE */
   .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 200; max-height: 200px; overflow-y: auto; }
   .autocomplete-item { padding: 9px 12px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--bg); color: var(--text); }
   .autocomplete-item:last-child { border-bottom: none; }
   .autocomplete-item:hover { background: var(--green-light); color: var(--green); }
 
-  /* COORD TABS */
   .input-tabs { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
   .input-tab { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); transition: all 0.15s; }
   .input-tab.active { background: var(--green-light); color: var(--green); border-color: var(--green-mid); }
   .coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-  /* ASSIGN */
   .assign-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 8px; }
   .assign-row:last-child { border-bottom: none; }
   .assign-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.2s; }
   .assign-dot.on { background: var(--green); }
 
-  /* PROFILE */
+  /* ChirpStack banner */
+  .chirpstack-banner { display: flex; align-items: center; justify-content: space-between; background: var(--info-light); border: 1px solid #b3ccf0; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px; }
+  .chirpstack-banner-text { font-size: 13px; color: var(--info); }
+  .chirpstack-banner-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+
   .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; max-width: 480px; }
   .profile-avatar { width: 56px; height: 56px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 600; color: var(--green); margin-bottom: 1rem; }
   .profile-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bg); font-size: 14px; gap: 8px; flex-wrap: wrap; }
   .profile-label { color: var(--text-muted); font-size: 13px; }
 
-  /* USER MOBILE */
   .user-mobile-card { display: none; }
 
   @media (min-width: 769px) {
@@ -211,6 +193,7 @@
     .top-bar { flex-direction: column; align-items: flex-start; }
     .modal { padding: 1.25rem; }
     .measurement-grid { grid-template-columns: 1fr 1fr; }
+    .chirpstack-banner { flex-direction: column; align-items: flex-start; }
     .users-table-head { display: none; }
     .user-desktop-row { display: none !important; }
     .user-mobile-td { display: table-cell !important; padding: 0 0 10px 0 !important; border: none !important; background: transparent !important; }
@@ -221,7 +204,7 @@
     .user-mobile-card .um-email { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
     .user-mobile-card .um-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .user-mobile-card .um-actions .btn { flex: 1; justify-content: center; }
-    #page-devices table { min-width: 500px; }
+    #page-devices table { min-width: 560px; }
   }
   @media (max-width: 400px) {
     .stats-grid { grid-template-columns: 1fr; }
@@ -232,7 +215,6 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-page">
   <div class="login-card">
     <div class="login-logo">
@@ -247,7 +229,6 @@
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="topbar">
     <div class="topbar-logo">
@@ -276,6 +257,10 @@
       </div>
       <div class="nav-item" id="nav-users" onclick="showPage('users',this)" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Vartotojai
+      </div>
+      <div class="nav-section admin-nav-section" style="display:none">Išorinės sistemos</div>
+      <div class="nav-item admin-nav-item" onclick="openChirpStack()" style="display:none">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>ChirpStack
       </div>
     </nav>
     <div class="sidebar-bottom">
@@ -315,10 +300,13 @@
     <div class="page" id="page-devices">
       <div class="top-bar">
         <div class="page-header" style="margin:0"><h1>Įrenginiai</h1><p>IoT jutiklių valdymas</p></div>
-        <button class="btn btn-primary" id="btn-add-device" style="display:none" onclick="openAddDevice()">+ Pridėti įrenginį</button>
+        <div class="actions" id="devices-admin-btns" style="display:none">
+          <button class="btn btn-amber" onclick="openImportModal()">⬇ Importuoti iš ChirpStack</button>
+          <button class="btn btn-primary" onclick="openAddDevice()">+ Pridėti rankiniu</button>
+        </div>
       </div>
       <div class="card"><div class="table-wrap"><table>
-        <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>Unikalus ID</th><th>DevEUI</th><th>Vieta</th><th>Veiksmai</th></tr></thead>
+        <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>DevEUI</th><th>Vieta</th><th>Veiksmai</th></tr></thead>
         <tbody id="devices-tbody"></tbody>
       </table></div></div>
     </div>
@@ -406,11 +394,12 @@
       <button class="modal-close" onclick="closeModal('modal-device')">×</button>
     </div>
     <input type="hidden" id="dev-edit-id">
-    <div class="form-group"><label>Pavadinimas *</label><input type="text" id="dev-name" placeholder="Pvz. Temperatūros jutiklis 1"></div>
+    <div class="form-group"><label>Pavadinimas *</label><input type="text" id="dev-name" placeholder="Pvz. Arduino Uno LA66"></div>
     <div class="form-group"><label>Tipas *</label>
       <select id="dev-type">
-        <option value="temperature">Temperatūros jutiklis</option>
-        <option value="humidity">Drėgmės jutiklis</option>
+        <option value="combined">Temperatūra + Drėgmė</option>
+        <option value="temperature">Tik temperatūra</option>
+        <option value="humidity">Tik drėgmė</option>
         <option value="soil">Dirvožemio jutiklis</option>
         <option value="rain">Lietaus jutiklis</option>
         <option value="wind">Vėjo jutiklis</option>
@@ -427,6 +416,29 @@
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-device')">Atšaukti</button>
       <button class="btn btn-primary" onclick="saveDevice()">Išsaugoti</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Importuoti iš ChirpStack -->
+<div class="modal-overlay" id="modal-import">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">⬇ Importuoti iš ChirpStack</span>
+      <button class="modal-close" onclick="closeModal('modal-import')">×</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">
+      Importuojami visi įrenginiai iš ChirpStack aplikacijos. Jau esantys įrenginiai (pagal DevEUI) nebus dubliuojami.
+    </p>
+    <div class="form-group">
+      <label>Priskirti žemės vietai *</label>
+      <select id="import-location"></select>
+      <div class="form-hint">Visi importuoti įrenginiai bus priskirti šiai vietai</div>
+    </div>
+    <div id="import-result" style="margin-top:1rem"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-import')">Atšaukti</button>
+      <button class="btn btn-amber" id="btn-do-import" onclick="doImport()">⬇ Importuoti</button>
     </div>
   </div>
 </div>
@@ -466,10 +478,10 @@
       <button class="modal-close" onclick="closeModal('modal-measurements')">×</button>
     </div>
     <div id="measurements-latest" style="margin-bottom:1rem"></div>
-    <div style="font-size:13px;font-weight:500;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em">Istorija (paskutiniai 50)</div>
+    <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em">Istorija (paskutiniai 50 įrašų)</div>
     <div style="overflow-x:auto">
       <table class="measurements-table">
-        <thead><tr><th>Laikas</th><th>Temperatūra</th><th>Drėgmė</th></tr></thead>
+        <thead><tr><th>Laikas</th><th>🌡 Temperatūra</th><th>💧 Drėgmė</th></tr></thead>
         <tbody id="measurements-tbody"></tbody>
       </table>
     </div>
@@ -479,6 +491,7 @@
 
 <script>
 const API = 'http://' + location.hostname + ':8002/api';
+const CHIRPSTACK_URL = 'http://192.168.0.177:8080';
 let token = localStorage.getItem('agro_token');
 let currentUser = null;
 let allLocations = [], allUsers = [], allDevices = [];
@@ -522,7 +535,8 @@ async function initApp() {
   document.getElementById('nav-users').style.display = isAdmin ? '' : 'none';
   document.getElementById('stat-users-card').style.display = isAdmin ? '' : 'none';
   document.getElementById('btn-add-location').style.display = isAdmin ? '' : 'none';
-  document.getElementById('btn-add-device').style.display = isAdmin ? '' : 'none';
+  document.getElementById('devices-admin-btns').style.display = isAdmin ? '' : 'none';
+  document.querySelectorAll('.admin-nav-section, .admin-nav-item').forEach(el => el.style.display = isAdmin ? '' : 'none');
   await loadAll();
   showPage('dashboard');
 }
@@ -581,7 +595,12 @@ function renderLocations() {
 
 function renderDevices() {
   const tb = document.getElementById('devices-tbody');
-  if (!allDevices.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra įrenginių</td></tr>'; return; }
+  if (!allDevices.length) {
+    tb.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">
+      Nėra įrenginių${currentUser.is_admin ? ' — naudokite „Importuoti iš ChirpStack" mygtuką' : ''}
+    </td></tr>`;
+    return;
+  }
   tb.innerHTML = allDevices.map(d => {
     const loc = allLocations.find(l => l.id === d.location_id);
     const eui = d.chirpstack_dev_eui
@@ -591,9 +610,11 @@ function renderDevices() {
       <button class="btn btn-secondary btn-sm" onclick="editDevice(${d.id})">Redaguoti</button>
       <button class="btn btn-danger btn-sm" onclick="deleteDevice(${d.id})">Šalinti</button>` : '';
     return `<tr>
-      <td><strong>${esc(d.name)}</strong></td>
+      <td>
+        <div style="font-weight:500">${esc(d.name)}</div>
+        <div style="font-size:11px;color:var(--text-muted)">${loc ? esc(loc.name) : '—'}</div>
+      </td>
       <td><span class="badge badge-blue">${deviceTypeLabel(d.device_type)}</span></td>
-      <td><code style="font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px">${esc(d.unique_id)}</code></td>
       <td>${eui}</td>
       <td>${loc ? esc(loc.name) : '-'}</td>
       <td>
@@ -608,10 +629,7 @@ function renderDevices() {
 
 function renderUsers() {
   const tb = document.getElementById('users-tbody');
-  if (!allUsers.length) {
-    tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra vartotojų</td></tr>';
-    return;
-  }
+  if (!allUsers.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Nėra vartotojų</td></tr>'; return; }
   tb.innerHTML = allUsers.map(u => {
     const roleB = `<span class="badge ${u.is_admin?'badge-amber':'badge-green'}">${u.is_admin?'Admin':'Vartotojas'}</span>`;
     const statusB = `<span class="badge ${u.is_active?'badge-green':'badge-red'}">${u.is_active?'Aktyvus':'Išjungtas'}</span>`;
@@ -619,23 +637,20 @@ function renderUsers() {
       <tr class="user-desktop-row">
         <td><strong>${esc(u.username)}</strong></td>
         <td>${esc(u.email)}</td>
-        <td>${roleB}</td>
-        <td>${statusB}</td>
+        <td>${roleB}</td><td>${statusB}</td>
         <td><button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">Vietos</button></td>
         <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button></td>
       </tr>
-      <tr>
-        <td colspan="6" class="user-mobile-td">
-          <div class="user-mobile-card">
-            <div class="um-top"><span class="um-name">${esc(u.username)}</span><div class="um-badges">${roleB}${statusB}</div></div>
-            <div class="um-email">${esc(u.email)}</div>
-            <div class="um-actions">
-              <button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">📍 Vietos</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button>
-            </div>
+      <tr><td colspan="6" class="user-mobile-td">
+        <div class="user-mobile-card">
+          <div class="um-top"><span class="um-name">${esc(u.username)}</span><div class="um-badges">${roleB}${statusB}</div></div>
+          <div class="um-email">${esc(u.email)}</div>
+          <div class="um-actions">
+            <button class="btn btn-secondary btn-sm" onclick="openAssign(${u.id},'${esc(u.username)}')">📍 Vietos</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Šalinti</button>
           </div>
-        </td>
-      </tr>`;
+        </div>
+      </td></tr>`;
   }).join('');
 }
 
@@ -671,6 +686,47 @@ async function changePassword() {
   } catch(e) { document.getElementById('pw-error').textContent = e.message; }
 }
 
+/* CHIRPSTACK */
+function openChirpStack() {
+  window.open(CHIRPSTACK_URL, '_blank');
+}
+
+/* IMPORT */
+function openImportModal() {
+  document.getElementById('import-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
+  document.getElementById('import-result').innerHTML = '';
+  document.getElementById('btn-do-import').disabled = false;
+  document.getElementById('btn-do-import').textContent = '⬇ Importuoti';
+  if (!allLocations.length) {
+    document.getElementById('import-result').innerHTML = '<p style="color:var(--danger);font-size:13px">Pirmiausia sukurkite bent vieną žemės vietą!</p>';
+  }
+  openModal('modal-import');
+}
+
+async function doImport() {
+  const locationId = document.getElementById('import-location').value;
+  const btn = document.getElementById('btn-do-import');
+  const resultEl = document.getElementById('import-result');
+  btn.disabled = true;
+  btn.textContent = 'Importuojama...';
+  resultEl.innerHTML = '<p style="color:var(--text-muted);font-size:13px">Jungiamasi prie ChirpStack...</p>';
+  try {
+    const data = await api('POST', `/devices/import-from-chirpstack?location_id=${locationId}`);
+    if (!data) return;
+    resultEl.innerHTML = `
+      <div style="background:var(--green-light);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--green)">
+        ✅ Sėkmingai importuota <strong>${data.length}</strong> įrenginių!
+        ${data.map(d=>`<div style="margin-top:4px;font-size:12px">• ${esc(d.name)} <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">${esc(d.chirpstack_dev_eui||'')}</code></div>`).join('')}
+      </div>`;
+    btn.textContent = '✓ Importuota';
+    await loadAll();
+  } catch(e) {
+    resultEl.innerHTML = `<p style="color:var(--danger);font-size:13px">❌ Klaida: ${e.message}</p>`;
+    btn.disabled = false;
+    btn.textContent = '⬇ Importuoti';
+  }
+}
+
 /* MEASUREMENTS */
 async function openMeasurements(deviceId, deviceName) {
   document.getElementById('modal-measurements-title').textContent = '📊 ' + deviceName;
@@ -680,28 +736,25 @@ async function openMeasurements(deviceId, deviceName) {
   try {
     const data = await api('GET', `/measurements/device/${deviceId}?limit=50`);
     if (!data || !data.length) {
-      document.getElementById('measurements-latest').innerHTML = '<div class="empty"><div class="empty-icon">📡</div><p>Duomenų dar nėra. Patikrinkite ar DevEUI teisingai sukonfigūruotas.</p></div>';
-      document.getElementById('measurements-tbody').innerHTML = '';
+      document.getElementById('measurements-latest').innerHTML = `
+        <div class="empty"><div class="empty-icon">📡</div>
+        <p>Duomenų dar nėra.</p>
+        <p style="font-size:12px;margin-top:8px">Patikrinkite ar:<br>1. DevEUI teisingai įvestas<br>2. ChirpStack HTTP Integration sukonfigūruota<br>3. Įrenginys siunčia duomenis</p></div>`;
       return;
     }
     const latest = data[0];
+    const tempHtml = latest.temperature !== null
+      ? `<div class="measure-card"><div class="measure-label">🌡 Temperatūra</div><div class="measure-value">${latest.temperature.toFixed(1)}<span class="measure-unit"> °C</span></div></div>` : '';
+    const humHtml = latest.humidity !== null
+      ? `<div class="measure-card"><div class="measure-label">💧 Drėgmė</div><div class="measure-value">${latest.humidity.toFixed(1)}<span class="measure-unit"> %</span></div></div>` : '';
     document.getElementById('measurements-latest').innerHTML = `
       <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Paskutinis matavimas: ${formatTime(latest.received_at)}</div>
-      <div class="measurement-grid">
-        ${latest.temperature !== null ? `<div class="measure-card">
-          <div class="measure-label">🌡 Temperatūra</div>
-          <div class="measure-value">${latest.temperature.toFixed(1)}<span class="measure-unit"> °C</span></div>
-        </div>` : ''}
-        ${latest.humidity !== null ? `<div class="measure-card">
-          <div class="measure-label">💧 Drėgmė</div>
-          <div class="measure-value">${latest.humidity.toFixed(1)}<span class="measure-unit"> %</span></div>
-        </div>` : ''}
-      </div>`;
+      <div class="measurement-grid">${tempHtml}${humHtml}</div>`;
     document.getElementById('measurements-tbody').innerHTML = data.map(m => `
       <tr>
-        <td style="white-space:nowrap">${formatTime(m.received_at)}</td>
-        <td>${m.temperature !== null ? m.temperature.toFixed(1) + ' °C' : '—'}</td>
-        <td>${m.humidity !== null ? m.humidity.toFixed(1) + ' %' : '—'}</td>
+        <td style="white-space:nowrap;color:var(--text-muted)">${formatTime(m.received_at)}</td>
+        <td>${m.temperature !== null ? '<strong>' + m.temperature.toFixed(1) + '</strong> °C' : '—'}</td>
+        <td>${m.humidity !== null ? '<strong>' + m.humidity.toFixed(1) + '</strong> %' : '—'}</td>
       </tr>`).join('');
   } catch(e) {
     document.getElementById('measurements-latest').innerHTML = `<p style="color:var(--danger);font-size:13px">${e.message}</p>`;
@@ -736,7 +789,7 @@ function closeSidebar() {
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-/* ADDRESS AUTOCOMPLETE */
+/* ADDRESS */
 async function onAddressInput(val) {
   clearTimeout(addrTimer);
   const box = document.getElementById('address-suggestions');
@@ -849,6 +902,7 @@ function openAddDevice() {
   document.getElementById('dev-name').value = '';
   document.getElementById('dev-uid').value = '';
   document.getElementById('dev-eui').value = '';
+  document.getElementById('dev-type').value = 'combined';
   document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
   document.getElementById('modal-device-title').textContent = 'Naujas įrenginys';
   document.getElementById('dev-location-group').style.display = '';
@@ -878,11 +932,8 @@ async function saveDevice() {
   const location_id = parseInt(document.getElementById('dev-location').value);
   if (!name||!unique_id) { alert('Pavadinimas ir unikalus ID yra privalomi'); return; }
   try {
-    if (id) {
-      await api('PUT', '/devices/'+id, {name, device_type, unique_id, chirpstack_dev_eui});
-    } else {
-      await api('POST', '/devices', {name, device_type, unique_id, chirpstack_dev_eui, location_id});
-    }
+    if (id) await api('PUT', '/devices/'+id, {name, device_type, unique_id, chirpstack_dev_eui});
+    else await api('POST', '/devices', {name, device_type, unique_id, chirpstack_dev_eui, location_id});
     closeModal('modal-device'); await loadAll();
   } catch(e) { alert(e.message); }
 }
@@ -907,7 +958,7 @@ async function deleteUser(id) {
   try { await api('DELETE', '/users/'+id); await loadAll(); } catch(e) { alert(e.message); }
 }
 
-/* ASSIGN LOCATIONS */
+/* ASSIGN */
 async function openAssign(userId, username) {
   assignUserId = userId;
   document.getElementById('assign-username').textContent = username;
@@ -955,7 +1006,7 @@ function doLogout() {
 }
 
 function deviceTypeLabel(t) {
-  return {temperature:'🌡',humidity:'💧',soil:'🌱',rain:'🌧',wind:'💨',other:'📡'}[t]||'📡';
+  return {combined:'🌡💧',temperature:'🌡',humidity:'💧',soil:'🌱',rain:'🌧',wind:'💨',other:'📡'}[t]||'📡';
 }
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
