@@ -617,8 +617,8 @@ async function renderAssignList(userId) {
         </div>
       </div>
       <div class="actions">
-        <button class="btn btn-secondary btn-xs" onclick="doAssign(${userId},${loc.id},true)">+ Priskirti</button>
-        <button class="btn btn-danger btn-xs" onclick="doAssign(${userId},${loc.id},false)">− Atšaukti</button>
+        <button class="btn btn-secondary btn-xs" onclick="doAssign(${userId},${loc.id},true,this)">+ Priskirti</button>
+        <button class="btn btn-danger btn-xs" onclick="doAssign(${userId},${loc.id},false,this)">− Atšaukti</button>
       </div>
     </div>`).join('');
 }
