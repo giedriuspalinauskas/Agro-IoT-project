@@ -94,7 +94,7 @@
   .top-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:12px; }
 
   /* STATS */
-  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:1.5rem; }
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; margin-bottom:1.5rem; }
   .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.25rem; }
   .stat-label { font-size:12px; color:var(--text-muted); font-weight:500; margin-bottom:4px; }
   .stat-value { font-size:26px; font-weight:600; color:var(--green); }
@@ -132,6 +132,8 @@
 
   /* LOCATION CARDS */
   .locations-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+  .loc-desktop-table { display:block; }
+  .loc-mobile-cards { display:none; }
   .location-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; }
   .location-card-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:8px; gap:8px; }
   .location-card-title { font-size:15px; font-weight:600; }
@@ -183,6 +185,21 @@
   .empty { text-align:center; padding:3rem 1rem; color:var(--text-muted); }
   .empty-icon { font-size:32px; margin-bottom:0.5rem; }
   .user-mobile-card { display:none; }
+  .device-mobile-td { display:none; }
+  .device-mobile-card { display:block; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; }
+  .device-mobile-card .dm-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; gap:8px; flex-wrap:wrap; }
+  .device-mobile-card .dm-name { font-size:15px; font-weight:600; }
+  .device-mobile-card .dm-loc { font-size:12px; color:var(--text-muted); margin-bottom:4px; }
+  .device-mobile-card .dm-eui { font-size:11px; font-family:monospace; background:var(--bg); padding:3px 6px; border-radius:4px; color:var(--text-muted); margin-bottom:8px; word-break:break-all; }
+  .device-mobile-card .dm-fields { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; min-height:20px; }
+  .device-mobile-card .dm-actions { display:flex; gap:8px; flex-wrap:wrap; }
+  .device-mobile-card .dm-actions .btn { flex:1; justify-content:center; }
+  .cfg-type-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1rem; }
+  .type-checks { display:flex; flex-wrap:wrap; gap:6px; }
+  .type-check { display:none; }
+  .type-check-label { display:inline-flex; align-items:center; gap:4px; padding:5px 12px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--text-muted); transition:all 0.15s; user-select:none; }
+  .type-check:checked + .type-check-label { background:var(--green-light); color:var(--green); border-color:var(--green-mid); }
+  .cfg-add-row { display:grid; grid-template-columns:1fr 1fr 80px auto; gap:8px; align-items:end; }
 
   /* RESPONSIVE */
   @media (min-width:769px) {
@@ -195,6 +212,8 @@
     .sidebar.open { transform:translateX(0); }
     .main { margin-left:0; padding:1rem; padding-top:72px; }
     .locations-grid { grid-template-columns:1fr; }
+    .loc-desktop-table { display:none; }
+    .loc-mobile-cards { display:block; }
     .stats-grid { grid-template-columns:1fr 1fr; }
     .coord-row { grid-template-columns:1fr; }
     .top-bar { flex-direction:column; align-items:flex-start; }
@@ -205,6 +224,11 @@
     .users-table-head { display:none; }
     .user-desktop-row { display:none !important; }
     .user-mobile-td { display:table-cell !important; padding:0 0 10px 0 !important; border:none !important; background:transparent !important; }
+    .devices-table-head { display:none; }
+    .device-desktop-row { display:none !important; }
+    .device-mobile-td { display:table-cell !important; padding:0 0 10px 0 !important; border:none !important; background:transparent !important; }
+    .cfg-type-row { grid-template-columns:1fr !important; }
+    .cfg-add-row { grid-template-columns:1fr 1fr !important; }
     .user-mobile-card { display:block; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; }
     .user-mobile-card .um-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; gap:8px; }
     .user-mobile-card .um-name { font-size:15px; font-weight:600; }
@@ -267,12 +291,18 @@
       <div class="nav-item" id="nav-users" onclick="showPage('users',this)" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Vartotojai
       </div>
+      <div class="nav-item" id="nav-recommendations" onclick="showPage('recommendations',this)">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>Rekomendacijos
+      </div>
       <div class="nav-section" id="nav-ext-section" style="display:none">Išorinės sistemos</div>
-      <div class="nav-item" id="nav-chirpstack" onclick="window.open('http://192.168.0.177:8080','_blank')" style="display:none">
+      <div class="nav-item" id="nav-chirpstack" onclick="window.open('http://192.168.0.186:8080','_blank')" style="display:none">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>ChirpStack
       </div>
       <div class="nav-item" id="nav-n8n" onclick="window.open('http://192.168.0.177:5678','_blank')" style="display:none">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>n8n
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.678 0C8.807 0 6.456 2.09 6.1 4.837H4.63C2.074 4.837 0 6.9 0 9.443s2.074 4.606 4.63 4.606h.1a4.593 4.593 0 004.378-3.195h1.625l1.752 3.001-1.752 3H8.977a4.592 4.592 0 00-4.346-3.062H4.63C2.074 13.793 0 15.857 0 18.4s2.074 4.606 4.63 4.606c2.195 0 4.032-1.535 4.514-3.584h1.914l2.62-4.5-2.62-4.5H9.144A4.59 4.59 0 004.73 7.326h-.1a2.113 2.113 0 010-4.225h1.471A4.607 4.607 0 0010.44 6.02l1.238-2.118V0zm.644 0v3.9l1.238 2.121a4.608 4.608 0 004.347-3.184h1.463a2.113 2.113 0 010 4.225h-.1a4.591 4.591 0 00-4.348 3.095H13.3l-2.62 4.5 2.62 4.5h1.624a4.59 4.59 0 004.445 3.451C21.924 22.608 24 20.544 24 18s-2.076-4.607-4.631-4.607a4.592 4.592 0 00-4.378 3.195h-1.625l-1.752-3.001 1.752-3h1.756a4.591 4.591 0 004.247 2.845h.1C21.926 13.432 24 11.369 24 8.826S21.926 4.22 19.37 4.22h-.1a4.591 4.591 0 00-4.446 3.45H13.36A4.608 4.608 0 0012.322 0z"/></svg>n8n
+      </div>
+      <div class="nav-item" id="nav-grafana" onclick="window.open('http://192.168.0.177:3000','_blank')" style="display:none">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21.917 12.775a2.52 2.52 0 00-.199-.09 5.265 5.265 0 00.063-.781c0-2.098-1.15-3.93-2.853-4.904a4.826 4.826 0 00.023-.468c0-2.66-2.157-4.816-4.816-4.816a4.8 4.8 0 00-2.29.575A3.606 3.606 0 008.99 1c-1.99 0-3.604 1.614-3.604 3.604 0 .161.011.32.031.475A5.155 5.155 0 002.26 9.956a5.157 5.157 0 001.027 3.08 3.602 3.602 0 00-.2 1.188 3.61 3.61 0 003.258 3.59 4.807 4.807 0 003.836 1.914c.57 0 1.118-.1 1.625-.281a3.606 3.606 0 006.513-2.124 3.588 3.588 0 00-.112-.882 4.815 4.815 0 003.71-4.666zm-9.892 6.17a3.772 3.772 0 01-2.406-.865 2.576 2.576 0 00.32-.138l3.997-2.308a.647.647 0 00.327-.563v-5.64l1.69.976a.06.06 0 01.033.047v4.669a3.779 3.779 0 01-3.961 3.822zm-8.532-3.47a3.768 3.768 0 01-.452-1.892c0-.64.167-1.245.454-1.77l.003.002 3.997 2.309a.646.646 0 00.652 0l4.88-2.817v1.952a.062.062 0 01-.024.052l-4.04 2.332a3.78 3.78 0 01-5.47-.168zm-1.1-8.77a3.762 3.762 0 011.97-1.655v4.758a.645.645 0 00.326.562l4.873 2.813-1.689.975a.062.062 0 01-.059.005L3.79 11.02a3.779 3.779 0 01-.397-4.315zm13.886 3.245l-4.877-2.816 1.689-.976a.063.063 0 01.059-.005l4.021 2.32a3.772 3.772 0 01-.583 6.808v-4.768a.646.646 0 00-.309-.563zm1.682-2.528a2.556 2.556 0 00-.32.138l-3.997-2.308a.648.648 0 00-.652 0l-4.88 2.818V6.118a.063.063 0 01.024-.052l4.04-2.33a3.778 3.778 0 015.785 3.687zm-10.576.976L5.696 9.37a.062.062 0 01-.033-.047V4.655a3.777 3.777 0 016.192-2.894 2.59 2.59 0 00-.321.138L7.537 4.207a.647.647 0 00-.327.563zm.916-1.977l2.174-1.255 2.174 1.253v2.506L10.475 9.18l-2.174-1.253z"/></svg>Grafana
       </div>
     </nav>
     <div class="sidebar-bottom">
@@ -302,7 +332,23 @@
         <div class="page-header" style="margin:0"><h1>Žemės vietos</h1><p>Sklypų valdymas</p></div>
         <button class="btn btn-primary" id="btn-add-location" style="display:none" onclick="openLocationModal()">+ Pridėti vietą</button>
       </div>
-      <div class="locations-grid" id="locations-grid"></div>
+      <div id="locations-grid"></div>
+    </div>
+
+    <!-- RECOMMENDATIONS MODAL -->
+    <div class="modal-overlay" id="modal-recommendations">
+      <div class="modal" style="max-width:640px">
+        <div class="modal-header">
+          <span class="modal-title" id="rec-modal-title">🤖 AI Rekomendacijos</span>
+          <button class="modal-close" onclick="closeModal('modal-recommendations')">×</button>
+        </div>
+        <div id="rec-weather-summary" style="display:none;background:var(--info-light);border:1px solid #b3ccf0;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--info);margin-bottom:1rem;font-family:monospace;white-space:pre-wrap"></div>
+        <div id="rec-content"></div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal('modal-recommendations')">Uždaryti</button>
+          <button class="btn btn-primary" id="rec-generate-btn" onclick="generateRecommendations()">🤖 Generuoti naujas</button>
+        </div>
+      </div>
     </div>
 
     <!-- DEVICES -->
@@ -316,7 +362,7 @@
       </div>
       <div id="unknown-devices-warning" style="display:none" class="warning-banner">⚠️ Kai kurie įrenginiai neturi sukonfigūruotų laukų – paspauskite <strong>⚙ Konfigūruoti</strong>.</div>
       <div class="card"><div class="table-wrap"><table>
-        <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>DevEUI</th><th>Vieta</th><th>Laukai</th><th>Veiksmai</th></tr></thead>
+        <thead class="devices-table-head"><tr><th>Pavadinimas</th><th>Tipas</th><th>DevEUI</th><th>Vieta</th><th>Laukai</th><th>🔋</th><th>Prisijungė</th><th>Veiksmai</th></tr></thead>
         <tbody id="devices-tbody"></tbody>
       </table></div></div>
     </div>
@@ -331,6 +377,24 @@
         <thead class="users-table-head"><tr><th>Vardas</th><th>El. paštas</th><th>Rolė</th><th>Būsena</th><th>Vietos</th><th>Veiksmai</th></tr></thead>
         <tbody id="users-tbody"></tbody>
       </table></div></div>
+    </div>
+
+    <!-- RECOMMENDATIONS -->
+    <div class="page" id="page-recommendations">
+      <div class="page-header"><h1>Rekomendacijos</h1><p>AI rekomendacijos pagal augalus, jutiklius ir orus</p></div>
+      <div id="recommendations-locations-grid"></div>
+    </div>
+
+    <!-- RECOMMENDATIONS HISTORY MODAL -->
+    <div class="modal-overlay" id="modal-rec-history">
+      <div class="modal" style="max-width:660px">
+        <div class="modal-header">
+          <span class="modal-title" id="rec-history-title">📋 Istorija</span>
+          <button class="modal-close" onclick="closeModal('modal-rec-history')">×</button>
+        </div>
+        <div id="rec-history-content"></div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-rec-history')">Uždaryti</button></div>
+      </div>
     </div>
 
     <!-- PROFILE -->
@@ -360,6 +424,14 @@
   <div class="modal">
     <div class="modal-header"><span class="modal-title" id="modal-location-title">Nauja žemės vieta</span><button class="modal-close" onclick="closeModal('modal-location')">×</button></div>
     <input type="hidden" id="loc-edit-id">
+    <div class="form-group">
+      <label>Tipas *</label>
+      <div class="input-tabs">
+        <button class="input-tab active" id="loc-type-laukas" onclick="setLocType('laukas')">🌾 Atviras laukas</button>
+        <button class="input-tab" id="loc-type-siltnamis" onclick="setLocType('siltnamis')">🏠 Šiltnamis</button>
+      </div>
+      <input type="hidden" id="loc-type" value="laukas">
+    </div>
     <div class="form-group"><label>Pavadinimas *</label><input type="text" id="loc-name" placeholder="Pvz. Sodas Kaune"></div>
     <div class="form-group">
       <label>Adresas *</label>
@@ -382,10 +454,36 @@
       <div id="coord-preview" style="display:none;margin-top:8px;font-size:12px;color:var(--green);font-family:monospace;padding:6px 10px;background:var(--green-light);border-radius:6px"></div>
     </div>
     <div class="form-group"><label>Aprašymas</label><textarea id="loc-desc" rows="3" placeholder="Neprivalomas..."></textarea></div>
+    <div class="form-group">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <label style="margin:0">Auginami augalai</label>
+        <button type="button" class="btn btn-secondary btn-xs" onclick="openPlantsManager()">+ Tvarkyti sąrašą</button>
+      </div>
+      <div id="plants-select-box" style="border:1px solid var(--border);border-radius:8px;padding:6px 8px;background:var(--surface);cursor:text" onclick="document.getElementById('plants-search').focus()">
+        <div id="plants-selected-tags" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px"></div>
+        <input type="text" id="plants-search" placeholder="Ieškoti augalo..." autocomplete="off"
+          style="border:none;outline:none;font-size:13px;width:100%;background:transparent;padding:2px 4px"
+          oninput="filterPlantsDropdown(this.value)" onfocus="showPlantsDropdown()" onblur="setTimeout(hidePlantsDropdown,200)">
+      </div>
+      <div id="plants-dropdown" style="display:none;position:absolute;z-index:300;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);max-height:180px;overflow-y:auto;width:calc(100% - 3rem)"></div>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-location')">Atšaukti</button>
       <button class="btn btn-primary" onclick="saveLocation()">Išsaugoti</button>
     </div>
+  </div>
+</div>
+
+<!-- MODAL: Augalų sąrašas -->
+<div class="modal-overlay" id="modal-plants">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><span class="modal-title">🌿 Augalų sąrašas</span><button class="modal-close" onclick="closeModal('modal-plants')">×</button></div>
+    <div class="form-group" style="display:flex;gap:8px">
+      <input type="text" id="new-plant-name" placeholder="Augalo pavadinimas" style="flex:1" onkeydown="if(event.key==='Enter')addPlant()">
+      <button class="btn btn-primary btn-sm" onclick="addPlant()">+ Pridėti</button>
+    </div>
+    <div id="plants-list"></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-plants')">Uždaryti</button></div>
   </div>
 </div>
 
@@ -396,14 +494,15 @@
     <input type="hidden" id="dev-edit-id">
     <div class="form-group"><label>Pavadinimas *</label><input type="text" id="dev-name" placeholder="Pvz. Arduino Uno LA66"></div>
     <div class="form-group"><label>Tipas *</label>
-      <select id="dev-type">
-        <option value="combined">Temperatūra + Drėgmė</option>
-        <option value="temperature">Tik temperatūra</option>
-        <option value="humidity">Tik drėgmė</option>
-        <option value="soil">Dirvožemio jutiklis</option>
-        <option value="rain">Lietaus jutiklis</option>
-        <option value="other">Kitas</option>
-      </select>
+      <div class="type-checks" id="dev-type-checks">
+        <input type="checkbox" class="type-check" id="dt-temperature" value="temperature"><label class="type-check-label" for="dt-temperature">🌡 Temperatūra</label>
+        <input type="checkbox" class="type-check" id="dt-humidity" value="humidity"><label class="type-check-label" for="dt-humidity">💧 Drėgmė</label>
+        <input type="checkbox" class="type-check" id="dt-co2" value="co2"><label class="type-check-label" for="dt-co2">🌫 CO₂</label>
+        <input type="checkbox" class="type-check" id="dt-pressure" value="pressure"><label class="type-check-label" for="dt-pressure">🔵 Slėgis</label>
+        <input type="checkbox" class="type-check" id="dt-soil" value="soil"><label class="type-check-label" for="dt-soil">🌱 Dirvožemis</label>
+        <input type="checkbox" class="type-check" id="dt-rain" value="rain"><label class="type-check-label" for="dt-rain">🌧 Lietus</label>
+        <input type="checkbox" class="type-check" id="dt-other" value="other"><label class="type-check-label" for="dt-other">📡 Kitas</label>
+      </div>
     </div>
     <div class="form-group"><label>Unikalus ID *</label><input type="text" id="dev-uid" placeholder="Pvz. SENSOR-001"></div>
     <div class="form-group">
@@ -424,19 +523,18 @@
   <div class="modal" style="max-width:620px">
     <div class="modal-header"><span class="modal-title" id="modal-configure-title">⚙ Konfigūruoti įrenginį</span><button class="modal-close" onclick="closeModal('modal-configure')">×</button></div>
     <input type="hidden" id="cfg-device-id">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem">
-      <div class="form-group" style="margin:0"><label>Įrenginio tipas</label>
-        <select id="cfg-type">
-          <option value="combined">Temperatūra + Drėgmė</option>
-          <option value="temperature">Tik temperatūra</option>
-          <option value="humidity">Tik drėgmė</option>
-          <option value="soil">Dirvožemio jutiklis</option>
-          <option value="rain">Lietaus jutiklis</option>
-          <option value="other">Kitas</option>
-        </select>
+    <div class="form-group"><label>Įrenginio tipas</label>
+      <div class="type-checks" id="cfg-type-checks">
+        <input type="checkbox" class="type-check" id="ct-temperature" value="temperature"><label class="type-check-label" for="ct-temperature">🌡 Temperatūra</label>
+        <input type="checkbox" class="type-check" id="ct-humidity" value="humidity"><label class="type-check-label" for="ct-humidity">💧 Drėgmė</label>
+        <input type="checkbox" class="type-check" id="ct-co2" value="co2"><label class="type-check-label" for="ct-co2">🌫 CO₂</label>
+        <input type="checkbox" class="type-check" id="ct-pressure" value="pressure"><label class="type-check-label" for="ct-pressure">🔵 Slėgis</label>
+        <input type="checkbox" class="type-check" id="ct-soil" value="soil"><label class="type-check-label" for="ct-soil">🌱 Dirvožemis</label>
+        <input type="checkbox" class="type-check" id="ct-rain" value="rain"><label class="type-check-label" for="ct-rain">🌧 Lietus</label>
+        <input type="checkbox" class="type-check" id="ct-other" value="other"><label class="type-check-label" for="ct-other">📡 Kitas</label>
       </div>
-      <div class="form-group" style="margin:0"><label>Žemės vieta</label><select id="cfg-location"></select></div>
     </div>
+    <div class="form-group"><label>Žemės vieta</label><select id="cfg-location"></select></div>
 
     <div style="border-top:1px solid var(--border);padding-top:1rem">
       <div style="font-size:14px;font-weight:500;margin-bottom:4px">Duomenų laukų mapingas</div>
@@ -456,7 +554,7 @@
 
       <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
         <div style="font-size:12px;font-weight:500;margin-bottom:8px;color:var(--text-muted)">+ Pridėti lauką:</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 80px auto;gap:8px;align-items:end">
+        <div class="cfg-add-row">
           <div>
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Laukas iš įrenginio</label>
             <input type="text" id="new-source-field" placeholder="pvz. temperature_c" style="font-family:monospace;font-size:12px">
@@ -474,6 +572,8 @@
             <select id="new-sensor-type" style="font-size:12px">
               <option value="temperature">🌡 Temp.</option>
               <option value="humidity">💧 Drėgmė</option>
+              <option value="co2">🌫 CO₂</option>
+              <option value="pressure">🔵 Slėgis</option>
               <option value="soil_moisture">🌱 Dirv.</option>
               <option value="rain">🌧 Lietus</option>
               <option value="other">📡 Kita</option>
@@ -535,6 +635,7 @@
   <div class="modal" style="max-width:700px">
     <div class="modal-header"><span class="modal-title" id="modal-measurements-title">📊 Duomenys</span><button class="modal-close" onclick="closeModal('modal-measurements')">×</button></div>
     <div id="measurements-latest" style="margin-bottom:1.25rem"></div>
+    <div id="measurements-events" style="margin-bottom:1.25rem"></div>
     <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px">Istorija (paskutiniai 50 įrašų)</div>
     <div style="overflow-x:auto">
       <table id="measurements-table">
@@ -550,17 +651,19 @@
 const API = 'http://' + location.hostname + ':8002/api';
 let token = localStorage.getItem('agro_token');
 let currentUser = null;
-let allLocations = [], allUsers = [], allDevices = [];
+let allLocations = [], allUsers = [], allDevices = [], allEventsSummary = {}, allPlants = [], allRecommendations = [];
 let selLat = null, selLng = null, coordTab = 'auto', addrTimer = null;
 let cfgMappings = [];
 let sensorTypes = {};
 
 const SENSOR_META = {
-  temperature:   { icon: '🌡', label: 'Temperatūra',       unit: '°C' },
-  humidity:      { icon: '💧', label: 'Drėgmė',            unit: '%'  },
-  soil_moisture: { icon: '🌱', label: 'Dirvožemio drėgmė', unit: '%'  },
-  rain:          { icon: '🌧', label: 'Lietus',             unit: 'mm' },
-  other:         { icon: '📡', label: 'Kita',               unit: ''   },
+  temperature:   { icon: '🌡', label: 'Temperatūra',       unit: '°C'  },
+  humidity:      { icon: '💧', label: 'Drėgmė',            unit: '%'   },
+  co2:           { icon: '🌫', label: 'CO₂',               unit: 'ppm' },
+  pressure:      { icon: '🌀', label: 'Slėgis',            unit: 'hPa' },
+  soil_moisture: { icon: '🌱', label: 'Dirvožemio drėgmė', unit: '%'   },
+  rain:          { icon: '🌧', label: 'Lietus',             unit: 'mm'  },
+  other:         { icon: '📡', label: 'Kita',               unit: ''    },
 };
 
 async function api(method, path, body) {
@@ -596,7 +699,7 @@ async function initApp() {
   document.getElementById('user-role-display').textContent = currentUser.is_admin ? 'Administratorius' : 'Vartotojas';
   document.getElementById('user-avatar').textContent = currentUser.username[0].toUpperCase();
   const isAdmin = currentUser.is_admin;
-  ['nav-users','stat-users-card','btn-add-location','devices-admin-btns','nav-ext-section','nav-chirpstack','nav-n8n']
+  ['nav-users','stat-users-card','btn-add-location','devices-admin-btns','nav-ext-section','nav-chirpstack','nav-n8n','nav-grafana']
     .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = isAdmin ? '' : 'none'; });
   try { sensorTypes = await api('GET', '/measurements/sensor-types') || {}; } catch(e) {}
   await loadAll();
@@ -605,11 +708,17 @@ async function initApp() {
 
 async function loadAll() {
   try {
-    allLocations = await api('GET', '/locations') || [];
-    allDevices = await api('GET', '/devices') || [];
+    [allLocations, allDevices, allPlants] = await Promise.all([
+      api('GET', '/locations').then(r => r||[]),
+      api('GET', '/devices').then(r => r||[]),
+      api('GET', '/plants').then(r => r||[]),
+    ]);
     if (currentUser.is_admin) allUsers = await api('GET', '/users') || [];
+    allEventsSummary = await api('GET', '/measurements/events/summary').catch(() => ({})) || {};
+    allRecommendations = await api('GET', '/recommendations').catch(() => []) || [];
     renderStats(); renderDashboard(); renderLocations(); renderDevices();
     if (currentUser.is_admin) renderUsers();
+    renderRecommendationsPage();
   } catch(e) { console.error(e); }
 }
 
@@ -623,24 +732,57 @@ function locCard(loc, showActions) {
   const devs = allDevices.filter(d => d.location_id === loc.id);
   const coords = (loc.latitude && loc.longitude) ? `<div class="location-card-coords">📌 ${loc.latitude.toFixed(6)}, ${loc.longitude.toFixed(6)}</div>` : '';
   const adminBtns = (showActions && currentUser.is_admin) ? `<div class="actions" style="margin-top:8px;width:100%"><button class="btn btn-secondary btn-sm" onclick="editLocation(${loc.id})">Redaguoti</button><button class="btn btn-danger btn-sm" onclick="deleteLocation(${loc.id})">Šalinti</button></div>` : '';
+  const plantsHtml = (loc.plants||[]).length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px">${(loc.plants).map(p=>`<span class="badge badge-green">🌿 ${esc(p.name)}</span>`).join('')}</div>` : '';
+  const typeLabel = loc.location_type === 'siltnamis' ? '🏠 Šiltnamis' : '🌾 Laukas';
   return `<div class="location-card">
     <div class="location-card-header"><span class="location-card-title">${esc(loc.name)}</span><span class="badge badge-green">${devs.length} įrenginiai</span></div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">${typeLabel}</div>
     <div class="location-card-addr">📍 ${esc(loc.address)}</div>${coords}
     ${loc.description ? `<div class="location-card-desc">${esc(loc.description)}</div>` : ''}
-    <div class="location-card-footer">${devs.map(d=>`<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('')}${adminBtns}</div>
+    ${plantsHtml}
+    <div class="location-card-footer" style="margin-top:8px">${devs.map(d=>`<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('')}${adminBtns}</div>
   </div>`;
 }
 
 function renderDashboard() {
   const el = document.getElementById('dashboard-locations');
   if (!allLocations.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🌱</div><p>Nėra priskirtų žemės vietų</p></div>'; return; }
-  el.innerHTML = '<div class="locations-grid">' + allLocations.map(l=>locCard(l,false)).join('') + '</div>';
+  const tableRows = allLocations.map(loc => {
+    const devs = allDevices.filter(d => d.location_id === loc.id);
+    const coords = (loc.latitude && loc.longitude) ? `<span style="font-family:monospace;font-size:11px">${loc.latitude.toFixed(4)}, ${loc.longitude.toFixed(4)}</span>` : '<span style="color:var(--text-muted)">—</span>';
+    const devsHtml = devs.length ? `<span class="badge badge-green" style="margin-right:6px">${devs.length}</span>` + devs.map(d=>`<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('') : '<span style="color:var(--text-muted);font-size:12px">Nėra</span>';
+    return `<tr><td><strong>${esc(loc.name)}</strong></td><td style="color:var(--text-muted)">${esc(loc.address)}</td><td>${coords}</td><td>${devsHtml}</td></tr>`;
+  }).join('');
+  const cardsHtml = allLocations.map(l=>locCard(l,false)).join('');
+  el.innerHTML = `
+    <div class="loc-desktop-table"><div class="table-wrap"><table>
+      <thead><tr><th>Pavadinimas</th><th>Adresas</th><th>Koordinatės</th><th>Įrenginiai</th></tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table></div></div>
+    <div class="loc-mobile-cards locations-grid">${cardsHtml}</div>`;
 }
 
 function renderLocations() {
   const el = document.getElementById('locations-grid');
-  if (!allLocations.length) { el.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🌱</div><p>Nėra žemės vietų</p></div>'; return; }
-  el.innerHTML = allLocations.map(l=>locCard(l,true)).join('');
+  if (!allLocations.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🌱</div><p>Nėra žemės vietų</p></div>'; return; }
+  const isAdmin = currentUser.is_admin;
+  const tableRows = allLocations.map(loc => {
+    const devs = allDevices.filter(d => d.location_id === loc.id);
+    const coords = (loc.latitude && loc.longitude) ? `<span style="font-family:monospace;font-size:11px">${loc.latitude.toFixed(4)}, ${loc.longitude.toFixed(4)}</span>` : '<span style="color:var(--text-muted)">—</span>';
+    const devsHtml = devs.length ? `<span class="badge badge-green" style="margin-right:6px">${devs.length}</span>` + devs.map(d=>`<span class="device-pill">${deviceTypeLabel(d.device_type)} ${esc(d.name)}</span>`).join('') : '<span style="color:var(--text-muted);font-size:12px">Nėra</span>';
+    const plantsHtml = (loc.plants||[]).length ? (loc.plants).map(p=>`<span class="badge badge-green">🌿 ${esc(p.name)}</span>`).join(' ') : '<span style="color:var(--text-muted);font-size:12px">—</span>';
+    const locTypeIcon = loc.location_type === 'siltnamis' ? '🏠 Šiltnamis' : '🌾 Laukas';
+    const adminBtns = isAdmin ? `<td><div class="actions"><button class="btn btn-secondary btn-sm" onclick="editLocation(${loc.id})">Redaguoti</button><button class="btn btn-danger btn-sm" onclick="deleteLocation(${loc.id})">Šalinti</button></div></td>` : '';
+    return `<tr><td><strong>${esc(loc.name)}</strong></td><td><span style="font-size:13px">${locTypeIcon}</span></td><td style="color:var(--text-muted)">${esc(loc.address)}</td><td>${coords}</td><td style="color:var(--text-muted);font-size:13px;max-width:200px">${esc(loc.description||'—')}</td><td>${plantsHtml}</td><td>${devsHtml}</td>${adminBtns}</tr>`;
+  }).join('');
+  const actionsHead = isAdmin ? '<th>Veiksmai</th>' : '';
+  const cardsHtml = allLocations.map(l=>locCard(l,true)).join('');
+  el.innerHTML = `
+    <div class="loc-desktop-table card"><div class="table-wrap"><table>
+      <thead><tr><th>Pavadinimas</th><th>Tipas</th><th>Adresas</th><th>Koordinatės</th><th>Aprašymas</th><th>Augalai</th><th>Įrenginiai</th>${actionsHead}</tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table></div></div>
+    <div class="loc-mobile-cards locations-grid">${cardsHtml}</div>`;
 }
 
 function renderDevices() {
@@ -657,14 +799,33 @@ function renderDevices() {
       ? mappings.map(m => { const meta = SENSOR_META[m.sensor_type]||SENSOR_META.other; return `<span class="badge badge-blue" style="margin-right:3px">${meta.icon} ${esc(m.display_name)}</span>`; }).join('')
       : (d.chirpstack_dev_eui ? '<span class="badge badge-amber">⚠ Nekonfigūruotas</span>' : '<span style="color:var(--text-muted);font-size:12px">—</span>');
     const adminBtns = currentUser.is_admin ? `<button class="btn btn-amber btn-sm" onclick="openConfigure(${d.id})">⚙ Konfigūruoti</button><button class="btn btn-danger btn-sm" onclick="deleteDevice(${d.id})">Šalinti</button>` : '';
-    return `<tr>
+    const ev = allEventsSummary[String(d.id)] || {};
+    const batteryHtml = ev.battery_level !== undefined && ev.battery_level !== null
+      ? (() => { const p = Math.round(ev.battery_level); const c = p > 50 ? 'var(--green)' : p > 20 ? 'var(--amber)' : 'var(--danger)'; return `<strong style="color:${c}">${p}%</strong>`; })()
+      : '<span style="color:var(--text-muted)">—</span>';
+    const joinHtml = ev.last_join
+      ? `<span style="font-size:12px;color:var(--text-muted)">${formatTime(ev.last_join)}</span>`
+      : '<span style="color:var(--text-muted)">—</span>';
+    const euiShort = d.chirpstack_dev_eui ? `<div class="dm-eui">${esc(d.chirpstack_dev_eui)}</div>` : '';
+    return `<tr class="device-desktop-row">
       <td><div style="font-weight:500">${esc(d.name)}</div></td>
       <td><span class="badge badge-blue">${deviceTypeLabel(d.device_type)}</span></td>
       <td>${eui}</td>
       <td>${loc ? esc(loc.name) : '—'}</td>
       <td>${fieldsHtml}</td>
+      <td>${batteryHtml}</td>
+      <td>${joinHtml}</td>
       <td><div class="actions"><button class="btn btn-info btn-sm" onclick="openMeasurements(${d.id},'${esc(d.name)}')">📊 Duomenys</button>${adminBtns}</div></td>
-    </tr>`;
+    </tr>
+    <tr><td colspan="8" class="device-mobile-td"><div class="device-mobile-card">
+      <div class="dm-top"><span class="dm-name">${esc(d.name)}</span><span class="badge badge-blue">${deviceTypeLabel(d.device_type)}</span></div>
+      <div class="dm-loc">📍 ${loc ? esc(loc.name) : '—'}</div>
+      ${euiShort}
+      <div class="dm-fields">${fieldsHtml}</div>
+      ${ev.battery_level !== undefined && ev.battery_level !== null ? `<div style="font-size:12px;margin-bottom:6px">🔋 Baterija: ${batteryHtml}</div>` : ''}
+      ${ev.last_join ? `<div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">🔗 Prisijungė: ${formatTime(ev.last_join)}</div>` : ''}
+      <div class="dm-actions"><button class="btn btn-info btn-sm" onclick="openMeasurements(${d.id},'${esc(d.name)}')">📊 Duomenys</button>${adminBtns}</div>
+    </div></td></tr>`;
   }).join('');
 }
 
@@ -723,7 +884,7 @@ async function openConfigure(deviceId) {
   cfgMappings = (d.field_mappings || []).map(m => ({...m}));
   document.getElementById('cfg-device-id').value = deviceId;
   document.getElementById('modal-configure-title').textContent = '⚙ ' + d.name;
-  document.getElementById('cfg-type').value = d.device_type || 'combined';
+  setDeviceTypes('cfg-type-checks', d.device_type || '');
   document.getElementById('cfg-location').innerHTML = allLocations.map(l => `<option value="${l.id}" ${l.id===d.location_id?'selected':''}>${esc(l.name)}</option>`).join('');
   document.getElementById('cfg-available').style.display = 'none';
   document.getElementById('cfg-no-data').style.display = 'none';
@@ -821,9 +982,13 @@ function removeMappingRow(i) {
 }
 
 async function saveConfig() {
-  const id = document.getElementById('cfg-device-id').value;
-  const device_type = document.getElementById('cfg-type').value;
+  const id = parseInt(document.getElementById('cfg-device-id').value);
+  const device_type = getDeviceTypes('cfg-type-checks');
   const location_id = parseInt(document.getElementById('cfg-location').value);
+  const orig = allDevices.find(x => x.id === id);
+  if (orig && location_id !== orig.location_id) {
+    if (!confirm('Įspėjimas: keičiant žemės vietą bus ištrinti visi šio jutiklio istoriniai duomenys. Tęsti?')) return;
+  }
   try {
     await api('PUT', '/devices/' + id, {device_type, location_id});
     await api('POST', `/measurements/device/${id}/mappings`, cfgMappings);
@@ -838,11 +1003,31 @@ async function openMeasurements(deviceId, deviceName) {
   const mappings = (d && d.field_mappings) ? d.field_mappings : [];
   document.getElementById('modal-measurements-title').textContent = '📊 ' + deviceName;
   document.getElementById('measurements-latest').innerHTML = '<p style="color:var(--text-muted);font-size:13px">Kraunama...</p>';
+  document.getElementById('measurements-events').innerHTML = '';
   document.getElementById('measurements-tbody').innerHTML = '';
   openModal('modal-measurements');
 
   try {
-    const data = await api('GET', `/measurements/device/${deviceId}?limit=50`);
+    const [data, events] = await Promise.all([
+      api('GET', `/measurements/device/${deviceId}?limit=50`),
+      api('GET', `/measurements/device/${deviceId}/events?limit=20`).catch(() => [])
+    ]);
+
+    // Events (join / status)
+    if (events && events.length) {
+      const lastJoin = events.find(ev => ev.event_type === 'join');
+      const lastStatus = events.find(ev => ev.event_type === 'status');
+      const parts = [];
+      if (lastJoin) parts.push(`<span>🔗 Pask. prisijungimas: <strong>${formatTime(lastJoin.received_at)}</strong></span>`);
+      if (lastStatus && lastStatus.battery_level !== null && lastStatus.battery_level !== undefined) {
+        const pct = Math.round(lastStatus.battery_level);
+        const color = pct > 50 ? 'var(--green)' : pct > 20 ? 'var(--amber)' : 'var(--danger)';
+        parts.push(`<span>🔋 Baterija: <strong style="color:${color}">${pct}%</strong></span>`);
+      }
+      if (parts.length) {
+        document.getElementById('measurements-events').innerHTML = `<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;background:var(--bg);border-radius:8px;padding:10px 14px;border:1px solid var(--border)">${parts.join(' <span style="color:var(--border)">|</span> ')}</div>`;
+      }
+    }
     if (!data || !data.length) {
       document.getElementById('measurements-latest').innerHTML = `<div class="empty"><div class="empty-icon">📡</div><p>Duomenų dar nėra.</p><p style="font-size:12px;margin-top:8px">Patikrinkite ar įrenginys sukonfigūruotas (⚙ Konfigūruoti).</p></div>`;
       return;
@@ -851,8 +1036,6 @@ async function openMeasurements(deviceId, deviceName) {
     const latest = data[0];
     const latestValues = {};
     if (latest.values) latest.values.forEach(v => { latestValues[v.field_key] = v.field_value; });
-    if (latest.temperature !== null && latest.temperature !== undefined) latestValues['__temp'] = latest.temperature;
-    if (latest.humidity !== null && latest.humidity !== undefined) latestValues['__hum'] = latest.humidity;
 
     // Latest cards
     let cardsHtml = '';
@@ -863,31 +1046,29 @@ async function openMeasurements(deviceId, deviceName) {
         return `<div class="measure-card"><div class="measure-icon">${meta.icon}</div><div class="measure-label">${esc(m.display_name)}</div><div class="measure-value">${val !== undefined ? val.toFixed(1) : '—'}<span class="measure-unit"> ${esc(m.unit||'')}</span></div></div>`;
       }).join('');
     } else {
-      if (latest.temperature !== null && latest.temperature !== undefined)
-        cardsHtml += `<div class="measure-card"><div class="measure-icon">🌡</div><div class="measure-label">Temperatūra</div><div class="measure-value">${latest.temperature.toFixed(1)}<span class="measure-unit"> °C</span></div></div>`;
-      if (latest.humidity !== null && latest.humidity !== undefined)
-        cardsHtml += `<div class="measure-card"><div class="measure-icon">💧</div><div class="measure-label">Drėgmė</div><div class="measure-value">${latest.humidity.toFixed(1)}<span class="measure-unit"> %</span></div></div>`;
+      cardsHtml = Object.entries(latestValues).map(([k, v]) => {
+        const meta = SENSOR_META[k] || SENSOR_META.other;
+        return `<div class="measure-card"><div class="measure-icon">${meta.icon}</div><div class="measure-label">${esc(meta.label)}</div><div class="measure-value">${v.toFixed(1)}<span class="measure-unit"> ${esc(meta.unit)}</span></div></div>`;
+      }).join('');
     }
 
     document.getElementById('measurements-latest').innerHTML = `
       <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Paskutinis matavimas: ${formatTime(latest.received_at)}</div>
-      <div class="measurement-grid">${cardsHtml}</div>`;
+      <div class="measurement-grid">${cardsHtml || '<span style="color:var(--text-muted);font-size:13px">Nėra duomenų</span>'}</div>`;
 
-    // Dynamic table columns
+    // Dynamic table columns from mappings or from latest values
     let cols = [];
     if (mappings.length) {
       cols = mappings.map(m => { const meta = SENSOR_META[m.sensor_type]||SENSOR_META.other; return {key:m.source_field, label:`${meta.icon} ${m.display_name}`, unit:m.unit||''}; });
     } else {
-      if (data.some(d => d.temperature !== null && d.temperature !== undefined)) cols.push({key:'__temp', label:'🌡 Temperatūra', unit:'°C'});
-      if (data.some(d => d.humidity !== null && d.humidity !== undefined)) cols.push({key:'__hum', label:'💧 Drėgmė', unit:'%'});
+      const allKeys = [...new Set(data.flatMap(d => (d.values||[]).map(v => v.field_key)))];
+      cols = allKeys.map(k => { const meta = SENSOR_META[k]||SENSOR_META.other; return {key:k, label:`${meta.icon} ${meta.label}`, unit:meta.unit||''}; });
     }
 
     document.getElementById('measurements-thead').innerHTML = `<tr><th>Laikas</th>${cols.map(c=>`<th>${esc(c.label)}</th>`).join('')}</tr>`;
     document.getElementById('measurements-tbody').innerHTML = data.map(m => {
       const vals = {};
       if (m.values) m.values.forEach(v => { vals[v.field_key] = v.field_value; });
-      if (m.temperature !== null && m.temperature !== undefined) vals['__temp'] = m.temperature;
-      if (m.humidity !== null && m.humidity !== undefined) vals['__hum'] = m.humidity;
       return `<tr><td style="white-space:nowrap;color:var(--text-muted)">${formatTime(m.received_at)}</td>${cols.map(c => { const v = vals[c.key]; return `<td>${v !== undefined ? `<strong>${v.toFixed(1)}</strong> ${esc(c.unit)}` : '—'}</td>`; }).join('')}</tr>`;
     }).join('');
   } catch(e) {
@@ -1000,13 +1181,67 @@ function getCoords() {
 }
 
 /* LOCATION CRUD */
+let selectedPlantIds = [];
+
+function renderPlantTags() {
+  const el = document.getElementById('plants-selected-tags');
+  el.innerHTML = selectedPlantIds.map(id => {
+    const p = allPlants.find(x => x.id === id);
+    if (!p) return '';
+    return `<span style="display:inline-flex;align-items:center;gap:4px;background:var(--green-light);color:var(--green);border:1px solid var(--green-mid);border-radius:6px;padding:2px 8px;font-size:12px;font-weight:500">🌿 ${esc(p.name)}<span style="cursor:pointer;margin-left:2px;font-size:14px;line-height:1" onclick="removePlantFromSelect(${id})">&times;</span></span>`;
+  }).join('');
+}
+
+function removePlantFromSelect(id) {
+  selectedPlantIds = selectedPlantIds.filter(x => x !== id);
+  renderPlantTags();
+  filterPlantsDropdown(document.getElementById('plants-search').value);
+}
+
+function filterPlantsDropdown(q) {
+  const dd = document.getElementById('plants-dropdown');
+  const term = q.toLowerCase();
+  const available = allPlants.filter(p => !selectedPlantIds.includes(p.id) && p.name.toLowerCase().includes(term));
+  if (!available.length) { dd.style.display = 'none'; return; }
+  dd.innerHTML = available.map(p =>
+    `<div style="padding:8px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--bg)" onmousedown="addPlantToSelect(${p.id})" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background=''">🌿 ${esc(p.name)}</div>`
+  ).join('');
+  dd.style.display = 'block';
+}
+
+function showPlantsDropdown() { filterPlantsDropdown(document.getElementById('plants-search').value); }
+function hidePlantsDropdown() { document.getElementById('plants-dropdown').style.display = 'none'; }
+
+function addPlantToSelect(id) {
+  if (!selectedPlantIds.includes(id)) selectedPlantIds.push(id);
+  document.getElementById('plants-search').value = '';
+  renderPlantTags();
+  hidePlantsDropdown();
+}
+
+function initPlantsSelect(ids) {
+  selectedPlantIds = ids || [];
+  renderPlantTags();
+  document.getElementById('plants-search').value = '';
+}
+
+function getLocPlantIds() { return selectedPlantIds; }
+
 function openLocationModal() {
   document.getElementById('loc-edit-id').value = '';
   ['loc-name','loc-address','loc-desc','loc-lat','loc-lng'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('coord-preview').style.display = 'none';
   document.getElementById('modal-location-title').textContent = 'Nauja žemės vieta';
+  setLocType('laukas');
   selLat=null; selLng=null; switchCoordTab('auto');
+  initPlantsSelect([]);
   openModal('modal-location');
+}
+
+function setLocType(type) {
+  document.getElementById('loc-type').value = type;
+  document.getElementById('loc-type-laukas').classList.toggle('active', type === 'laukas');
+  document.getElementById('loc-type-siltnamis').classList.toggle('active', type === 'siltnamis');
 }
 
 function editLocation(id) {
@@ -1018,24 +1253,68 @@ function editLocation(id) {
   document.getElementById('loc-desc').value = loc.description||'';
   document.getElementById('loc-lat').value = loc.latitude||'';
   document.getElementById('loc-lng').value = loc.longitude||'';
+  setLocType(loc.location_type || 'laukas');
   document.getElementById('modal-location-title').textContent = 'Redaguoti vietą';
   selLat = loc.latitude||null; selLng = loc.longitude||null;
   if (selLat && selLng) { const p = document.getElementById('coord-preview'); p.textContent = `📌 ${selLat.toFixed(6)}, ${selLng.toFixed(6)}`; p.style.display = 'block'; }
   switchCoordTab(selLat ? 'auto' : 'manual');
+  initPlantsSelect((loc.plants||[]).map(p=>p.id));
   openModal('modal-location');
 }
+
 
 async function saveLocation() {
   const id = document.getElementById('loc-edit-id').value;
   const name = document.getElementById('loc-name').value.trim();
   const address = document.getElementById('loc-address').value.trim();
   const description = document.getElementById('loc-desc').value.trim();
+  const location_type = document.getElementById('loc-type').value || 'laukas';
   if (!name||!address) { alert('Pavadinimas ir adresas privalomi'); return; }
   const {lat, lng} = getCoords();
   try {
-    if (id) await api('PUT', '/locations/'+id, {name, address, description:description||null, latitude:lat, longitude:lng});
-    else await api('POST', '/locations', {name, address, description:description||null, latitude:lat, longitude:lng});
+    let locId = id;
+    if (id) await api('PUT', '/locations/'+id, {name, address, description:description||null, latitude:lat, longitude:lng, location_type});
+    else { const r = await api('POST', '/locations', {name, address, description:description||null, latitude:lat, longitude:lng, location_type}); locId = r.id; }
+    await api('PUT', '/plants/location/'+locId, {plant_ids: getLocPlantIds()});
     closeModal('modal-location'); await loadAll();
+  } catch(e) { alert(e.message); }
+}
+
+/* PLANTS MANAGER */
+async function openPlantsManager() {
+  renderPlantsList();
+  openModal('modal-plants');
+}
+
+function renderPlantsList() {
+  const el = document.getElementById('plants-list');
+  if (!allPlants.length) { el.innerHTML = '<div class="empty" style="padding:1.5rem 0"><div class="empty-icon">🌿</div><p>Sąrašas tuščias</p></div>'; return; }
+  el.innerHTML = allPlants.map(p =>
+    `<div class="assign-row"><span style="font-size:14px">🌿 ${esc(p.name)}</span>` +
+    `<button class="btn btn-danger btn-xs" onclick="deletePlant(${p.id})">Šalinti</button></div>`
+  ).join('');
+}
+
+async function addPlant() {
+  const name = document.getElementById('new-plant-name').value.trim();
+  if (!name) return;
+  try {
+    const p = await api('POST', '/plants', {name});
+    allPlants.push(p);
+    allPlants.sort((a,b) => a.name.localeCompare(b.name));
+    document.getElementById('new-plant-name').value = '';
+    renderPlantsList();
+    initPlantsSelect(getLocPlantIds());
+  } catch(e) { alert(e.message); }
+}
+
+async function deletePlant(id) {
+  if (!confirm('Šalinti augalą iš sąrašo?')) return;
+  try {
+    await api('DELETE', '/plants/'+id);
+    allPlants = allPlants.filter(p => p.id !== id);
+    renderPlantsList();
+    initPlantsSelect(getLocPlantIds());
   } catch(e) { alert(e.message); }
 }
 
@@ -1048,7 +1327,7 @@ async function deleteLocation(id) {
 function openAddDevice() {
   document.getElementById('dev-edit-id').value = '';
   ['dev-name','dev-uid','dev-eui'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('dev-type').value = 'combined';
+  setDeviceTypes('dev-type-checks', '');
   document.getElementById('dev-location').innerHTML = allLocations.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');
   document.getElementById('modal-device-title').textContent = 'Naujas įrenginys';
   openModal('modal-device');
@@ -1057,7 +1336,7 @@ function openAddDevice() {
 async function saveDevice() {
   const id = document.getElementById('dev-edit-id').value;
   const name = document.getElementById('dev-name').value.trim();
-  const device_type = document.getElementById('dev-type').value;
+  const device_type = getDeviceTypes('dev-type-checks');
   const unique_id = document.getElementById('dev-uid').value.trim();
   const chirpstack_dev_eui = document.getElementById('dev-eui').value.trim() || null;
   const location_id = parseInt(document.getElementById('dev-location').value);
@@ -1128,8 +1407,233 @@ function doLogout() {
   document.getElementById('login-error').textContent='';
 }
 
+/* RECOMMENDATIONS */
+function renderRecContent(content) {
+  const lines = content.split('\n').filter(l => l.trim());
+  return lines.map(l => {
+    // Skip markdown header lines
+    if (/^#+\s/.test(l.trim())) return '';
+    const t = l.trim();
+    if (/^\d+\./.test(t)) {
+      const num = t.match(/^\d+/)[0];
+      const txt = t.replace(/^\d+\.\s*/, '').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      return `<div style="display:flex;gap:8px;margin-bottom:8px;align-items:flex-start">
+        <span style="background:var(--green);color:white;border-radius:50%;width:22px;height:22px;min-width:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${num}</span>
+        <span style="font-size:13px;line-height:1.5">${txt}</span>
+      </div>`;
+    }
+    return `<p style="font-size:12px;color:var(--text-muted);margin-bottom:4px">${l.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')}</p>`;
+  }).join('');
+}
+
+/* RECOMMENDATIONS PAGE */
+function renderRecommendationsPage() {
+  const el = document.getElementById('recommendations-locations-grid');
+  if (!el) return;
+  if (!allLocations.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🌱</div><p>Nėra žemės vietų</p></div>';
+    return;
+  }
+  el.innerHTML = allLocations.map(loc => {
+    const lastRec = allRecommendations.find(r => r.location_id === loc.id);
+    const recCount = allRecommendations.filter(r => r.location_id === loc.id).length;
+    const missingItems = validateLocation(loc);
+    const plants = (loc.plants||[]).map(p => `<span class="badge badge-green" style="font-size:11px">🌿 ${esc(p.name)}</span>`).join(' ');
+    const lastRecHtml = lastRec
+      ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">🤖 Paskutinė rekomendacija: ${formatTime(lastRec.created_at)}</div>
+          ${renderRecContent(lastRec.content)}
+          ${recCount > 1 ? `<div style="font-size:11px;color:var(--text-muted);margin-top:6px">📋 Istorijoje iš viso: ${recCount} rekomendacijų</div>` : ''}
+        </div>`
+      : `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)">Rekomendacijų dar nėra</div>`;
+    return `<div class="card" style="margin-bottom:1rem">
+      <div class="card-body">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:16px;font-weight:600;margin-bottom:2px">${esc(loc.name)}</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:2px">${loc.location_type === 'siltnamis' ? '🏠 Šiltnamis' : '🌾 Atviras laukas'}</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">📍 ${esc(loc.address)}</div>
+            ${plants ? `<div style="display:flex;flex-wrap:wrap;gap:4px">${plants}</div>` : ''}
+            ${missingItems.length ? `<div style="margin-top:8px;background:var(--amber-light);border:1px solid #f0d4b3;border-radius:6px;padding:8px 10px;font-size:12px;color:var(--amber)">${missingItems.map(m=>'⚠ '+esc(m.text)).join('<br>')}</div>` : ''}
+            ${lastRecHtml}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+            <button class="btn btn-primary btn-sm" id="rec-gen-btn-${loc.id}" onclick="generateForLocation(${loc.id},'${esc(loc.name)}')" ${missingItems.length ? 'title="Trūksta duomenų — spauskite norėdami sužinoti daugiau"' : ''}>🤖 Generuoti${missingItems.length ? ' ⚠' : ''}</button>
+            ${recCount > 0 ? `<button class="btn btn-secondary btn-sm" onclick="openRecHistory(${loc.id},'${esc(loc.name)}')">📋 Istorija (${recCount})</button>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function validateLocation(loc) {
+  const missing = [];
+  if (!loc.latitude || !loc.longitude)
+    missing.push({ text: '📍 Koordinatės — redaguokite vietą ir įveskite adresą', page: 'locations' });
+  if (!loc.plants || !loc.plants.length)
+    missing.push({ text: '🌿 Augalai — redaguokite vietą ir pasirinkite augalus', page: 'locations' });
+  const devs = allDevices.filter(d => d.location_id === loc.id);
+  const hassensors = devs.some(d => d.field_mappings && d.field_mappings.length > 0);
+  if (!devs.length)
+    missing.push({ text: '📡 Įrenginiai — priskirtas žemės vietai nė vienas įrenginys', page: 'devices' });
+  else if (!hassensors)
+    missing.push({ text: '⚙ Jutiklių konfigūracija — eikite į Įrenginiai ir sukonfigūruokite laukus (⚙ Konfigūruoti)', page: 'devices' });
+  return missing;
+}
+
+async function generateForLocation(locationId, locationName) {
+  const loc = allLocations.find(l => l.id === locationId);
+  if (loc) {
+    const missing = validateLocation(loc);
+    if (missing.length) {
+      const msg = 'Nepavyko generuoti rekomendacijų — trūksta duomenų:\n\n' +
+        missing.map(m => '• ' + m.text).join('\n');
+      alert(msg);
+      return;
+    }
+  }
+  const btn = document.getElementById('rec-gen-btn-'+locationId);
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Generuojama...'; }
+  try {
+    const resp = await fetch('http://'+location.hostname+':5678/webhook/agro-recommendations', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({location_id: locationId})
+    });
+    const data = await resp.json();
+    if (data.ok) {
+      allRecommendations = await api('GET', '/recommendations').catch(() => allRecommendations) || allRecommendations;
+      renderRecommendationsPage();
+    } else {
+      alert('Klaida: ' + (data.message || 'Nepavyko'));
+    }
+  } catch(e) {
+    alert('Klaida: ' + e.message);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 Generuoti'; }
+}
+
+function openRecHistory(locationId, locationName) {
+  document.getElementById('rec-history-title').textContent = '📋 ' + locationName + ' — istorija';
+  const recs = allRecommendations.filter(r => r.location_id === locationId);
+  const el = document.getElementById('rec-history-content');
+  if (!recs.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>Istorija tuščia</p></div>';
+  } else {
+    el.innerHTML = recs.map(r => {
+      return `<div style="padding:1rem 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+          <span>📅 ${formatTime(r.created_at)}</span>
+          <button class="btn btn-danger btn-xs" onclick="deleteRecommendation(${r.id})">Šalinti</button>
+        </div>
+        ${renderRecContent(r.content)}
+        ${r.weather_summary ? `<details style="margin-top:8px"><summary style="font-size:11px;color:var(--text-muted);cursor:pointer">🌤 Orų duomenys</summary><pre style="font-size:10px;color:var(--text-muted);margin-top:6px;white-space:pre-wrap;background:var(--bg);padding:6px;border-radius:6px">${esc(r.weather_summary)}</pre></details>` : ''}
+      </div>`;
+    }).join('');
+  }
+  openModal('modal-rec-history');
+}
+
+async function deleteRecommendation(id) {
+  if (!confirm('Šalinti rekomendaciją?')) return;
+  try {
+    await api('DELETE', '/recommendations/'+id);
+    allRecommendations = allRecommendations.filter(r => r.id !== id);
+    renderRecommendationsPage();
+    const histEl = document.getElementById('rec-history-content');
+    if (histEl && histEl.innerHTML) {
+      const title = document.getElementById('rec-history-title').textContent;
+      const locName = title.replace('📋 ','').replace(' — istorija','');
+      const loc = allLocations.find(l => l.name === locName);
+      if (loc) openRecHistory(loc.id, loc.name);
+    }
+  } catch(e) { alert(e.message); }
+}
+
+/* RECOMMENDATIONS MODAL */
+let recLocationId = null;
+
+async function openRecommendations(locationId, locationName) {
+  recLocationId = locationId;
+  document.getElementById('rec-modal-title').textContent = '🤖 AI Rekomendacijos — ' + locationName;
+  document.getElementById('rec-content').innerHTML = '<p style="color:var(--text-muted);font-size:13px">Kraunama...</p>';
+  document.getElementById('rec-weather-summary').style.display = 'none';
+  document.getElementById('rec-generate-btn').disabled = false;
+  openModal('modal-recommendations');
+  try {
+    const recs = allRecommendations.filter(r => r.location_id === locationId);
+    renderRecommendations(recs);
+  } catch(e) {
+    document.getElementById('rec-content').innerHTML = '<p style="color:var(--danger)">'+e.message+'</p>';
+  }
+}
+
+function renderRecommendations(recs) {
+  const el = document.getElementById('rec-content');
+  if (!recs || !recs.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🤖</div><p>Rekomendacijų dar nėra.</p><p style="font-size:12px;margin-top:6px;color:var(--text-muted)">Spauskite „Generuoti naujas" — AI išanalizuos orus, jutiklius ir augalus.</p></div>';
+    return;
+  }
+  const latest = recs[0];
+  if (latest.weather_summary) {
+    const ws = document.getElementById('rec-weather-summary');
+    ws.textContent = latest.weather_summary;
+    ws.style.display = 'block';
+  }
+  el.innerHTML = recs.map((r, i) => {
+    const lines = r.content.split('\n').filter(l => l.trim());
+    const html = lines.map(l => {
+      if (/^\d+\./.test(l.trim())) return `<div style="display:flex;gap:10px;margin-bottom:10px"><span style="background:var(--green);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0">${l.match(/^\d+/)[0]}</span><span style="font-size:14px;line-height:1.5">${esc(l.replace(/^\d+\.\s*/,''))}</span></div>`;
+      return `<p style="font-size:13px;color:var(--text-muted);margin-bottom:6px">${esc(l)}</p>`;
+    }).join('');
+    return `<div style="${i>0?'margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)':''}">
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">📅 ${formatTime(r.created_at)}</div>
+      ${html}
+    </div>`;
+  }).join('');
+}
+
+async function generateRecommendations() {
+  if (!recLocationId) return;
+  const btn = document.getElementById('rec-generate-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generuojama...';
+  document.getElementById('rec-content').innerHTML = '<p style="color:var(--text-muted);font-size:13px">AI analizuoja duomenis, orus ir augalus... (~30 sek.)</p>';
+  try {
+    const resp = await fetch('http://'+location.hostname+':5678/webhook/agro-recommendations', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({location_id: recLocationId})
+    });
+    const data = await resp.json();
+    if (data.ok) {
+      allRecommendations = await api('GET', '/recommendations').catch(() => allRecommendations) || allRecommendations;
+      const recs = allRecommendations.filter(r => r.location_id === recLocationId);
+      renderRecommendations(recs);
+      renderRecommendationsPage();
+    } else {
+      document.getElementById('rec-content').innerHTML = '<p style="color:var(--danger)">Klaida: '+(data.message||'Nepavyko')+'</p>';
+    }
+  } catch(e) {
+    document.getElementById('rec-content').innerHTML = '<p style="color:var(--danger)">Klaida: '+e.message+'</p>';
+  }
+  btn.disabled = false;
+  btn.textContent = '🤖 Generuoti naujas';
+}
+
+const _TYPE_MAP = {temperature:'🌡',humidity:'💧',co2:'🌫',pressure:'🌀',soil:'🌱',rain:'🌧',other:'📡',combined:'🌡💧'};
 function deviceTypeLabel(t) {
-  return {combined:'🌡💧',temperature:'🌡',humidity:'💧',soil:'🌱',rain:'🌧',other:'📡',unknown:'❓'}[t]||'📡';
+  if (!t) return '📡';
+  return t.split(',').map(v => _TYPE_MAP[v.trim()] || '📡').join(' ');
+}
+function getDeviceTypes(containerId) {
+  const checked = [...document.querySelectorAll(`#${containerId} .type-check:checked`)].map(c => c.value);
+  return checked.length ? checked.join(',') : 'other';
+}
+function setDeviceTypes(containerId, typeStr) {
+  const vals = (typeStr||'').split(',').flatMap(v => v.trim()==='combined' ? ['temperature','humidity'] : [v.trim()]).filter(Boolean);
+  document.querySelectorAll(`#${containerId} .type-check`).forEach(cb => { cb.checked = vals.includes(cb.value); });
 }
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 

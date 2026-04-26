@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh-copy-id admin@192.168.0.177)",
+      "Bash(ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N \"\")",
+      "Bash(bash \"/c/Users/Giedrius/Documents/GitHub/Agro IoT project/deploy.sh\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U agro_user -d agro_iot -c '\\\\dt'\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U agro_user -d agro_iot -c 'SELECT id, device_id, received_at, raw_data FROM measurements ORDER BY received_at DESC LIMIT 5;'\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U agro_user -d agro_iot -c \\\\\"SELECT id, received_at, raw_data FROM measurements WHERE device_id=11 ORDER BY received_at DESC LIMIT 20;\\\\\"\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U agro_user -d agro_iot -c \\\\\"SELECT * FROM device_field_mapping WHERE device_id=11;\\\\\"\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U n8n -d n8n -c \\\\\"SELECT id, name, active FROM workflow_entity ORDER BY id;\\\\\" 2>/dev/null || echo 'no access'\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U agro_user -d agro_iot -c '\\\\dt device_events'\")",
+      "Bash(ssh admin@192.168.0.177 \"docker exec n8n-postgres psql -U agro_user -d agro_iot -c 'SELECT * FROM device_events ORDER BY received_at DESC LIMIT 10;'\")",
+      "Bash(ssh admin@192.168.0.177 \"curl -s 'http://localhost:8002/api/measurements/device/11/events?limit=5' -H 'Authorization: Bearer test' 2>&1 | head -c 500\")"
+    ]
+  }
+}

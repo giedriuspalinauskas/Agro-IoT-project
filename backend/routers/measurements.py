@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from typing import List
+from datetime import datetime, timezone
+from collections import OrderedDict
 from database import get_db
 from auth import get_current_user, require_admin
-from schemas import MeasurementOut, FieldMappingIn, FieldMappingOut
+from schemas import FieldMappingIn, FieldMappingOut
 import models
 import json
 
@@ -12,6 +14,8 @@ router = APIRouter()
 SENSOR_TYPES = {
     "temperature": {"label": "Temperatūra", "unit": "°C", "icon": "🌡"},
     "humidity": {"label": "Drėgmė", "unit": "%", "icon": "💧"},
+    "co2": {"label": "CO₂", "unit": "ppm", "icon": "🌫"},
+    "pressure": {"label": "Slėgis", "unit": "hPa", "icon": "🔵"},
     "soil_moisture": {"label": "Dirvožemio drėgmė", "unit": "%", "icon": "🌱"},
     "rain": {"label": "Lietus", "unit": "mm", "icon": "🌧"},
     "other": {"label": "Kita", "unit": "", "icon": "📡"},
@@ -24,7 +28,7 @@ def get_sensor_types():
 @router.post("/chirpstack")
 async def receive_chirpstack(request: Request, db: Session = Depends(get_db)):
     event = request.query_params.get("event", "")
-    if event != "up":
+    if event not in ("up", "join", "status"):
         return {"ok": True, "skipped": True}
     try:
         body = await request.json()
@@ -45,39 +49,44 @@ async def receive_chirpstack(request: Request, db: Session = Depends(get_db)):
     if not device:
         return {"ok": True, "skipped": True, "reason": "device not found"}
 
+    # Use sensor reading time from ChirpStack payload, fall back to server time
+    time_str = body.get("time")
+    try:
+        now = datetime.fromisoformat(time_str.replace("Z", "+00:00")) if time_str else datetime.now(timezone.utc)
+    except Exception:
+        now = datetime.now(timezone.utc)
+
+    if event in ("join", "status"):
+        battery = None
+        if event == "status":
+            raw_battery = body.get("batteryLevel")
+            if raw_battery is not None:
+                try:
+                    battery = float(raw_battery)
+                except (ValueError, TypeError):
+                    pass
+        dev_event = models.DeviceEvent(
+            device_id=device.id,
+            event_type=event,
+            battery_level=battery,
+            raw_data=json.dumps(body),
+            received_at=now,
+        )
+        db.add(dev_event)
+        db.commit()
+        return {"ok": True, "device": device.name, "event": event}
+
+    # UP event
     obj = body.get("object", {})
 
-    # Saugome matavimą
-    temperature = None
-    humidity = None
-
-    # Legacy laukai
-    for key in ["temperature_c", "temperature", "temp", "Temperature"]:
-        if key in obj:
-            try:
-                temperature = float(obj[key])
-                break
-            except (ValueError, TypeError):
-                pass
-
-    for key in ["humidity_pct", "humidity", "hum", "Humidity", "rh"]:
-        if key in obj:
-            try:
-                humidity = float(obj[key])
-                break
-            except (ValueError, TypeError):
-                pass
-
-    measurement = models.Measurement(
+    dev_event = models.DeviceEvent(
         device_id=device.id,
-        temperature=temperature,
-        humidity=humidity,
+        event_type="up",
         raw_data=json.dumps(obj),
+        received_at=now,
     )
-    db.add(measurement)
-    db.flush()
+    db.add(dev_event)
 
-    # Universalūs measurement values pagal field mappings
     mappings = db.query(models.DeviceFieldMapping).filter(
         models.DeviceFieldMapping.device_id == device.id
     ).all()
@@ -88,9 +97,10 @@ async def receive_chirpstack(request: Request, db: Session = Depends(get_db)):
             try:
                 val = float(obj[mapping.source_field])
                 mv = models.MeasurementValue(
-                    measurement_id=measurement.id,
+                    device_id=device.id,
                     field_key=mapping.source_field,
                     field_value=val,
+                    received_at=now,
                 )
                 db.add(mv)
                 saved_values.append({"field": mapping.source_field, "value": val})
@@ -100,21 +110,106 @@ async def receive_chirpstack(request: Request, db: Session = Depends(get_db)):
     db.commit()
     return {"ok": True, "device": device.name, "values": saved_values}
 
+@router.post("/direct")
+async def receive_direct(body: dict, db: Session = Depends(get_db)):
+    """Direct data ingestion from WiFi devices (e.g. Pico W via MQTT/n8n)."""
+    unique_id = body.get("unique_id", "")
+    data = body.get("data", {})
+    if not unique_id or not isinstance(data, dict):
+        raise HTTPException(status_code=400, detail="unique_id and data required")
+
+    device = db.query(models.Device).filter(
+        (models.Device.unique_id == unique_id) |
+        (models.Device.chirpstack_dev_eui == unique_id)
+    ).first()
+    if not device:
+        raise HTTPException(status_code=404, detail=f"Device '{unique_id}' not found")
+
+    # Use Unix timestamp from Pico W if provided, otherwise server time
+    ts = body.get("ts")
+    try:
+        now = datetime.fromtimestamp(float(ts), tz=timezone.utc) if ts else datetime.now(timezone.utc)
+    except Exception:
+        now = datetime.now(timezone.utc)
+
+    dev_event = models.DeviceEvent(
+        device_id=device.id,
+        event_type="up",
+        raw_data=json.dumps(data),
+        received_at=now,
+    )
+    db.add(dev_event)
+
+    mappings = db.query(models.DeviceFieldMapping).filter(
+        models.DeviceFieldMapping.device_id == device.id
+    ).all()
+
+    saved = []
+    for mapping in mappings:
+        if mapping.source_field in data:
+            try:
+                mv = models.MeasurementValue(
+                    device_id=device.id,
+                    field_key=mapping.source_field,
+                    field_value=float(data[mapping.source_field]),
+                    received_at=now,
+                )
+                db.add(mv)
+                saved.append(mapping.source_field)
+            except (ValueError, TypeError):
+                pass
+
+    db.commit()
+    return {"ok": True, "device": device.name, "saved": saved}
+
+@router.get("/events/summary")
+def get_events_summary(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    events = db.query(models.DeviceEvent)\
+        .filter(models.DeviceEvent.event_type.in_(["join", "status"]))\
+        .order_by(models.DeviceEvent.device_id, models.DeviceEvent.received_at.desc())\
+        .all()
+    result = {}
+    for e in events:
+        key = str(e.device_id)
+        if key not in result:
+            result[key] = {}
+        if e.event_type == "join" and "last_join" not in result[key]:
+            result[key]["last_join"] = e.received_at.isoformat()
+        if e.event_type == "status" and "battery_level" not in result[key]:
+            result[key]["battery_level"] = e.battery_level
+    return result
+
 @router.get("/device/{device_id}/fields")
 def get_available_fields(
     device_id: int,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
-    measurement = db.query(models.Measurement)\
-        .filter(models.Measurement.device_id == device_id)\
-        .order_by(models.Measurement.received_at.desc())\
+    event = db.query(models.DeviceEvent)\
+        .filter(
+            models.DeviceEvent.device_id == device_id,
+            models.DeviceEvent.event_type == "up"
+        )\
+        .order_by(models.DeviceEvent.received_at.desc())\
         .first()
-    if not measurement or not measurement.raw_data:
+    if not event or not event.raw_data:
         return {"fields": [], "sample": {}}
     try:
-        obj = json.loads(measurement.raw_data)
-        fields = [k for k, v in obj.items() if isinstance(v, (int, float))]
+        obj = json.loads(event.raw_data)
+        def _is_numeric(v):
+            if isinstance(v, (int, float)):
+                return True
+            if isinstance(v, str):
+                try:
+                    float(v)
+                    return True
+                except ValueError:
+                    pass
+            return False
+        fields = [k for k, v in obj.items() if _is_numeric(v)]
         return {"fields": fields, "sample": obj}
     except Exception:
         return {"fields": [], "sample": {}}
@@ -136,11 +231,9 @@ def save_mappings(
     db: Session = Depends(get_db),
     _=Depends(require_admin)
 ):
-    # Ištriname senus
     db.query(models.DeviceFieldMapping).filter(
         models.DeviceFieldMapping.device_id == device_id
     ).delete()
-    # Pridedame naujus
     for m in mappings:
         mapping = models.DeviceFieldMapping(
             device_id=device_id,
@@ -153,7 +246,35 @@ def save_mappings(
     db.commit()
     return {"ok": True}
 
-@router.get("/device/{device_id}", response_model=List[MeasurementOut])
+@router.get("/device/{device_id}/events")
+def get_device_events(
+    device_id: int,
+    limit: int = 20,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    device = db.query(models.Device).filter(models.Device.id == device_id).first()
+    if not device:
+        raise HTTPException(status_code=404, detail="Įrenginys nerastas")
+    if not current_user.is_admin:
+        user_loc_ids = [l.id for l in current_user.locations]
+        if device.location_id not in user_loc_ids:
+            raise HTTPException(status_code=403, detail="Nėra prieigos")
+    events = db.query(models.DeviceEvent)\
+        .filter(models.DeviceEvent.device_id == device_id)\
+        .order_by(models.DeviceEvent.received_at.desc())\
+        .limit(limit).all()
+    return [
+        {
+            "id": e.id,
+            "event_type": e.event_type,
+            "battery_level": e.battery_level,
+            "received_at": e.received_at.isoformat(),
+        }
+        for e in events
+    ]
+
+@router.get("/device/{device_id}")
 def get_device_measurements(
     device_id: int,
     limit: int = 50,
@@ -167,7 +288,22 @@ def get_device_measurements(
         user_loc_ids = [l.id for l in current_user.locations]
         if device.location_id not in user_loc_ids:
             raise HTTPException(status_code=403, detail="Nėra prieigos")
-    return db.query(models.Measurement)\
-        .filter(models.Measurement.device_id == device_id)\
-        .order_by(models.Measurement.received_at.desc())\
-        .limit(limit).all()
+
+    rows = db.query(models.MeasurementValue)\
+        .filter(models.MeasurementValue.device_id == device_id)\
+        .order_by(models.MeasurementValue.received_at.desc())\
+        .all()
+
+    groups: OrderedDict = OrderedDict()
+    for v in rows:
+        key = v.received_at.isoformat()
+        if key not in groups:
+            if len(groups) >= limit:
+                break
+            groups[key] = {"received_at": v.received_at, "values": []}
+        groups[key]["values"].append({"field_key": v.field_key, "field_value": v.field_value})
+
+    return [
+        {"received_at": g["received_at"], "values": g["values"]}
+        for g in groups.values()
+    ]

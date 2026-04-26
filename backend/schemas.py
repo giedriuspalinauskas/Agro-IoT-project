@@ -49,15 +49,6 @@ class MeasurementValueOut(BaseModel):
     class Config:
         from_attributes = True
 
-class MeasurementOut(BaseModel):
-    id: int
-    temperature: Optional[float] = None
-    humidity: Optional[float] = None
-    received_at: datetime
-    values: List[MeasurementValueOut] = []
-    class Config:
-        from_attributes = True
-
 class DeviceBase(BaseModel):
     name: str
     device_type: str
@@ -81,7 +72,6 @@ class DeviceUpdate(BaseModel):
 class DeviceOut(DeviceBase):
     id: int
     location_id: int
-    measurements: List[MeasurementOut] = []
     field_mappings: List[FieldMappingOut] = []
     class Config:
         from_attributes = True
@@ -92,6 +82,7 @@ class LocationBase(BaseModel):
     description: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+    location_type: Optional[str] = 'laukas'
 
 class LocationCreate(LocationBase):
     pass
@@ -102,9 +93,17 @@ class LocationUpdate(BaseModel):
     description: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+    location_type: Optional[str] = None
+
+class PlantOut(BaseModel):
+    id: int
+    name: str
+    class Config:
+        from_attributes = True
 
 class LocationOut(LocationBase):
     id: int
     devices: List[DeviceOut] = []
+    plants: List[PlantOut] = []
     class Config:
         from_attributes = True

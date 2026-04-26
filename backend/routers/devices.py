@@ -9,9 +9,9 @@ import models
 
 router = APIRouter()
 
-CHIRPSTACK_URL = "http://192.168.0.177:8090"
-CHIRPSTACK_API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjaGlycHN0YWNrIiwiaXNzIjoiY2hpcnBzdGFjayIsInN1YiI6ImYyN2NlYzA3LWRmOGMtNDc5OS04Y2NkLWIxOWI4YTkxNDZkNSIsInR5cCI6ImtleSJ9.EzjiNc7Zw5wOn7xj8ZECkdphcgU00UqYKDj2sQsSLG0"
-CHIRPSTACK_APP_ID = "7b66c18c-fb61-48a8-b7d7-036a88bead55"
+CHIRPSTACK_URL = "http://192.168.0.186:8090"
+CHIRPSTACK_API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjaGlycHN0YWNrIiwiaXNzIjoiY2hpcnBzdGFjayIsInN1YiI6IjlkNzJiZGZlLWM3MGMtNDYwYS1hZDExLTU2NmNlNTZkNmI3ZiIsInR5cCI6ImtleSJ9.zAcGsAAeU01ZUB5n82wBVEWGX9MpZ-r0xh0y7-DG6h4"
+CHIRPSTACK_APP_ID = "d0168e14-67a4-45e0-a8fa-f2f19636b5fc"
 
 @router.get("/", response_model=List[DeviceOut])
 def list_devices(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
@@ -84,6 +84,9 @@ def update_device(device_id: int, data: DeviceUpdate, db: Session = Depends(get_
     device = db.query(models.Device).filter(models.Device.id == device_id).first()
     if not device:
         raise HTTPException(status_code=404, detail="Įrenginys nerastas")
+    if data.location_id is not None and data.location_id != device.location_id:
+        db.query(models.MeasurementValue).filter(models.MeasurementValue.device_id == device_id).delete()
+        db.query(models.DeviceEvent).filter(models.DeviceEvent.device_id == device_id).delete()
     for k, v in data.model_dump(exclude_unset=True).items():
         setattr(device, k, v)
     db.commit()

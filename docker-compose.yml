@@ -20,6 +20,21 @@ services:
       - default
       - n8n-postgres_default
 
+  mqtt-bridge:
+    build: ./mqtt-bridge
+    container_name: agro-mqtt-bridge
+    restart: unless-stopped
+    environment:
+      MQTT_HOST: chirpstack-docker-mosquitto-1
+      MQTT_PORT: "1883"
+      API_BASE: http://agro-backend:8000/api
+    networks:
+      - default
+      - n8n-postgres_default
+      - chirpstack-docker_default
+
 networks:
   n8n-postgres_default:
+    external: true
+  chirpstack-docker_default:
     external: true
